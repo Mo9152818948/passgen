@@ -1,7 +1,7 @@
 {
-  "name": "سازنده رمز قوی",
-  "short_name": "PassGen",
-  "description": "تولید پسورد و ایمیل + تم و پس‌زمینه",
+  "name": "رمز ساز bahrami",
+  "short_name": "bahrami",
+  "description": "اپ تولید پسورد و ایمیل امن",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -15,7 +15,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "1000002775.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
