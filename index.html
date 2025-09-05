@@ -25,35 +25,25 @@ button{border:none; border-radius:12px; padding:10px 14px; background:var(--btn)
 button.secondary{background:transparent;color:var(--fg); border:1px solid var(--muted)}
 .password{display:flex; justify-content:space-between; align-items:center; gap:8px; background:rgba(255,255,255,.06); padding:10px 12px; border-radius:12px; font-family:ui-monospace,monospace}
 .password-actions{display:flex; gap:6px; flex-wrap:wrap}
-
-/* نوار قدرت */
 .meter{height:8px; border-radius:6px; background:#111827; overflow:hidden; margin-top:8px}
 .meter > span{display:block; height:100%; width:0%;}
 .meter.w1 > span{width:33%; background:#ef4444}
 .meter.w2 > span{width:66%; background:#f59e0b}
 .meter.w3 > span{width:100%; background:#22c55e}
 small.meter-label{opacity:.8}
-
-/* لیست‌ها */
 .list{display:grid; gap:8px; margin-top:12px}
 .tabs{display:flex; gap:8px; margin-top:10px}
-.hidden{display:none}
-
-/* تم‌ها */
 .theme-light{--bg:#f8fafc; --fg:#0f172a; --card:#ffffff; --muted:#e2e8f0; --btn:#0f172a; --btn-fg:#ffffff;}
 .theme-dark{--bg:#0b1220; --fg:#e5e7eb; --card:#0f172a; --muted:#1f2937; --btn:#16a34a; --btn-fg:#07110a;}
 .theme-blue{--bg:#e6f0ff; --fg:#0b1a33; --card:#ffffff; --muted:#d9e6ff; --btn:#1d4ed8; --btn-fg:#ffffff;}
 .theme-purple{--bg:#f5f0ff; --fg:#27104a; --card:#ffffff; --muted:#eadbff; --btn:#7c3aed; --btn-fg:#ffffff;}
 .theme-gradient{--fg:#0f172a; --btn:#111827; --btn-fg:#ffffff;}
 .theme-gradient body,.theme-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 60%,#9333ea 100%) fixed;}
-
-/* پس‌زمینه‌ها */
 .bg-1{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%) fixed;}
 .bg-2{background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%) fixed;}
 .bg-3{background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%) fixed;}
 .bg-4{background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%) fixed;}
 .bg-forest{background:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1280&q=80') center/cover fixed;}
-
 @media (max-width:520px){ .row>*{flex:1 1 auto} h1{font-size:22px} }
 </style>
 </head>
@@ -62,10 +52,10 @@ small.meter-label{opacity:.8}
   <div class="card">
     <h1>🔐 رمز ساز bahrami</h1>
 
-    <div class="row" style="margin-bottom:6px">
+    <!-- بخش تنظیمات رمز -->
+    <div class="row">
       <label>طول رمز: <input type="number" id="length" value="12" min="6" max="64"></label>
       <label>تعداد خروجی: <input type="number" id="count" value="5" min="1" max="50"></label>
-
       <label>تم:
         <select id="theme">
           <option value="dark">تیره</option>
@@ -91,7 +81,7 @@ small.meter-label{opacity:.8}
     </div>
 
     <!-- ایمیل Gmail -->
-    <div class="row" style="margin:10px 0">
+    <div class="row">
       <label>طول ایمیل: <input type="number" id="emailLen" value="10" min="6" max="30"></label>
       <label><input type="checkbox" id="emailDot" checked> نقطه مجاز</label>
       <button id="btnEmail" class="secondary">✉️ تولید Gmail</button>
@@ -105,155 +95,81 @@ small.meter-label{opacity:.8}
       <button id="btnClear" class="secondary">🧹 پاک‌کردن تاریخچه</button>
     </div>
 
-    <!-- نوار قدرت -->
     <div class="meter" id="strength"><span></span></div>
     <small id="strengthLabel" class="meter-label">قدرت: —</small>
 
     <div class="tabs">
-      <button id="tabLatest" class="secondary">نمایش: آخرین‌ها</button>
+      <button id="tabLatest" class="secondary">آخرین‌ها</button>
       <button id="tabFav" class="secondary">⭐ علاقه‌مندی‌ها</button>
     </div>
 
     <div id="output" class="list"></div>
+
+    <!-- ایمیل موقت -->
+    <hr style="border-color: rgba(255,255,255,.15); margin:18px 0">
+    <h2>✉️ ایمیل یک‌بارمصرف (Mail.tm)</h2>
+    <div class="row">
+      <button id="tmpCreate">ساخت ایمیل موقت</button>
+      <button id="tmpCopy" class="secondary" disabled>📋 کپی آدرس</button>
+      <button id="tmpRefresh" class="secondary" disabled>🔄 بروزرسانی</button>
+    </div>
+    <div class="password"><span id="tmpAddr">—</span></div>
+    <small id="tmpStatus" class="meter-label">وضعیت: —</small>
+    <div id="tmpInbox" class="list"></div>
   </div>
 </div>
 
 <script>
-// ===== ذخیره ساده =====
+/* ===== ذخیره ساده ===== */
 const store = {
   get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch{ return d; } },
   set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
 };
 
-// ===== تم‌ها =====
+/* ===== تم ===== */
 const THEME_KEY="theme", BG_KEY="bg";
 const themeSelect=document.getElementById("theme");
 function applyTheme(name){
-  document.body.classList.remove("theme-light","theme-dark","theme-blue","theme-purple","theme-gradient");
-  document.body.classList.add("theme-"+name);
+  document.body.className="theme-"+name;
   store.set(THEME_KEY,name);
 }
-(function(){const s=store.get(THEME_KEY,"dark");themeSelect.value=s;applyTheme(s);})();
-themeSelect.addEventListener("change",e=>applyTheme(e.target.value));
+(function(){applyTheme(store.get(THEME_KEY,"dark")); themeSelect.value=store.get(THEME_KEY,"dark");})();
+themeSelect.onchange=e=>applyTheme(e.target.value);
 
-// پس‌زمینه
-const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"]; 
+const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"];
 let bgIndex=store.get(BG_KEY,-1);
 function applyBg(i){document.body.classList.remove(...BG_CLASSES); if(i>-1)document.body.classList.add(BG_CLASSES[i]);}
 applyBg(bgIndex);
-document.getElementById("btnBg").onclick=()=>{bgIndex=(bgIndex+1)%(BG_CLASSES.length+1); if(bgIndex===BG_CLASSES.length){bgIndex=-1; applyBg(-1);} else applyBg(bgIndex); store.set(BG_KEY,bgIndex);};
+btnBg.onclick=()=>{bgIndex=(bgIndex+1)%(BG_CLASSES.length+1); if(bgIndex===BG_CLASSES.length) bgIndex=-1; applyBg(bgIndex); store.set(BG_KEY,bgIndex);};
 
-// ===== ابزار تصادفی امن =====
-function rnd(max){const a=new Uint32Array(1);const M=0xffffffff,lim=Math.floor(M/max)*max;let r;do{crypto.getRandomValues(a);r=a[0];}while(r>=lim);return r%max;}
+/* ===== رمز ===== */
+function rnd(max){const a=new Uint32Array(1);let r;do{crypto.getRandomValues(a);r=a[0];}while(r>=0xffffffff-max+1);return r%max;}
 function pick(s){return s[rnd(s.length)];}
-function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=rnd(i+1);[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 const sets={lower:"abcdefghijklmnopqrstuvwxyz",upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",digits:"0123456789",symbols:"!@#$%^&*()_-+=[]{}|:;,.?/~`<>"},
-      similar=new Set("Il1O0B8S5Z2".split(""));
+      similar=new Set("Il1O0B8S5Z2");
+function buildPool(o){let g=[]; if(o.lower)g.push(sets.lower); if(o.upper)g.push(sets.upper); if(o.digits)g.push(sets.digits); if(o.symbols)g.push(sets.symbols);
+  if(o.noSimilar)g=g.map(s=>[...s].filter(c=>!similar.has(c)).join("")); return {groups:g,all:g.join("")};}
+function genPass(o){const {groups,all}=buildPool(o); if(!all)return""; const L=o.length,chs=[]; if(o.requireEach)groups.forEach(g=>chs.push(pick(g))); while(chs.length<L){chs.push(pick(all));} return shuffle(chs).slice(0,L).join("");}
+function scorePassword(p){if(!p)return 0;let s=0;const u=new Set(p).size;s+=Math.min(u*4,40);if(/[a-z]/.test(p))s+=10;if(/[A-Z]/.test(p))s+=10;if(/\d/.test(p))s+=10;if(/[^\w]/.test(p))s+=15;if(p.length>=12)s+=10;return Math.min(100,s);}
+function updateMeter(p){const sc=scorePassword(p),m=document.getElementById("strength"),lab=document.getElementById("strengthLabel");m.className="meter "+(sc<40?"w1":sc<70?"w2":"w3");lab.textContent="قدرت: "+(sc<40?"ضعیف":sc<70?"متوسط":"قوی")+" ("+sc+"%)";}
+function opts(){return{lower:lower.checked,upper:upper.checked,digits:digits.checked,symbols:symbols.checked,noSimilar:noSimilar.checked,noRepeat:noRepeat.checked,requireEach:requireEach.checked,length:+length.value};}
+let last=[],hidden=store.get("hidden",false),favs=store.get("favs",[]),showFav=false;
+function render(list){last=list;const d=showFav?list.filter(x=>favs.includes(x)):list;const out=document.getElementById("output");out.innerHTML="";d.forEach(x=>{const row=document.createElement("div");row.className="password";const span=document.createElement("span");span.textContent=hidden?"•".repeat(x.length):x;span.dataset.real=x;const actions=document.createElement("div");actions.className="password-actions";const btnCopy=document.createElement("button");btnCopy.className="secondary";btnCopy.textContent="📋";btnCopy.onclick=()=>navigator.clipboard.writeText(x);const btnFav=document.createElement("button");btnFav.className="secondary";btnFav.textContent=favs.includes(x)?"⭐":"☆";btnFav.onclick=()=>{if(favs.includes(x))favs=favs.filter(i=>i!==x);else favs.push(x);store.set("favs",favs);render(list);};actions.append(btnCopy,btnFav);row.append(span,actions);out.appendChild(row);});updateMeter(list[0]||"");}
+btnGen.onclick=()=>{const c=Math.min(100,+count.value);const o=opts();const arr=[];for(let i=0;i<c;i++)arr.push(genPass(o));render(arr);}
+btnEmail.onclick=()=>{const c=Math.min(100,+count.value);let L=Math.max(6,Math.min(30,+emailLen.value));const arr=[];for(let i=0;i<c;i++){let s="";for(let j=0;j<L;j++)s+=pick("abcdefghijklmnopqrstuvwxyz0123456789"+(emailDot.checked?".":""));arr.push(s+"@gmail.com");}render(arr);}
+btnToggle.onclick=()=>{hidden=!hidden;store.set("hidden",hidden);render(last);}
+btnClear.onclick=()=>render([]);
 
-// ساخت پسورد
-function buildPool(o){let groups=[]; if(o.lower)groups.push(sets.lower); if(o.upper)groups.push(sets.upper); if(o.digits)groups.push(sets.digits); if(o.symbols)groups.push(sets.symbols);
-  if(o.noSimilar)groups=groups.map(g=>[...g].filter(c=>!similar.has(c)).join("")); return {groups, all:groups.join("")};}
-function genPass(o){const {groups,all}=buildPool(o); if(!all)return""; const L=o.length,chs=[]; if(o.requireEach)groups.forEach(g=>chs.push(pick(g)));
-  while(chs.length<L){const c=pick(all); if(o.noRepeat && chs.length && chs[chs.length-1]===c) continue; chs.push(c);} return shuffle(chs).slice(0,L).join("");}
-
-// قدرت رمز
-function scorePassword(p){
-  if(!p) return 0; let s=0; const unique = new Set(p).size;
-  s += Math.min(unique*4, 40);
-  if(/[a-z]/.test(p)) s+=10;
-  if(/[A-Z]/.test(p)) s+=10;
-  if(/\d/.test(p)) s+=10;
-  if(/[^\w]/.test(p)) s+=15;
-  if(p.length>=12) s+=10;
-  if(/(.)\1{2,}/.test(p)) s-=10;
-  return Math.max(0, Math.min(100, s));
-}
-function updateMeter(p){
-  const m = document.getElementById('strength');
-  const label = document.getElementById('strengthLabel');
-  const sc = scorePassword(p);
-  m.className = 'meter ' + (sc<40?'w1':sc<70?'w2':'w3');
-  label.textContent = 'قدرت: ' + (sc<40?'ضعیف':sc<70?'متوسط':'قوی') + ` (${sc}%)`;
-}
-
-// ایمیل Gmail
-const letters="abcdefghijklmnopqrstuvwxyz", nums="0123456789";
-function genGmailLocal(L,allowDot){let allowed=(allowDot?letters+nums+".":letters+nums),s=letters[rnd(letters.length)];
-  while(s.length<L){const c=pick(allowed); if(c==="."&&(s[s.length-1]==="."||s.length===L-1)) continue; s+=c;}
-  if(s.endsWith(".")) s=s.slice(0,-1)+letters[rnd(letters.length)]; return s;}
-
-// وضعیت نمایش
-let last=[], hidden=store.get('hidden',false), favs=store.get('favs',[]), showFav=false;
-
-// رندر آیتم‌ها
-function isFav(x){return favs.includes(x);}
-function toggleFav(x){ if(isFav(x)) favs=favs.filter(i=>i!==x); else favs.push(x); store.set('favs',favs); render(last); }
-
-function render(list){
-  last=list;
-  const data = showFav ? list.filter(x=>isFav(x)) : list;
-  const out=document.getElementById("output");
-  out.innerHTML="";
-  data.forEach(x=>{
-    const row=document.createElement("div"); row.className="password";
-    const span=document.createElement("span"); span.textContent=hidden?"•".repeat(x.length):x; span.dataset.real=x;
-
-    const actions=document.createElement("div"); actions.className="password-actions";
-
-    const btnCopy=document.createElement("button"); btnCopy.className="secondary"; btnCopy.textContent="📋 کپی";
-    btnCopy.onclick=async()=>{ await navigator.clipboard.writeText(x); if(navigator.vibrate) navigator.vibrate(20); };
-
-    const btnFav=document.createElement("button"); btnFav.className="secondary"; btnFav.textContent = isFav(x) ? "⭐" : "☆";
-    btnFav.onclick=()=>toggleFav(x);
-
-    actions.append(btnCopy, btnFav);
-    row.append(span, actions);
-    out.appendChild(row);
-  });
-
-  updateMeter(list[0]||"");
-}
-
-// تنظیمات ورودی‌ها
-['length','count','emailLen','lower','upper','digits','symbols','noSimilar','noRepeat','requireEach','emailDot'].forEach(id=>{
-  const el = document.getElementById(id);
-  const saved = store.get('set_'+id, null);
-  if(saved!==null){
-    if(el.type==='checkbox') el.checked = saved; else el.value = saved;
-  }
-  el.addEventListener('change',()=>{store.set('set_'+id, el.type==='checkbox'?el.checked:el.value);});
-});
-
-// تولید چندتا
-function opts(){return{lower:lower.checked,upper:upper.checked,digits:digits.checked,symbols:symbols.checked,noSimilar:noSimilar.checked,noRepeat:noRepeat.checked,requireEach:requireEach.checked,length:parseInt(length.value||12)};}
-function genMany(){const c=Math.min(100,Math.max(1,parseInt(count.value||5))); const o=opts(); const arr=[]; for(let i=0;i<c;i++) arr.push(genPass(o)); saveHistory(arr); render(arr);}
-function genEmails(){const c=Math.min(100,Math.max(1,parseInt(count.value||5))); let L=parseInt(emailLen.value||10); if(isNaN(L))L=10; L=Math.max(6,Math.min(30,L));
-  const arr=[]; for(let i=0;i<c;i++) arr.push(genGmailLocal(L,emailDot.checked)+"@gmail.com"); saveHistory(arr); render(arr); }
-
-btnGen.onclick=genMany;
-btnEmail.onclick=genEmails;
-btnCSV.onclick=()=>{if(!last.length)return; const b=new Blob([last.join("\n")],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click();}
-btnJSON.onclick=()=>{if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click();}
-btnToggle.onclick=()=>{hidden=!hidden; store.set('hidden',hidden); document.querySelectorAll("#output .password span").forEach(el=>{el.textContent=hidden?"•".repeat(el.dataset.real.length):el.dataset.real;});}
-btnClear.onclick=()=>{store.set('history',[]); render([]);}
-document.getElementById('tabLatest').onclick=()=>{showFav=false; render(loadHistory());}
-document.getElementById('tabFav').onclick=()=>{showFav=true; render(loadHistory());}
-
-// تاریخچه
-function loadHistory(){ return store.get('history',[]); }
-function saveHistory(items){ const h = loadHistory(); const combined = [...items, ...h].slice(0,50); store.set('history', combined); }
-
-// بار اول
-render(loadHistory());
-if(!loadHistory().length) genMany();
-</script>
-
-<!-- Service Worker -->
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js').catch(console.log);
-}
+/* ===== ایمیل موقت (Mail.tm) ===== */
+const mailApi="https://api.mail.tm";let mtm={token:null,address:null};
+async function mtmFetch(path,opts={}){const h=opts.headers||{};if(mtm.token)h.Authorization="Bearer "+mtm.token;if(opts.body&&!h["Content-Type"])h["Content-Type"]="application/json";const r=await fetch(mailApi+path,{...opts,headers:h});if(!r.ok)throw 0;return r.json();}
+async function mtmCreate(){setTmpStatus("در حال ساخت...");const d=await mtmFetch("/domains");const domain=d["hydra:member"][0].domain;const id=Math.random().toString(36).slice(2,10);const addr=id+"@"+domain;const pass=Math.random().toString(36);await mtmFetch("/accounts",{method:"POST",body:JSON.stringify({address:addr,password:pass})});const t=await mtmFetch("/token",{method:"POST",body:JSON.stringify({address:addr,password:pass})});mtm={token:t.token,address:addr};tmpAddr.textContent=addr;tmpCopy.disabled=false;tmpRefresh.disabled=false;setTmpStatus("ایمیل ساخته شد.");mtmRefresh();}
+async function mtmRefresh(){if(!mtm.token)return;setTmpStatus("در حال بروزرسانی...");const m=await mtmFetch("/messages");renderInbox(m["hydra:member"]);setTmpStatus("صندوق بروز شد.");}
+function renderInbox(items){tmpInbox.innerHTML="";if(!items.length){tmpInbox.innerHTML="<div class='password'>صندوق خالی است</div>";return;}items.forEach(x=>{const row=document.createElement("div");row.className="password";row.innerHTML=`<div><b>${x.subject||"(بدون موضوع)"}</b> — ${x.from.address||""}</div>`;tmpInbox.appendChild(row);});}
+function setTmpStatus(t){tmpStatus.textContent="وضعیت: "+t;}
+tmpCreate.onclick=()=>mtmCreate().catch(()=>setTmpStatus("خطا"));tmpCopy.onclick=()=>navigator.clipboard.writeText(mtm.address);tmpRefresh.onclick=mtmRefresh;
 </script>
 </body>
 </html>
