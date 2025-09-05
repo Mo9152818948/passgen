@@ -18,6 +18,7 @@
     --card:#ffffff; --accent:#28b954; --accent-2:#1e90ff;
     --shadow:0 8px 24px rgba(0,0,0,.12);
   }
+
   *{box-sizing:border-box}
   body{margin:0; min-height:100vh; font-family: Vazirmatn, iransans, system-ui, -apple-system, Segoe UI, Roboto; color:var(--fg)}
   .bg-gradient{
@@ -36,10 +37,13 @@
       radial-gradient(900px 700px at 80% 0%, #192a56 0%, transparent 55%),
       linear-gradient(180deg,#080c16 0%, #0a1220 100%);
   }
+
   .wrap{max-width:980px; margin:28px auto 60px; padding:0 16px}
   header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
   .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:24px}
   .brand .lock{width:28px; height:28px; display:inline-grid; place-items:center; background:linear-gradient(135deg,#21d07a,#0aa94f); color:#0b1220; border-radius:10px; box-shadow:var(--shadow)}
+
+  /* iOS switch (pages) */
   .ios-switch{ position:relative; display:inline-block; width:52px; height:28px }
   .ios-switch input{ opacity:0; width:0; height:0 }
   .slider{ position:absolute; inset:0; cursor:pointer; background:#c7ced6; border-radius:34px; transition:.35s ease; box-shadow: inset 0 2px 6px rgba(0,0,0,.25) }
@@ -48,29 +52,39 @@
   .ios-switch input:checked + .slider{ background:var(--accent) }
   .ios-switch input:checked + .slider:before{ transform:translateX(24px) }
   .seg-label{ font-size:12px; color:var(--muted); margin-right:8px; user-select:none }
+
   .card{ background:rgba(15, 23, 42, .85); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px }
   :root[data-theme="light"] .card{ background:#fff; border-color:#eef2f6 }
   .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+  .row > *{flex:1 1 auto}
+
   .input, select{ width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:transparent; color:var(--fg); outline:none }
   :root[data-theme="light"] .input, :root[data-theme="light"] select{ border-color:#e7edf3 }
+
   .btn{ padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(135deg,#21d07a,#0aa94f); color:#07210f; font-weight:700; cursor:pointer; transition:transform .05s ease }
   .btn:active{ transform:translateY(1px) }
   .btn.ghost{ background:transparent; color:var(--fg) }
   .muted{ color:var(--muted) }
+
   .chip{ padding:6px 10px; border-radius:999px; font-size:12px; background:#0b1a2f; color:#93e5b4; border:1px solid rgba(255,255,255,.08) }
   :root[data-theme="light"] .chip{ background:#f1f6f9; color:#176b3f; border-color:#e7edf3 }
+
   .list{ display:grid; gap:10px; margin-top:16px }
   .item{ display:flex; align-items:center; gap:10px; justify-content:space-between; background:#0e1930; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:12px 14px }
   :root[data-theme="light"] .item{ background:#f7fafc; border-color:#e7edf3 }
+
   .strength{height:10px; border-radius:999px; background:#172033; overflow:hidden}
   :root[data-theme="light"] .strength{ background:#e8eef5 }
   .bar{height:100%; width:0%; background:linear-gradient(90deg,#ff6b6b,#ffd166,#34c759); transition:width .3s ease}
+
   .page{ display:none; transform-origin:center; animation:.25s fade-up both }
   .page.active{ display:block }
   @keyframes fade-up{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
   footer{ margin-top:20px; text-align:center; font-size:12px; color:var(--muted) }
+
   .theme-toggle{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:transparent; color:var(--fg); cursor:pointer }
   :root[data-theme="light"] .theme-toggle{ border-color:#e7edf3 }
+
   .toast{ position:fixed; inset-inline:16px; bottom:16px; background:#101828; color:#e5e7eb; border:1px solid rgba(255,255,255,.1); padding:12px 14px; border-radius:12px; box-shadow:var(--shadow); display:none }
   :root[data-theme="light"] .toast{ background:#ffffff; color:#0f172a; border-color:#e7edf3 }
 </style>
@@ -82,6 +96,7 @@
         <span class="lock">🔒</span>
         <span>bahrami رمزساز</span>
       </div>
+
       <div class="row" style="flex-wrap:nowrap; gap:8px; justify-content:flex-end">
         <span class="seg-label">رمزساز</span>
         <label class="ios-switch" title="تغییر بخش">
@@ -89,7 +104,9 @@
           <span class="slider"></span>
         </label>
         <span class="seg-label">ایمیل موقت</span>
+
         <button id="themeBtn" class="theme-toggle" title="تغییر تم"><span id="themeIcon">🌙</span><span id="themeText" class="muted">تاریک</span></button>
+
         <select id="bgSelect" style="flex:0 0 170px" class="input" title="پس‌زمینه">
           <option value="bg-gradient" selected>پس‌زمینه: گرادیان</option>
           <option value="bg-forest">پس‌زمینه: جنگلی</option>
@@ -120,11 +137,6 @@
         <div class="row" style="margin-top:12px">
           <button id="btnGen" class="btn">🎲 تولید رمز</button>
           <button id="btnClear" class="btn ghost">🧹 پاک‌کردن</button>
-
-          <!-- دکمه Gmail: صفحه رسمی ثبت‌نام را باز می‌کند -->
-          <button id="btnGmailOpen" class="btn ghost" title="ساخت Gmail">
-            ✉️ ساخت Gmail (رسمی)
-          </button>
         </div>
         <div style="margin-top:14px">
           <div class="muted" style="margin-bottom:6px">قدرت:</div>
@@ -132,37 +144,50 @@
         </div>
       </div>
 
+      <div class="card" style="margin-bottom:14px">
+        <h3 style="margin:0 0 10px">آزمایشگاه نام کاربری Gmail (برای یادگیری)</h3>
+        <div class="row">
+          <input id="seedName" class="input" placeholder="نام/شناسه (مثلاً bahrami یا بهرامی)"/>
+          <input id="seedExtra" class="input" placeholder="کلمهٔ دلخواه (اختیاری) مثل: secure, dev"/>
+          <input id="seedYear"  class="input" type="number" min="1900" max="2099" placeholder="سال (اختیاری) مثل: 2000"/>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div class="chip"><label><input id="gDot" type="checkbox" checked/> استفاده از نقطه (.)</label></div>
+          <div class="chip"><label><input id="gStartLetter" type="checkbox" checked/> شروع با حرف</label></div>
+          <div class="chip"><label><input id="gTrans" type="checkbox" checked/> ترانویسی فارسی→لاتین</label></div>
+          <button id="btnGmailLab" class="btn">✉️ ساخت پیشنهادهای ‎@gmail.com‎</button>
+        </div>
+        <div id="gList" class="list" style="margin-top:12px"></div>
+        <div class="muted" style="margin-top:8px">* این‌ها فقط پیشنهاد نام کاربری هستند؛ حساب واقعی را باید در سایت رسمی گوگل بسازی.</div>
+      </div>
+
       <div class="card">
-        <div class="muted" style="margin-bottom:10px">خروجی‌ها</div>
+        <div class="muted" style="margin-bottom:10px">خروجی‌های رمز (★ = پیش‌فرض ستاره‌دار)</div>
         <div id="list" class="list"></div>
       </div>
     </section>
 
-    <!-- صفحه ایمیل موقت -->
+    <!-- صفحه ایمیل موقت (دمو) -->
     <section id="page-mail" class="page">
       <div class="card">
         <h3 style="margin:0 0 8px">ایمیل یک‌بارمصرف</h3>
         <p class="muted" style="margin:0 0 16px">
-          اگر برای تست نیاز به ایمیل سریع داری، از ایمیل موقت استفاده کن. برای جیمیل واقعی، از دکمهٔ «ساخت Gmail (رسمی)» در بخش رمز برو به فرم رسمی گوگل.
+          برای تست سریع می‌تونی از ایمیل موقت استفاده کنی. (اگر خواستی بعداً به mail.tm یا 1secmail وصلش می‌کنم.)
         </p>
         <div class="row">
           <input id="demoEmail" class="input" readonly value="temp-xyz@mail.example"/>
           <button class="btn" onclick="copy('#demoEmail')">کپی</button>
         </div>
-        <div class="list" style="margin-top:12px">
-          <div class="item"><span>Welcome 🎉</span><button class="btn ghost" disabled>بازکردن</button></div>
-          <div class="item"><span>Security code: 823914</span><button class="btn ghost" disabled>کپی کد</button></div>
-        </div>
       </div>
     </section>
 
-    <footer>© 2025 – Bahrami • تم روشن/تاریک + پس‌زمینه پویا</footer>
+    <footer>© 2025 – Bahrami • تم روشن/تاریک + پس‌زمینه پویا • آزمایشگاه Gmail (آموزشی)</footer>
   </div>
 
   <div id="toast" class="toast"></div>
 
 <script>
-  // سوییچ بین صفحات
+  /* -------- switch pages -------- */
   const switcher = document.getElementById('switcher');
   const pagePass = document.getElementById('page-pass');
   const pageMail = document.getElementById('page-mail');
@@ -172,7 +197,7 @@
     window.scrollTo({top:0, behavior:'smooth'});
   });
 
-  // تم
+  /* -------- theme -------- */
   const root = document.documentElement;
   const themeBtn = document.getElementById('themeBtn');
   const themeIcon = document.getElementById('themeIcon');
@@ -186,7 +211,7 @@
   setTheme(localStorage.getItem('theme-mode') || 'dark');
   themeBtn.addEventListener('click', ()=> setTheme(root.getAttribute('data-theme')==='light'?'dark':'light'));
 
-  // پس‌زمینه
+  /* -------- background -------- */
   const bgSel = document.getElementById('bgSelect');
   function setBg(cls){
     document.body.classList.remove('bg-gradient','bg-forest','bg-night');
@@ -196,7 +221,7 @@
   setBg(localStorage.getItem('bg-class') || 'bg-gradient');
   bgSel.addEventListener('change', e=> setBg(e.target.value));
 
-  // تولید رمز
+  /* -------- password generator -------- */
   const amb = "Il1O0oB8G6S5Z2";
   const lowers = "abcdefghijklmnopqrstuvwxyz";
   const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -254,7 +279,7 @@
   [len,optLower,optUpper,optNum,optSym,optNoDup].forEach(el => el.addEventListener('input', updateStrength));
   updateStrength();
 
-  // آیتم‌ها به‌صورت پیش‌فرض ★ (ستاره‌دار)
+  // ★ به‌صورت پیش‌فرض ستاره‌دار
   function addItem(txt){
     const row = document.createElement('div');
     row.className = 'item';
@@ -280,21 +305,136 @@
   });
   btnClear.addEventListener('click', ()=>{ list.innerHTML=""; });
 
-  // دکمه «ساخت Gmail (رسمی)» — باز کردن فرم ثبت‌نام گوگل در تب جدید
-  document.getElementById('btnGmailOpen').addEventListener('click', ()=>{
-    // آدرس رسمی ثبت‌نام گوگل:
-    window.open('https://accounts.google.com/signup', '_blank','noopener');
-    showToast('فرم رسمی ثبت‌نام Gmail در تب جدید باز شد. بعد از ساخت حساب برگرد و از بخش ایمیل موقت یا رمزساز استفاده کن ✨', 6000);
+  /* -------- Gmail Username Lab (learning) -------- */
+  const seedName = document.getElementById('seedName');
+  const seedExtra= document.getElementById('seedExtra');
+  const seedYear = document.getElementById('seedYear');
+  const gDot = document.getElementById('gDot');
+  const gStartLetter = document.getElementById('gStartLetter');
+  const gTrans = document.getElementById('gTrans');
+  const btnGmailLab = document.getElementById('btnGmailLab');
+  const gList = document.getElementById('gList');
+
+  // ترانویسی خیلی ساده فارسی→لاتین + تبدیل ارقام فارسی
+  const mapFa = {'ا':'a','آ':'a','ب':'b','پ':'p','ت':'t','ث':'s','ج':'j','چ':'ch','ح':'h','خ':'kh','د':'d','ذ':'z','ر':'r','ز':'z','ژ':'zh','س':'s','ش':'sh','ص':'s','ض':'z','ط':'t','ظ':'z','ع':'a','غ':'gh','ف':'f','ق':'gh','ک':'k','گ':'g','ل':'l','م':'m','ن':'n','و':'v','ه':'h','ی':'y','ء':'','ٔ':'','‌':'','‍':''};
+  const mapDigits = {'۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
+  function fa2en(s){
+    return s.split('').map(ch=> mapDigits[ch] ?? ch).join('');
+  }
+  function translit(s){
+    return s.split('').map(ch=> mapFa[ch] ?? ch).join('');
+  }
+  function onlyAllowed(s){
+    // فقط حروف a-z، ارقام و نقطه. بقیه حذف
+    return s.toLowerCase().replace(/[^a-z0-9.]/g,'');
+  }
+  function collapseDots(s){
+    // نقطه‌های پشت‌سرهم و ابتدا/انتها حذف
+    s=s.replace(/\.+/g,'.');
+    s=s.replace(/^\./,'').replace(/\.$/,'');
+    return s;
+  }
+  function ensureLen(s){
+    if(s.length<6){
+      const pad = '0123456789';
+      while(s.length<6) s += pad[rand(pad.length)];
+    }
+    if(s.length>30) s = s.slice(0,30);
+    return s;
+  }
+  function ensureStartLetter(s){
+    if(!s) return 'user'+rand(1000);
+    if(/[a-z]/.test(s[0])) return s;
+    return 'a'+s; // ساده: اگر با عدد شروع شد، حرف a می‌چسبانیم
+  }
+
+  function makePatterns(base, extra, year, useDot){
+    const out = new Set();
+    const parts = [];
+    if(base) parts.push(base);
+    if(extra) parts.push(extra);
+    const y2 = (year && String(year).length>=2) ? String(year).slice(-2) : '';
+    const y4 = (year && String(year).length>=4) ? String(year).slice(-4) : '';
+
+    function add(u){ out.add(u); }
+    const join = (a,b)=> useDot ? `${a}.${b}` : `${a}${b}`;
+
+    if(base){
+      add(base);
+      if(y2) add(join(base,y2));
+      if(y4) add(join(base,y4));
+      if(extra){
+        add(join(base,extra));
+        if(y2) add(join(join(base,extra), y2));
+        if(y4) add(join(join(base,extra), y4));
+        add(join(extra,base));
+      }
+      // الگوهای انسانی‌تر
+      add(base + rand(99).toString().padStart(2,'0'));
+      add(base + rand(999));
+      add((useDot? base+'.x' : base+'x') + rand(99));
+      if(extra) add(base + rand(9) + extra.charAt(0));
+    }
+    // چند نمونه تصادفی سبک‌انسانی
+    const pool = [base, extra].filter(Boolean);
+    for(let i=0;i<5;i++){
+      const a = pool[rand(pool.length)] || base || 'user';
+      const b = rand(2) ? (y2||rand(99)) : (y4||rand(999));
+      add( useDot ? `${a}.${b}` : `${a}${b}` );
+    }
+    return Array.from(out).filter(Boolean).slice(0, 40);
+  }
+
+  function renderHandles(arr){
+    gList.innerHTML = "";
+    arr.slice(0,20).forEach(u=>{
+      const email = u + '@gmail.com';
+      const row = document.createElement('div'); row.className='item';
+      const span = document.createElement('span'); span.style.direction='ltr'; span.textContent = email;
+      const actions = document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px';
+
+      const bCopy = document.createElement('button'); bCopy.className='btn'; bCopy.textContent='کپی';
+      bCopy.onclick=()=>navigator.clipboard.writeText(email);
+
+      const bSignup = document.createElement('button'); bSignup.className='btn ghost'; bSignup.textContent='ثبت در Gmail';
+      bSignup.onclick=()=>window.open('https://accounts.google.com/signup','_blank','noopener');
+
+      actions.append(bCopy, bSignup);
+      row.append(span, actions);
+      gList.appendChild(row);
+    });
+  }
+
+  btnGmailLab.addEventListener('click', ()=>{
+    let n = fa2en(seedName.value||'').trim();
+    let e = fa2en(seedExtra.value||'').trim();
+    let y = fa2en(seedYear.value||'').trim();
+
+    if(gTrans.checked){ n = translit(n); e = translit(e); }
+    n = onlyAllowed(n); e = onlyAllowed(e); y = onlyAllowed(y);
+    n = collapseDots(n); e = collapseDots(e);
+
+    if(!n){ n = 'user'; } // اگر خالی بود
+    if(gStartLetter.checked) n = ensureStartLetter(n);
+
+    const suggestions = makePatterns(n, e, y, gDot.checked).map(u=>{
+      u = collapseDots(onlyAllowed(u));
+      if(gStartLetter.checked) u = ensureStartLetter(u);
+      return ensureLen(u);
+    });
+
+    renderHandles(Array.from(new Set(suggestions)));
+    showToast('۲۰ پیشنهاد نام کاربری ساخته شد. توجه: این‌ها حساب واقعی نیستند؛ باید در سایت رسمی گوگل بسازی.', 6000);
   });
 
-  // Toast
+  /* -------- toast -------- */
   const toast = document.getElementById('toast');
   function showToast(html, ms=4500){
     toast.innerHTML = html; toast.style.display='block';
     clearTimeout(showToast.t); showToast.t = setTimeout(()=> toast.style.display='none', ms);
   }
 
-  // util copy
+  /* -------- util copy -------- */
   window.copy = (sel)=>{
     const el = document.querySelector(sel);
     if (!el) return;
