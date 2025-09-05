@@ -1,141 +1,130 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>رمزساز bahrami</title>
-<meta name="theme-color" content="#0f172a" />
-
-<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#0f172a"/>
+<link rel="manifest" href="manifest.webmanifest"/>
 
 <style>
   :root{
     --bg:#0b1220; --fg:#e5e7eb; --muted:#93a3b3;
     --card:#0f172a; --accent:#34c759; --accent-2:#1e90ff;
-    --danger:#ef4444; --ok:#22c55e; --shadow:0 10px 30px rgba(0,0,0,.25);
-    --radius:20px;
+    --shadow:0 10px 30px rgba(0,0,0,.25); --radius:20px;
+  }
+  :root[data-theme="light"]{
+    --bg:#eef3f8; --fg:#0f172a; --muted:#5b6b7a;
+    --card:#ffffff; --accent:#28b954; --accent-2:#1e90ff;
+    --shadow:0 8px 24px rgba(0,0,0,.12);
   }
   *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; font-family: Vazirmatn, iransans, system-ui, -apple-system, Segoe UI, Roboto;
-    color:var(--fg); background:
+  body{margin:0; min-height:100vh; font-family: Vazirmatn, iransans, system-ui, -apple-system, Segoe UI, Roboto; color:var(--fg)}
+  .bg-gradient{
+    background:
       radial-gradient(1200px 800px at 80% -20%, #16325c 0%, transparent 60%),
       radial-gradient(900px 700px at -10% 110%, #133b2e 0%, transparent 55%),
       linear-gradient(180deg,#0a1220 0%, #0b1220 100%);
   }
+  .bg-forest{
+    background:
+      radial-gradient(900px 700px at 10% -20%, #1c563f 0%, transparent 55%),
+      linear-gradient(180deg,#071b14 0%, #0c2a20 100%);
+  }
+  .bg-night{
+    background:
+      radial-gradient(900px 700px at 80% 0%, #192a56 0%, transparent 55%),
+      linear-gradient(180deg,#080c16 0%, #0a1220 100%);
+  }
   .wrap{max-width:980px; margin:28px auto 60px; padding:0 16px}
-  header{
-    display:flex; align-items:center; justify-content:space-between;
-    gap:16px; margin-bottom:18px;
-  }
-  .brand{
-    display:flex; align-items:center; gap:10px; font-weight:800; font-size:24px;
-  }
-  .brand .lock{
-    width:28px; height:28px; display:inline-grid; place-items:center;
-    background:linear-gradient(135deg,#21d07a,#0aa94f);
-    color:#0b1220; border-radius:10px; box-shadow:var(--shadow);
-  }
-
-  /* iOS switch */
+  header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:24px}
+  .brand .lock{width:28px; height:28px; display:inline-grid; place-items:center; background:linear-gradient(135deg,#21d07a,#0aa94f); color:#0b1220; border-radius:10px; box-shadow:var(--shadow)}
   .ios-switch{ position:relative; display:inline-block; width:52px; height:28px }
   .ios-switch input{ opacity:0; width:0; height:0 }
-  .slider{
-    position:absolute; inset:0; cursor:pointer; background:#c7ced6;
-    border-radius:34px; transition:.35s ease;
-    box-shadow: inset 0 2px 6px rgba(0,0,0,.25);
-  }
-  .slider:before{
-    content:""; position:absolute; left:3px; bottom:3px; width:22px; height:22px;
-    background:#fff; border-radius:50%; transition:.35s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,.35);
-  }
+  .slider{ position:absolute; inset:0; cursor:pointer; background:#c7ced6; border-radius:34px; transition:.35s ease; box-shadow: inset 0 2px 6px rgba(0,0,0,.25) }
+  :root[data-theme="light"] .slider{ background:#d7dee6 }
+  .slider:before{ content:""; position:absolute; left:3px; bottom:3px; width:22px; height:22px; background:#fff; border-radius:50%; transition:.35s ease; box-shadow:0 2px 6px rgba(0,0,0,.35) }
   .ios-switch input:checked + .slider{ background:var(--accent) }
   .ios-switch input:checked + .slider:before{ transform:translateX(24px) }
-
-  .seg-label{ font-size:12px; color:var(--muted); margin-right:10px; user-select:none }
-
-  /* cards & layout */
-  .card{
-    background:rgba(15, 23, 42, .85); border:1px solid rgba(255,255,255,.06);
-    border-radius:var(--radius); box-shadow:var(--shadow); padding:18px;
-  }
-  .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center }
-  .row > * { flex: 1 1 auto }
-
-  .input, select{
-    width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
-    background:transparent; color:var(--fg); outline:none;
-  }
-  .btn{
-    padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
-    background:linear-gradient(135deg,#21d07a,#0aa94f); color:#07210f;
-    font-weight:700; cursor:pointer; transition:transform .05s ease;
-  }
+  .seg-label{ font-size:12px; color:var(--muted); margin-right:8px; user-select:none }
+  .card{ background:rgba(15, 23, 42, .85); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px }
+  :root[data-theme="light"] .card{ background:#fff; border-color:#eef2f6 }
+  .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+  .input, select{ width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:transparent; color:var(--fg); outline:none }
+  :root[data-theme="light"] .input, :root[data-theme="light"] select{ border-color:#e7edf3 }
+  .btn{ padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(135deg,#21d07a,#0aa94f); color:#07210f; font-weight:700; cursor:pointer; transition:transform .05s ease }
   .btn:active{ transform:translateY(1px) }
   .btn.ghost{ background:transparent; color:var(--fg) }
   .muted{ color:var(--muted) }
-
-  .list{ display:grid; gap:10px; margin-top:16px }
-  .item{
-    display:flex; align-items:center; gap:10px; justify-content:space-between;
-    background:#0e1930; border:1px solid rgba(255,255,255,.06);
-    border-radius:14px; padding:12px 14px;
-  }
   .chip{ padding:6px 10px; border-radius:999px; font-size:12px; background:#0b1a2f; color:#93e5b4; border:1px solid rgba(255,255,255,.08) }
-
+  :root[data-theme="light"] .chip{ background:#f1f6f9; color:#176b3f; border-color:#e7edf3 }
+  .list{ display:grid; gap:10px; margin-top:16px }
+  .item{ display:flex; align-items:center; gap:10px; justify-content:space-between; background:#0e1930; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:12px 14px }
+  :root[data-theme="light"] .item{ background:#f7fafc; border-color:#e7edf3 }
   .strength{height:10px; border-radius:999px; background:#172033; overflow:hidden}
+  :root[data-theme="light"] .strength{ background:#e8eef5 }
   .bar{height:100%; width:0%; background:linear-gradient(90deg,#ff6b6b,#ffd166,#34c759); transition:width .3s ease}
-
-  /* pages */
-  .page{
-    display:none; transform-origin:center; animation:.25s fade-up both;
-  }
+  .page{ display:none; transform-origin:center; animation:.25s fade-up both }
   .page.active{ display:block }
   @keyframes fade-up{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
-
   footer{ margin-top:20px; text-align:center; font-size:12px; color:var(--muted) }
+  .theme-toggle{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:transparent; color:var(--fg); cursor:pointer }
+  :root[data-theme="light"] .theme-toggle{ border-color:#e7edf3 }
+  .toast{ position:fixed; inset-inline:16px; bottom:16px; background:#101828; color:#e5e7eb; border:1px solid rgba(255,255,255,.1); padding:12px 14px; border-radius:12px; box-shadow:var(--shadow); display:none }
+  :root[data-theme="light"] .toast{ background:#ffffff; color:#0f172a; border-color:#e7edf3 }
 </style>
 </head>
-<body>
+<body class="bg-gradient">
   <div class="wrap">
     <header>
       <div class="brand">
         <span class="lock">🔒</span>
         <span>bahrami رمزساز</span>
       </div>
-      <div class="row" style="flex-wrap:nowrap; gap:8px">
+      <div class="row" style="flex-wrap:nowrap; gap:8px; justify-content:flex-end">
         <span class="seg-label">رمزساز</span>
         <label class="ios-switch" title="تغییر بخش">
-          <input id="switcher" type="checkbox" />
+          <input id="switcher" type="checkbox"/>
           <span class="slider"></span>
         </label>
         <span class="seg-label">ایمیل موقت</span>
+        <button id="themeBtn" class="theme-toggle" title="تغییر تم"><span id="themeIcon">🌙</span><span id="themeText" class="muted">تاریک</span></button>
+        <select id="bgSelect" style="flex:0 0 170px" class="input" title="پس‌زمینه">
+          <option value="bg-gradient" selected>پس‌زمینه: گرادیان</option>
+          <option value="bg-forest">پس‌زمینه: جنگلی</option>
+          <option value="bg-night">پس‌زمینه: شبانه</option>
+        </select>
       </div>
     </header>
 
-    <!-- PAGE: PASSWORDS -->
+    <!-- صفحه رمزها -->
     <section id="page-pass" class="page active">
       <div class="card" style="margin-bottom:14px">
         <div class="row">
           <div style="flex:0 0 120px">
             <label class="muted" for="len">طول رمز</label>
-            <input id="len" class="input" type="number" min="6" max="64" value="12" />
+            <input id="len" class="input" type="number" min="6" max="64" value="12"/>
           </div>
           <div style="flex:0 0 120px">
             <label class="muted" for="cnt">تعداد</label>
-            <input id="cnt" class="input" type="number" min="1" max="20" value="5" />
+            <input id="cnt" class="input" type="number" min="1" max="20" value="5"/>
           </div>
-          <div class="chip"><label><input id="optLower" type="checkbox" checked /> حروف کوچک</label></div>
-          <div class="chip"><label><input id="optUpper" type="checkbox" checked /> حروف بزرگ</label></div>
-          <div class="chip"><label><input id="optNum"   type="checkbox" checked /> اعداد</label></div>
-          <div class="chip"><label><input id="optSym"   type="checkbox" /> نمادها</label></div>
-          <div class="chip"><label><input id="optNoAmb" type="checkbox" /> حذف مشابه‌ها</label></div>
-          <div class="chip"><label><input id="optNoDup" type="checkbox" /> بدون تکرار</label></div>
+          <div class="chip"><label><input id="optLower" type="checkbox" checked/> حروف کوچک</label></div>
+          <div class="chip"><label><input id="optUpper" type="checkbox" checked/> حروف بزرگ</label></div>
+          <div class="chip"><label><input id="optNum"   type="checkbox" checked/> اعداد</label></div>
+          <div class="chip"><label><input id="optSym"   type="checkbox"/> نمادها</label></div>
+          <div class="chip"><label><input id="optNoAmb" type="checkbox"/> حذف مشابه‌ها</label></div>
+          <div class="chip"><label><input id="optNoDup" type="checkbox"/> بدون تکرار</label></div>
         </div>
         <div class="row" style="margin-top:12px">
           <button id="btnGen" class="btn">🎲 تولید رمز</button>
           <button id="btnClear" class="btn ghost">🧹 پاک‌کردن</button>
+
+          <!-- دکمه Gmail: صفحه رسمی ثبت‌نام را باز می‌کند -->
+          <button id="btnGmailOpen" class="btn ghost" title="ساخت Gmail">
+            ✉️ ساخت Gmail (رسمی)
+          </button>
         </div>
         <div style="margin-top:14px">
           <div class="muted" style="margin-bottom:6px">قدرت:</div>
@@ -149,60 +138,72 @@
       </div>
     </section>
 
-    <!-- PAGE: TEMP MAIL (demo) -->
+    <!-- صفحه ایمیل موقت -->
     <section id="page-mail" class="page">
       <div class="card">
-        <h3 style="margin:0 0 8px">ایمیل یک‌بارمصرف (دمو)</h3>
+        <h3 style="margin:0 0 8px">ایمیل یک‌بارمصرف</h3>
         <p class="muted" style="margin:0 0 16px">
-          این یک صفحه‌ی نمایشی است تا فقط سوییچ و جداسازی کامل بخش‌ها را ببینی.
-          اگر اوکی بود، همین ساختار را به mail.tm یا سرویس دلخواهت وصل می‌کنم تا
-          ایمیل بسازی و صندوق را بخوانی.
+          اگر برای تست نیاز به ایمیل سریع داری، از ایمیل موقت استفاده کن. برای جیمیل واقعی، از دکمهٔ «ساخت Gmail (رسمی)» در بخش رمز برو به فرم رسمی گوگل.
         </p>
-
         <div class="row">
-          <input id="demoEmail" class="input" readonly value="temp-xyz@mail.example" />
+          <input id="demoEmail" class="input" readonly value="temp-xyz@mail.example"/>
           <button class="btn" onclick="copy('#demoEmail')">کپی</button>
         </div>
-
-        <div style="margin-top:16px" class="muted">صندوق (نمایشی):</div>
-        <div class="list" style="margin-top:8px">
+        <div class="list" style="margin-top:12px">
           <div class="item"><span>Welcome 🎉</span><button class="btn ghost" disabled>بازکردن</button></div>
           <div class="item"><span>Security code: 823914</span><button class="btn ghost" disabled>کپی کد</button></div>
         </div>
       </div>
     </section>
 
-    <footer>© 2025 – Bahrami • UI با سوییچ iOS و جداسازی کامل صفحات</footer>
+    <footer>© 2025 – Bahrami • تم روشن/تاریک + پس‌زمینه پویا</footer>
   </div>
 
+  <div id="toast" class="toast"></div>
+
 <script>
-  // --- Switch pages ---
+  // سوییچ بین صفحات
   const switcher = document.getElementById('switcher');
   const pagePass = document.getElementById('page-pass');
   const pageMail = document.getElementById('page-mail');
-
   switcher.addEventListener('change', () => {
-    if (switcher.checked) {
-      pagePass.classList.remove('active');
-      pageMail.classList.add('active');
-      window.scrollTo({top:0, behavior:'smooth'});
-    } else {
-      pageMail.classList.remove('active');
-      pagePass.classList.add('active');
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+    if (switcher.checked){ pagePass.classList.remove('active'); pageMail.classList.add('active'); }
+    else{ pageMail.classList.remove('active'); pagePass.classList.add('active'); }
+    window.scrollTo({top:0, behavior:'smooth'});
   });
 
-  // --- Password generator ---
+  // تم
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+  function setTheme(mode){
+    root.setAttribute('data-theme', mode);
+    if(mode==='light'){ themeIcon.textContent='☀️'; themeText.textContent='روشن'; }
+    else{ themeIcon.textContent='🌙'; themeText.textContent='تاریک'; }
+    try{ localStorage.setItem('theme-mode', mode); }catch(e){}
+  }
+  setTheme(localStorage.getItem('theme-mode') || 'dark');
+  themeBtn.addEventListener('click', ()=> setTheme(root.getAttribute('data-theme')==='light'?'dark':'light'));
+
+  // پس‌زمینه
+  const bgSel = document.getElementById('bgSelect');
+  function setBg(cls){
+    document.body.classList.remove('bg-gradient','bg-forest','bg-night');
+    document.body.classList.add(cls);
+    try{ localStorage.setItem('bg-class', cls); }catch(e){}
+  }
+  setBg(localStorage.getItem('bg-class') || 'bg-gradient');
+  bgSel.addEventListener('change', e=> setBg(e.target.value));
+
+  // تولید رمز
   const amb = "Il1O0oB8G6S5Z2";
   const lowers = "abcdefghijklmnopqrstuvwxyz";
   const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const nums   = "0123456789";
   const syms   = "!@#$%^&*()_+-=[]{};:,.?/~";
-
   function rand(n){ return Math.floor(Math.random()*n) }
   function shuffle(s){ return s.split('').sort(()=>Math.random()-0.5).join('') }
-
   function buildPool() {
     let pool = "";
     if (optLower.checked) pool += lowers;
@@ -212,21 +213,15 @@
     if (optNoAmb.checked) pool = pool.split('').filter(ch => !amb.includes(ch)).join('');
     return pool;
   }
-
-  function uniqueChars(str){
-    return new Set(str.split('')).size === str.length;
-  }
-
+  function uniqueChars(str){ return new Set(str.split('')).size === str.length; }
   function genOne(len){
     let pool = buildPool();
     if (!pool) return "";
-    // تضمین حضور حداقل از هر گروه انتخاب‌شده
     let must = "";
     if (optLower.checked) must += lowers[rand(lowers.length)];
     if (optUpper.checked) must += uppers[rand(uppers.length)];
     if (optNum.checked)   must += nums[rand(nums.length)];
     if (optSym.checked)   must += syms[rand(syms.length)];
-
     let out = must;
     while (out.length < len){
       const ch = pool[rand(pool.length)];
@@ -234,16 +229,11 @@
       out += ch;
     }
     out = shuffle(out).slice(0,len);
-    if (optNoDup.checked && !uniqueChars(out)) return genOne(len); // تکرار نداشتن
+    if (optNoDup.checked && !uniqueChars(out)) return genOne(len);
     return out;
   }
+  function strengthScore(len, sets){ return Math.min(100, Math.round((len/20)*60 + sets*10 + (optNoDup.checked?10:0))); }
 
-  function strengthScore(len, sets){
-    // خیلی ساده: طول + تعداد گروه‌های فعال
-    return Math.min(100, Math.round((len/20)*60 + sets*10 + (optNoDup.checked?10:0)));
-  }
-
-  // DOM refs
   const len = document.getElementById('len');
   const cnt = document.getElementById('cnt');
   const optLower = document.getElementById('optLower');
@@ -252,7 +242,6 @@
   const optSym   = document.getElementById('optSym');
   const optNoAmb = document.getElementById('optNoAmb');
   const optNoDup = document.getElementById('optNoDup');
-
   const list = document.getElementById('list');
   const bar  = document.getElementById('bar');
   const btnGen = document.getElementById('btnGen');
@@ -260,28 +249,27 @@
 
   function updateStrength(){
     const sets = [optLower.checked,optUpper.checked,optNum.checked,optSym.checked].filter(Boolean).length;
-    const s = strengthScore(+len.value, sets);
-    bar.style.width = s + "%";
+    const s = strengthScore(+len.value, sets); bar.style.width = s + "%";
   }
   [len,optLower,optUpper,optNum,optSym,optNoDup].forEach(el => el.addEventListener('input', updateStrength));
   updateStrength();
 
+  // آیتم‌ها به‌صورت پیش‌فرض ★ (ستاره‌دار)
   function addItem(txt){
     const row = document.createElement('div');
     row.className = 'item';
     const span = document.createElement('span');
-    span.style.direction = 'ltr';
-    span.style.userSelect = 'all';
-    span.textContent = txt;
-    const actions = document.createElement('div');
-    actions.style.display='flex'; actions.style.gap='8px';
-    const b1 = document.createElement('button'); b1.className='btn ghost'; b1.textContent='⭐';
-    b1.title='علاقه‌مندی'; b1.onclick=()=>{b1.textContent = (b1.textContent==='⭐'?'★':'⭐')}
-    const b2 = document.createElement('button'); b2.className='btn'; b2.textContent='کپی';
-    b2.onclick=()=>navigator.clipboard.writeText(txt);
-    actions.append(b1,b2);
-    row.append(span,actions);
-    list.prepend(row);
+    span.style.direction = 'ltr'; span.style.userSelect = 'all'; span.textContent = txt;
+
+    const actions = document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px';
+    const fav = document.createElement('button'); fav.className='btn ghost'; fav.title='علاقه‌مندی';
+    fav.textContent = '★';
+    fav.onclick=()=>{fav.textContent = (fav.textContent==='★'?'⭐':'★')}
+    const cp = document.createElement('button'); cp.className='btn'; cp.textContent='کپی';
+    cp.onclick=()=>navigator.clipboard.writeText(txt);
+    actions.append(fav,cp);
+
+    row.append(span,actions); list.prepend(row);
   }
 
   btnGen.addEventListener('click', ()=>{
@@ -290,8 +278,21 @@
     const l = Math.max(6, Math.min(64, +len.value||12));
     for (let i=0;i<n;i++) addItem(genOne(l));
   });
-
   btnClear.addEventListener('click', ()=>{ list.innerHTML=""; });
+
+  // دکمه «ساخت Gmail (رسمی)» — باز کردن فرم ثبت‌نام گوگل در تب جدید
+  document.getElementById('btnGmailOpen').addEventListener('click', ()=>{
+    // آدرس رسمی ثبت‌نام گوگل:
+    window.open('https://accounts.google.com/signup', '_blank','noopener');
+    showToast('فرم رسمی ثبت‌نام Gmail در تب جدید باز شد. بعد از ساخت حساب برگرد و از بخش ایمیل موقت یا رمزساز استفاده کن ✨', 6000);
+  });
+
+  // Toast
+  const toast = document.getElementById('toast');
+  function showToast(html, ms=4500){
+    toast.innerHTML = html; toast.style.display='block';
+    clearTimeout(showToast.t); showToast.t = setTimeout(()=> toast.style.display='none', ms);
+  }
 
   // util copy
   window.copy = (sel)=>{
