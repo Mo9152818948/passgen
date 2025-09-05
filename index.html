@@ -65,7 +65,6 @@ small.meter-label{opacity:.8}
 .modal-head h3{margin:0;font-size:16px}
 .modal-body{padding:0;height:70vh;display:flex;flex-direction:column}
 .mail-meta{padding:10px 14px;border-bottom:1px solid var(--muted);direction:ltr}
-.mail-content{flex:1;display:flex;flex-direction:column;gap:0}
 .mail-tabs{display:flex;gap:8px;padding:8px 10px;border-bottom:1px solid var(--muted)}
 .mail-tabs button{padding:8px 10px}
 .mail-view{flex:1}
@@ -118,10 +117,10 @@ small.meter-label{opacity:.8}
 
     <div class="row">
       <button id="btnGen">🎲 تولید رمز</button>
-      <button id="btnCSV" class="secondary">JSON</button>
-      <button id="btnJSON" class="secondary">CSV</button>
+      <button id="btnCSV"   class="secondary">CSV</button>
+      <button id="btnJSON"  class="secondary">JSON</button>
       <button id="btnToggle" class="secondary">👁️ نمایش/مخفی</button>
-      <button id="btnClear" class="secondary">🧹 پاک‌کردن تاریخچه</button>
+      <button id="btnClear"  class="secondary">🧹 پاک‌کردن تاریخچه</button>
     </div>
 
     <div class="meter" id="strength"><span></span></div>
@@ -129,7 +128,7 @@ small.meter-label{opacity:.8}
 
     <div class="tabs">
       <button id="tabLatest" class="secondary">آخرین‌ها</button>
-      <button id="tabFav" class="secondary">⭐ علاقه‌مندی‌ها</button>
+      <button id="tabFav"    class="secondary">⭐ علاقه‌مندی‌ها</button>
     </div>
 
     <div id="output" class="list"></div>
@@ -139,7 +138,7 @@ small.meter-label{opacity:.8}
     <h2>✉️ ایمیل یک‌بارمصرف (Mail.tm)</h2>
     <div class="row">
       <button id="tmpCreate">ساخت ایمیل موقت</button>
-      <button id="tmpCopy" class="secondary" disabled>📋 کپی آدرس</button>
+      <button id="tmpCopy"   class="secondary" disabled>📋 کپی آدرس</button>
       <button id="tmpRefresh" class="secondary" disabled>🔄 بروزرسانی</button>
     </div>
     <div class="password"><span id="tmpAddr">—</span></div>
@@ -348,8 +347,8 @@ el.btnEmail.onclick = () => {
   }
   render(arr);
 };
-el.btnCSV.onclick = ()=>{ if(!last.length)return; const b=new Blob([last.join("\n")],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click(); };
-el.btnJSON.onclick=()=>{ if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click(); };
+el.btnCSV.onclick = ()=>{ if(!last.length)return; const b=new Blob([last.join("\n")],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click(); };
+el.btnJSON.onclick=()=>{ if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click(); };
 el.btnToggle.onclick=()=>{ hidden=!hidden; store.set('hidden',hidden); render(last); };
 el.btnClear.onclick = ()=>{ render([]); };
 el.tabLatest.onclick = ()=>{ showFav=false; render(last); };
@@ -429,7 +428,7 @@ function renderInbox(items){
   items.forEach(msg => {
     const row = document.createElement("div");
     row.className = "password";
-    row.style.cursor = "pointer";            // کلیک‌پذیر
+    row.style.cursor = "pointer";
 
     const info = document.createElement("div");
     info.style.direction = "ltr";
@@ -489,6 +488,11 @@ async function openMessage(id){
     setTmpStatus("خطا در باز کردن پیام.");
   }
 }
+
+/* ========= اتصال دکمه‌های Mail.tm ========= */
+el.tmpCreate.onclick = mtmCreate;
+el.tmpRefresh.onclick = mtmRefresh;
+el.tmpCopy.onclick = async ()=>{ if(mtm.address){ await navigator.clipboard.writeText(mtm.address); if(navigator.vibrate) navigator.vibrate(20);} };
 
 /* ========= بار اول ========= */
 (function init(){
