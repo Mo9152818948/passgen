@@ -1,306 +1,259 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>سازندهٔ رمز، Gmail و QR — حرفه‌ای</title>
-<meta name="theme-color" content="#0f172a"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>رمز ساز bahrami</title>
 
-<!-- QR generator (کوچک و مطمئن) -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f172a">
 
 <style>
-  :root{
-    --bg:#0b1220; --fg:#e5e7eb; --muted:#93a3b3;
-    --card:#0f172a; --accent:#34c759; --shadow:0 10px 30px rgba(0,0,0,.25);
-    --radius:20px;
-  }
-  :root[data-theme="light"]{
-    --bg:#eef3f8; --fg:#0f172a; --muted:#5b6b7a; --card:#ffffff; --accent:#28b954;
-    --shadow:0 8px 24px rgba(0,0,0,.12);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;font-family: Vazirmatn,iransans,system-ui; color:var(--fg)}
-  .bg-gradient{
-    background: radial-gradient(1100px 700px at 85% -10%,#16325c 0%,transparent 60%),
-                radial-gradient(900px 700px at -10% 110%,#133b2e 0%,transparent 55%),
-                linear-gradient(180deg,#0a1220,#0b1220);
-  }
-  .bg-forest{
-    background: radial-gradient(900px 700px at 10% -20%,#1c563f 0%,transparent 55%),
-                linear-gradient(180deg,#071b14,#0c2a20);
-  }
-  .bg-night{
-    background: radial-gradient(900px 700px at 80% 0%,#192a56 0%,transparent 55%),
-                linear-gradient(180deg,#080c16,#0a1220);
-  }
-  .wrap{max-width:980px;margin:28px auto 60px;padding:0 16px}
-  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:24px}
-  .brand .lock{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;
-               background:linear-gradient(135deg,#21d07a,#0aa94f);color:#0b1220;box-shadow:var(--shadow)}
-  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-  .input,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
-                background:transparent;color:var(--fg);outline:none}
-  :root[data-theme="light"] .input,:root[data-theme="light"] select{border-color:#e7edf3}
-  .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
-       background:linear-gradient(135deg,#21d07a,#0aa94f);color:#07210f;font-weight:800;cursor:pointer}
-  .btn.ghost{background:transparent;color:var(--fg)}
-  .muted{color:var(--muted)}
-  .card{background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
-        box-shadow:var(--shadow);padding:18px}
-  :root[data-theme="light"] .card{background:#fff;border-color:#eef2f6}
-  .chip{padding:6px 10px;border-radius:999px;font-size:12px;background:#0b1a2f;color:#93e5b4;
-        border:1px solid rgba(255,255,255,.08)}
-  :root[data-theme="light"] .chip{background:#f1f6f9;color:#176b3f;border-color:#e7edf3}
-  .list{display:grid;gap:10px;margin-top:12px}
-  .item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0e1930;
-        border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 14px}
-  :root[data-theme="light"] .item{background:#f7fafc;border-color:#e7edf3}
-  .strength{height:10px;border-radius:999px;background:#172033;overflow:hidden}
-  :root[data-theme="light"] .strength{background:#e8eef5}
-  .bar{height:100%;width:0;background:linear-gradient(90deg,#ff6b6b,#ffd166,#34c759);transition:width .3s}
-  /* iOS switch */
-  .ios-switch{position:relative;display:inline-block;width:52px;height:28px}
-  .ios-switch input{opacity:0;width:0;height:0}
-  .slider{position:absolute;inset:0;background:#c7ced6;border-radius:34px;cursor:pointer;transition:.35s;
-          box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
-  :root[data-theme="light"] .slider{background:#d7dee6}
-  .slider:before{content:"";position:absolute;left:3px;bottom:3px;width:22px;height:22px;background:#fff;
-                 border-radius:50%;transition:.35s;box-shadow:0 2px 6px rgba(0,0,0,.35)}
-  .ios-switch input:checked + .slider{background:var(--accent)}
-  .ios-switch input:checked + .slider:before{transform:translateX(24px)}
-  .seg-label{font-size:12px;color:var(--muted);margin-right:8px}
-  .page{display:none;animation:.25s fade both}
-  .page.active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none}}
-  .theme-toggle{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08);
-                background:transparent;color:var(--fg);cursor:pointer}
-  :root[data-theme="light"] .theme-toggle{border-color:#e7edf3}
-  .toast{position:fixed;inset-inline:16px;bottom:16px;background:#101828;color:#e5e7eb;border:1px solid rgba(255,255,255,.1);
-         padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);display:none}
-  :root[data-theme="light"] .toast{background:#fff;color:#0f172a;border-color:#e7edf3}
+:root{
+  --bg:#0b1220; --fg:#e5e7eb; --card:#0f172a; --muted:#1f2937; --btn:#16a34a; --btn-fg:#07110a;
+}
+*{box-sizing:border-box} body{margin:0; font-family: Vazirmatn,iransans,sans-serif; color:var(--fg); background:var(--bg); min-height:100vh;}
+.container{max-width:860px;margin:24px auto;padding:16px}
+.card{background:var(--card); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.25); padding:22px; backdrop-filter: blur(6px);}
+h1{margin:0 0 12px; font-size:28px}
+.row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+label{display:inline-flex; align-items:center; gap:8px; font-size:14px}
+input[type=number]{width:88px; padding:8px 10px; border-radius:10px; border:1px solid var(--muted); background:transparent; color:var(--fg)}
+select{padding:9px 12px; border-radius:12px; border:1px solid var(--muted); background:transparent; color:var(--fg)}
+button{border:none; border-radius:12px; padding:10px 14px; background:var(--btn); color:var(--btn-fg); cursor:pointer; font-weight:600}
+button.secondary{background:transparent;color:var(--fg); border:1px solid var(--muted)}
+.password{display:flex; justify-content:space-between; align-items:center; gap:8px; background:rgba(255,255,255,.06); padding:10px 12px; border-radius:12px; font-family:ui-monospace,monospace}
+.password-actions{display:flex; gap:6px; flex-wrap:wrap}
+
+/* نوار قدرت */
+.meter{height:8px; border-radius:6px; background:#111827; overflow:hidden; margin-top:8px}
+.meter > span{display:block; height:100%; width:0%;}
+.meter.w1 > span{width:33%; background:#ef4444}
+.meter.w2 > span{width:66%; background:#f59e0b}
+.meter.w3 > span{width:100%; background:#22c55e}
+small.meter-label{opacity:.8}
+
+/* لیست‌ها */
+.list{display:grid; gap:8px; margin-top:12px}
+.tabs{display:flex; gap:8px; margin-top:10px}
+.hidden{display:none}
+
+/* تم‌ها */
+.theme-light{--bg:#f8fafc; --fg:#0f172a; --card:#ffffff; --muted:#e2e8f0; --btn:#0f172a; --btn-fg:#ffffff;}
+.theme-dark{--bg:#0b1220; --fg:#e5e7eb; --card:#0f172a; --muted:#1f2937; --btn:#16a34a; --btn-fg:#07110a;}
+.theme-blue{--bg:#e6f0ff; --fg:#0b1a33; --card:#ffffff; --muted:#d9e6ff; --btn:#1d4ed8; --btn-fg:#ffffff;}
+.theme-purple{--bg:#f5f0ff; --fg:#27104a; --card:#ffffff; --muted:#eadbff; --btn:#7c3aed; --btn-fg:#ffffff;}
+.theme-gradient{--fg:#0f172a; --btn:#111827; --btn-fg:#ffffff;}
+.theme-gradient body,.theme-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 60%,#9333ea 100%) fixed;}
+
+/* پس‌زمینه‌ها */
+.bg-1{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%) fixed;}
+.bg-2{background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%) fixed;}
+.bg-3{background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%) fixed;}
+.bg-4{background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%) fixed;}
+.bg-forest{background:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1280&q=80') center/cover fixed;}
+
+@media (max-width:520px){ .row>*{flex:1 1 auto} h1{font-size:22px} }
 </style>
 </head>
-<body class="bg-gradient">
-<div class="wrap">
-  <header>
-    <div class="brand"><span class="lock">🔒</span><span>سازندهٔ رمز و ایمیل قوی — حرفه‌ای</span></div>
-    <div class="row" style="flex-wrap:nowrap;gap:8px">
-      <span class="seg-label">رمز</span>
-      <label class="ios-switch"><input id="switchPM" type="checkbox"><span class="slider"></span></label>
-      <span class="seg-label">ایمیل</span>
-      <label class="ios-switch" style="margin-inline-start:10px"><input id="switchMQ" type="checkbox"><span class="slider"></span></label>
-      <span class="seg-label">QR</span>
+<body class="theme-dark">
+<div class="container">
+  <div class="card">
+    <h1>🔐 رمز ساز bahrami</h1>
 
-      <button id="themeBtn" class="theme-toggle"><span id="themeIcon">🌙</span><span id="themeText" class="muted">تاریک</span></button>
-      <select id="bgSelect" class="input" style="flex:0 0 170px">
-        <option value="bg-gradient">پس‌زمینه: گرادیان</option>
-        <option value="bg-forest">پس‌زمینه: جنگلی</option>
-        <option value="bg-night">پس‌زمینه: شبانه</option>
-      </select>
-    </div>
-  </header>
+    <div class="row" style="margin-bottom:6px">
+      <label>طول رمز: <input type="number" id="length" value="12" min="6" max="64"></label>
+      <label>تعداد خروجی: <input type="number" id="count" value="5" min="1" max="50"></label>
 
-  <!-- صفحه رمز -->
-  <section id="page-pass" class="page active">
-    <div class="card">
-      <div class="row">
-        <div style="flex:0 0 120px"><label class="muted" for="len">طول رمز</label><input id="len" class="input" type="number" min="6" max="64" value="12"/></div>
-        <div style="flex:0 0 120px"><label class="muted" for="cnt">تعداد خروجی</label><input id="cnt" class="input" type="number" min="1" max="20" value="5"/></div>
-        <div class="chip"><label><input id="optLower" type="checkbox" checked/> حروف کوچک</label></div>
-        <div class="chip"><label><input id="optUpper" type="checkbox" checked/> حروف بزرگ</label></div>
-        <div class="chip"><label><input id="optNum" type="checkbox" checked/> اعداد</label></div>
-        <div class="chip"><label><input id="optSym" type="checkbox"/> نمادها</label></div>
-        <div class="chip"><label><input id="optNoAmb" type="checkbox"/> حذف مشابه‌ها</label></div>
-        <div class="chip"><label><input id="optNoDup" type="checkbox"/> بدون تکرار</label></div>
-      </div>
-      <div class="row" style="margin-top:12px">
-        <button id="btnGen" class="btn">🎲 تولید رمز</button>
-        <button id="btnClear" class="btn ghost">🧹 پاک‌کردن</button>
-      </div>
-      <div style="margin-top:12px"><div class="muted" style="margin-bottom:6px">قدرت:</div><div class="strength"><div id="bar" class="bar"></div></div></div>
-      <div id="list" class="list" style="margin-top:12px"></div>
-    </div>
-  </section>
-
-  <!-- صفحه ایمیل (Gmail رندم) -->
-  <section id="page-mail" class="page">
-    <div class="card">
-      <div class="row">
-        <div style="flex:0 0 120px"><label class="muted" for="gcount">تعداد</label><input id="gcount" class="input" type="number" min="1" max="30" value="5"/></div>
-        <div style="flex:0 0 120px"><label class="muted" for="glen">طول ایمیل</label><input id="glen" class="input" type="number" min="6" max="30" value="10"/></div>
-        <div class="chip"><label><input id="gDot" type="checkbox" checked/> نقطه مجاز</label></div>
-        <div class="chip"><label><input id="gStartLetter" type="checkbox" checked/> شروع با حرف</label></div>
-        <div class="chip"><label><input id="gNoAmb" type="checkbox"/> حذف مشابه‌ها</label></div>
-      </div>
-      <div class="row" style="margin-top:12px">
-        <button id="btnGmail" class="btn">✉️ تولید Gmail رندم</button>
-        <button id="btnGClear" class="btn ghost">🧹 پاک‌کردن</button>
-      </div>
-      <div id="gmailList" class="list" style="margin-top:12px"></div>
-    </div>
-  </section>
-
-  <!-- صفحه QR -->
-  <section id="page-qr" class="page">
-    <div class="card">
-      <h3 style="margin:0 0 10px">سازندهٔ QR Code</h3>
-      <div class="row">
-        <input id="qrText" class="input" placeholder="متن یا URL را بنویس… (مثلاً https://example.com)"/>
-        <select id="qrEcc" class="input" style="flex:0 0 160px">
-          <option value="L">ECC: L (کم)</option>
-          <option value="M" selected>ECC: M</option>
-          <option value="Q">ECC: Q</option>
-          <option value="H">ECC: H (زیاد)</option>
+      <label>تم:
+        <select id="theme">
+          <option value="dark">تیره</option>
+          <option value="light">روشن</option>
+          <option value="blue">آبی</option>
+          <option value="purple">بنفش</option>
+          <option value="gradient">گرادیانت</option>
         </select>
-        <div style="flex:0 0 160px"><label class="muted" for="qrSize">سایز (px)</label>
-          <input id="qrSize" class="input" type="number" min="128" max="1024" value="512"/>
-        </div>
-      </div>
-      <div class="row" style="margin-top:12px">
-        <button id="btnQR" class="btn">🧩 ساخت QR</button>
-        <button id="btnQRSave" class="btn ghost">⬇️ دانلود PNG</button>
-      </div>
-      <div style="display:grid;place-items:center;margin-top:14px">
-        <canvas id="qrCanvas" width="512" height="512" style="background:#fff;border-radius:12px"></canvas>
-      </div>
+      </label>
+      <button id="btnBg" class="secondary">🌆 پس‌زمینه</button>
     </div>
-  </section>
 
-  <footer style="text-align:center;margin-top:18px" class="muted">© 2025 Bahrami — تم روشن/تاریک، پس‌زمینه پویا، سوییچ iOS بین بخش‌ها</footer>
+    <div class="row">
+      <label><input type="checkbox" id="lower" checked> حروف کوچک</label>
+      <label><input type="checkbox" id="upper" checked> حروف بزرگ</label>
+      <label><input type="checkbox" id="digits" checked> اعداد</label>
+      <label><input type="checkbox" id="symbols" checked> نمادها</label>
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="noSimilar"> حذف مشابه‌ها</label>
+      <label><input type="checkbox" id="noRepeat"> بدون تکرار</label>
+      <label><input type="checkbox" id="requireEach" checked> وجود از هر گروه</label>
+    </div>
+
+    <!-- ایمیل Gmail -->
+    <div class="row" style="margin:10px 0">
+      <label>طول ایمیل: <input type="number" id="emailLen" value="10" min="6" max="30"></label>
+      <label><input type="checkbox" id="emailDot" checked> نقطه مجاز</label>
+      <button id="btnEmail" class="secondary">✉️ تولید Gmail</button>
+    </div>
+
+    <div class="row">
+      <button id="btnGen">🎲 تولید رمز</button>
+      <button id="btnCSV" class="secondary">CSV</button>
+      <button id="btnJSON" class="secondary">JSON</button>
+      <button id="btnToggle" class="secondary">👁️ نمایش/مخفی</button>
+      <button id="btnClear" class="secondary">🧹 پاک‌کردن تاریخچه</button>
+    </div>
+
+    <!-- نوار قدرت -->
+    <div class="meter" id="strength"><span></span></div>
+    <small id="strengthLabel" class="meter-label">قدرت: —</small>
+
+    <div class="tabs">
+      <button id="tabLatest" class="secondary">نمایش: آخرین‌ها</button>
+      <button id="tabFav" class="secondary">⭐ علاقه‌مندی‌ها</button>
+    </div>
+
+    <div id="output" class="list"></div>
+  </div>
 </div>
 
-<div id="toast" class="toast"></div>
-
 <script>
-  /* ---- theme & background ---- */
-  const root=document.documentElement; const themeBtn=document.getElementById('themeBtn');
-  const themeIcon=document.getElementById('themeIcon'); const themeText=document.getElementById('themeText');
-  function setTheme(mode){ root.setAttribute('data-theme',mode); if(mode==='light'){themeIcon.textContent='☀️';themeText.textContent='روشن';}else{themeIcon.textContent='🌙';themeText.textContent='تاریک';}
-    try{localStorage.setItem('theme-mode',mode)}catch(e){}}
-  setTheme(localStorage.getItem('theme-mode')||'dark');
-  themeBtn.addEventListener('click',()=> setTheme(root.getAttribute('data-theme')==='light'?'dark':'light'));
-  const bgSel=document.getElementById('bgSelect');
-  function setBg(cls){document.body.classList.remove('bg-gradient','bg-forest','bg-night');document.body.classList.add(cls);try{localStorage.setItem('bg-class',cls)}catch(e){}}
-  setBg(localStorage.getItem('bg-class')||'bg-gradient'); bgSel.value=localStorage.getItem('bg-class')||'bg-gradient';
-  bgSel.addEventListener('change',e=> setBg(e.target.value));
+// ===== ذخیره ساده =====
+const store = {
+  get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch{ return d; } },
+  set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
+};
 
-  /* ---- page switch: pass / mail / qr ---- */
-  const pagePass=document.getElementById('page-pass');
-  const pageMail=document.getElementById('page-mail');
-  const pageQR=document.getElementById('page-qr');
-  const switchPM=document.getElementById('switchPM'); // رمز ↔ ایمیل
-  const switchMQ=document.getElementById('switchMQ'); // ایمیل ↔ QR
+// ===== تم‌ها =====
+const THEME_KEY="theme", BG_KEY="bg";
+const themeSelect=document.getElementById("theme");
+function applyTheme(name){
+  document.body.classList.remove("theme-light","theme-dark","theme-blue","theme-purple","theme-gradient");
+  document.body.classList.add("theme-"+name);
+  store.set(THEME_KEY,name);
+}
+(function(){const s=store.get(THEME_KEY,"dark");themeSelect.value=s;applyTheme(s);})();
+themeSelect.addEventListener("change",e=>applyTheme(e.target.value));
 
-  function showPage(which){
-    pagePass.classList.remove('active'); pageMail.classList.remove('active'); pageQR.classList.remove('active');
-    if(which==='pass'){ pagePass.classList.add('active'); switchPM.checked=false; switchMQ.checked=false; }
-    if(which==='mail'){ pageMail.classList.add('active'); switchPM.checked=true;  switchMQ.checked=false; }
-    if(which==='qr'  ){ pageQR.classList.add('active');  switchPM.checked=true;  switchMQ.checked=true;  }
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-  switchPM.addEventListener('change',()=> showPage(switchPM.checked?'mail':'pass'));
-  switchMQ.addEventListener('change',()=> showPage(switchMQ.checked?'qr':'mail'));
+// پس‌زمینه
+const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"]; 
+let bgIndex=store.get(BG_KEY,-1);
+function applyBg(i){document.body.classList.remove(...BG_CLASSES); if(i>-1)document.body.classList.add(BG_CLASSES[i]);}
+applyBg(bgIndex);
+document.getElementById("btnBg").onclick=()=>{bgIndex=(bgIndex+1)%(BG_CLASSES.length+1); if(bgIndex===BG_CLASSES.length){bgIndex=-1; applyBg(-1);} else applyBg(bgIndex); store.set(BG_KEY,bgIndex);};
 
-  /* ---- toast ---- */
-  const toast=document.getElementById('toast');
-  function tip(msg,ms=3500){ toast.textContent=msg; toast.style.display='block'; clearTimeout(tip.t); tip.t=setTimeout(()=>toast.style.display='none',ms); }
+// ===== ابزار تصادفی امن =====
+function rnd(max){const a=new Uint32Array(1);const M=0xffffffff,lim=Math.floor(M/max)*max;let r;do{crypto.getRandomValues(a);r=a[0];}while(r>=lim);return r%max;}
+function pick(s){return s[rnd(s.length)];}
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=rnd(i+1);[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
-  /* ---- password generator ---- */
-  const amb="Il1O0oB8G6S5Z2"; const lowers="abcdefghijklmnopqrstuvwxyz";
-  const uppers="ABCDEFGHIJKLMNOPQRSTUVWXYZ"; const nums="0123456789";
-  const syms="!@#$%^&*()_+-=[]{};:,.?/~";
-  function r(n){return Math.floor(Math.random()*n)} function sh(s){return s.split('').sort(()=>Math.random()-0.5).join('')}
-  function unique(s){return new Set(s.split('')).size===s.length}
-  const len=document.getElementById('len'), cnt=document.getElementById('cnt');
-  const optLower=document.getElementById('optLower'), optUpper=document.getElementById('optUpper');
-  const optNum=document.getElementById('optNum'), optSym=document.getElementById('optSym');
-  const optNoAmb=document.getElementById('optNoAmb'), optNoDup=document.getElementById('optNoDup');
-  const list=document.getElementById('list'), bar=document.getElementById('bar');
-  function pool(){let p=""; if(optLower.checked)p+=lowers; if(optUpper.checked)p+=uppers; if(optNum.checked)p+=nums; if(optSym.checked)p+=syms; if(optNoAmb.checked)p=p.split('').filter(ch=>!amb.includes(ch)).join(''); return p}
-  function genOne(L){ let p=pool(); if(!p) return ""; let must=""; if(optLower.checked)must+=lowers[r(lowers.length)];
-    if(optUpper.checked)must+=uppers[r(uppers.length)]; if(optNum.checked)must+=nums[r(nums.length)]; if(optSym.checked)must+=syms[r(syms.length)];
-    let out=must; while(out.length<L){ const ch=p[r(p.length)]; if(optNoDup.checked && out.includes(ch)) continue; out+=ch; }
-    out=sh(out).slice(0,L); if(optNoDup.checked && !unique(out)) return genOne(L); return out;
-  }
-  function strength(L,sets){return Math.min(100,Math.round((L/20)*60+sets*10+(optNoDup.checked?10:0)))}
-  function updateStr(){const sets=[optLower.checked,optUpper.checked,optNum.checked,optSym.checked].filter(Boolean).length; bar.style.width=strength(+len.value,sets)+"%"}
-  [len,optLower,optUpper,optNum,optSym,optNoDup].forEach(el=>el.addEventListener('input',updateStr)); updateStr();
-  function addPass(txt){const row=document.createElement('div');row.className='item';
-    const sp=document.createElement('span');sp.style.direction='ltr';sp.textContent=txt;
-    const actions=document.createElement('div');actions.style.display='flex';actions.style.gap='8px';
-    const fav=document.createElement('button');fav.className='btn ghost'; fav.textContent='★'; fav.onclick=()=>{fav.textContent=(fav.textContent==='★'?'⭐':'★')}
-    const cp=document.createElement('button');cp.className='btn'; cp.textContent='کپی'; cp.onclick=()=>navigator.clipboard.writeText(txt);
-    actions.append(fav,cp); row.append(sp,actions); list.prepend(row);
-  }
-  document.getElementById('btnGen').addEventListener('click',()=>{ list.innerHTML=""; const n=Math.max(1,Math.min(20,+cnt.value||5)); const L=Math.max(6,Math.min(64,+len.value||12)); for(let i=0;i<n;i++) addPass(genOne(L)); tip('رمزها ساخته شدند.') });
-  document.getElementById('btnClear').addEventListener('click',()=>{ list.innerHTML=""; });
+const sets={lower:"abcdefghijklmnopqrstuvwxyz",upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",digits:"0123456789",symbols:"!@#$%^&*()_-+=[]{}|:;,.?/~`<>"},
+      similar=new Set("Il1O0B8S5Z2".split(""));
 
-  /* ---- Gmail random ---- */
-  const gmailList=document.getElementById('gmailList');
-  const gcount=document.getElementById('gcount'), glen=document.getElementById('glen');
-  const gDot=document.getElementById('gDot'), gStartLetter=document.getElementById('gStartLetter'), gNoAmb=document.getElementById('gNoAmb');
-  const letters="abcdefghijklmnopqrstuvwxyz", digits="0123456789";
-  function allowedPool(dot){ return letters + digits + (dot?'.':'') }
-  function startsWithLetter(s){ return /^[a-z]/.test(s) }
-  function normalize(u){
-    // حذف کاراکتر نامعتبر و نقطه‌های پیاپی/ابتدا/انتها
-    u=u.toLowerCase().replace(/[^a-z0-9.]/g,'').replace(/\.+/g,'.').replace(/^\./,'').replace(/\.$/,'');
-    return u;
-  }
-  function genHandle(L, dot, startLetter, noAmb){
-    const bad="ilo0"; // کاراکترهای گیج‌کننده
-    let p=allowedPool(dot).split('').filter(ch=> noAmb ? !bad.includes(ch) : true ).join('');
-    // اگر باید با حرف شروع شود
-    let first=letters[r(letters.length)];
-    let out=startLetter? first : p[r(p.length)];
-    while(out.length<L){
-      let ch=p[r(p.length)];
-      if(out.endsWith('.') && ch=='.') continue; // از دو نقطه پشت‌سرهم جلوگیری
-      out+=ch;
-    }
-    out=normalize(out).slice(0,L);
-    if(startLetter && !startsWithLetter(out)) out = letters[r(letters.length)] + out.slice(1);
-    if(out.length<6) out = out.padEnd(6, digits[r(digits.length)]);
-    return out;
-  }
-  function addMail(addr){
-    const row=document.createElement('div');row.className='item';
-    const sp=document.createElement('span');sp.style.direction='ltr';sp.textContent=addr;
-    const actions=document.createElement('div');actions.style.display='flex';actions.style.gap='8px';
-    const cp=document.createElement('button');cp.className='btn';cp.textContent='کپی';cp.onclick=()=>navigator.clipboard.writeText(addr);
-    actions.append(cp); row.append(sp,actions); gmailList.appendChild(row);
-  }
-  document.getElementById('btnGmail').addEventListener('click',()=>{
-    gmailList.innerHTML="";
-    const n=Math.max(1,Math.min(30,+gcount.value||5));
-    const L=Math.max(6,Math.min(30,+glen.value||10));
-    const set=new Set();
-    while(set.size<n){
-      const h=genHandle(L,gDot.checked,gStartLetter.checked,gNoAmb.checked) + "@gmail.com";
-      set.add(h);
-    }
-    Array.from(set).forEach(addMail);
-    tip('Gmailهای رندم ساخته شد (یادآوری: واقعی نیستند).');
+// ساخت پسورد
+function buildPool(o){let groups=[]; if(o.lower)groups.push(sets.lower); if(o.upper)groups.push(sets.upper); if(o.digits)groups.push(sets.digits); if(o.symbols)groups.push(sets.symbols);
+  if(o.noSimilar)groups=groups.map(g=>[...g].filter(c=>!similar.has(c)).join("")); return {groups, all:groups.join("")};}
+function genPass(o){const {groups,all}=buildPool(o); if(!all)return""; const L=o.length,chs=[]; if(o.requireEach)groups.forEach(g=>chs.push(pick(g)));
+  while(chs.length<L){const c=pick(all); if(o.noRepeat && chs.length && chs[chs.length-1]===c) continue; chs.push(c);} return shuffle(chs).slice(0,L).join("");}
+
+// قدرت رمز
+function scorePassword(p){
+  if(!p) return 0; let s=0; const unique = new Set(p).size;
+  s += Math.min(unique*4, 40);
+  if(/[a-z]/.test(p)) s+=10;
+  if(/[A-Z]/.test(p)) s+=10;
+  if(/\d/.test(p)) s+=10;
+  if(/[^\w]/.test(p)) s+=15;
+  if(p.length>=12) s+=10;
+  if(/(.)\1{2,}/.test(p)) s-=10;
+  return Math.max(0, Math.min(100, s));
+}
+function updateMeter(p){
+  const m = document.getElementById('strength');
+  const label = document.getElementById('strengthLabel');
+  const sc = scorePassword(p);
+  m.className = 'meter ' + (sc<40?'w1':sc<70?'w2':'w3');
+  label.textContent = 'قدرت: ' + (sc<40?'ضعیف':sc<70?'متوسط':'قوی') + ` (${sc}%)`;
+}
+
+// ایمیل Gmail
+const letters="abcdefghijklmnopqrstuvwxyz", nums="0123456789";
+function genGmailLocal(L,allowDot){let allowed=(allowDot?letters+nums+".":letters+nums),s=letters[rnd(letters.length)];
+  while(s.length<L){const c=pick(allowed); if(c==="."&&(s[s.length-1]==="."||s.length===L-1)) continue; s+=c;}
+  if(s.endsWith(".")) s=s.slice(0,-1)+letters[rnd(letters.length)]; return s;}
+
+// وضعیت نمایش
+let last=[], hidden=store.get('hidden',false), favs=store.get('favs',[]), showFav=false;
+
+// رندر آیتم‌ها
+function isFav(x){return favs.includes(x);}
+function toggleFav(x){ if(isFav(x)) favs=favs.filter(i=>i!==x); else favs.push(x); store.set('favs',favs); render(last); }
+
+function render(list){
+  last=list;
+  const data = showFav ? list.filter(x=>isFav(x)) : list;
+  const out=document.getElementById("output");
+  out.innerHTML="";
+  data.forEach(x=>{
+    const row=document.createElement("div"); row.className="password";
+    const span=document.createElement("span"); span.textContent=hidden?"•".repeat(x.length):x; span.dataset.real=x;
+
+    const actions=document.createElement("div"); actions.className="password-actions";
+
+    const btnCopy=document.createElement("button"); btnCopy.className="secondary"; btnCopy.textContent="📋 کپی";
+    btnCopy.onclick=async()=>{ await navigator.clipboard.writeText(x); if(navigator.vibrate) navigator.vibrate(20); };
+
+    const btnFav=document.createElement("button"); btnFav.className="secondary"; btnFav.textContent = isFav(x) ? "⭐" : "☆";
+    btnFav.onclick=()=>toggleFav(x);
+
+    actions.append(btnCopy, btnFav);
+    row.append(span, actions);
+    out.appendChild(row);
   });
-  document.getElementById('btnGClear').addEventListener('click',()=> gmailList.innerHTML="");
 
-  /* ---- QR ---- */
-  const qrCanvas=document.getElementById('qrCanvas');
-  const qrText=document.getElementById('qrText');
-  const qrEcc=document.getElementById('qrEcc');
-  const qrSize=document.getElementById('qrSize');
-  document.getElementById('btnQR').addEventListener('click',()=>{
-    const text=qrText.value.trim(); if(!text){ tip('متن/URL را وارد کن.'); return; }
-    const size=Math.max(128,Math.min(1024,+qrSize.value||512)); qrCanvas.width=qrCanvas.height=size;
-    QRCode.toCanvas(qrCanvas, text, {width:size, margin:2, errorCorrectionLevel:qrEcc.value})
-      .then(()=> tip('QR ساخته شد.'))
-      .catch(()=> tip('خطا در ساخت QR',4000));
-  });
-  document.getElementById('btnQRSave').addEventListener('click',()=>{
-    const link=document.createElement('a'); link.download='qrcode.png'; link.href=qrCanvas.toDataURL('image/png'); link.click();
-  });
+  updateMeter(list[0]||"");
+}
+
+// تنظیمات ورودی‌ها
+['length','count','emailLen','lower','upper','digits','symbols','noSimilar','noRepeat','requireEach','emailDot'].forEach(id=>{
+  const el = document.getElementById(id);
+  const saved = store.get('set_'+id, null);
+  if(saved!==null){
+    if(el.type==='checkbox') el.checked = saved; else el.value = saved;
+  }
+  el.addEventListener('change',()=>{store.set('set_'+id, el.type==='checkbox'?el.checked:el.value);});
+});
+
+// تولید چندتا
+function opts(){return{lower:lower.checked,upper:upper.checked,digits:digits.checked,symbols:symbols.checked,noSimilar:noSimilar.checked,noRepeat:noRepeat.checked,requireEach:requireEach.checked,length:parseInt(length.value||12)};}
+function genMany(){const c=Math.min(100,Math.max(1,parseInt(count.value||5))); const o=opts(); const arr=[]; for(let i=0;i<c;i++) arr.push(genPass(o)); saveHistory(arr); render(arr);}
+function genEmails(){const c=Math.min(100,Math.max(1,parseInt(count.value||5))); let L=parseInt(emailLen.value||10); if(isNaN(L))L=10; L=Math.max(6,Math.min(30,L));
+  const arr=[]; for(let i=0;i<c;i++) arr.push(genGmailLocal(L,emailDot.checked)+"@gmail.com"); saveHistory(arr); render(arr); }
+
+btnGen.onclick=genMany;
+btnEmail.onclick=genEmails;
+btnCSV.onclick=()=>{if(!last.length)return; const b=new Blob([last.join("\n")],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click();}
+btnJSON.onclick=()=>{if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click();}
+btnToggle.onclick=()=>{hidden=!hidden; store.set('hidden',hidden); document.querySelectorAll("#output .password span").forEach(el=>{el.textContent=hidden?"•".repeat(el.dataset.real.length):el.dataset.real;});}
+btnClear.onclick=()=>{store.set('history',[]); render([]);}
+document.getElementById('tabLatest').onclick=()=>{showFav=false; render(loadHistory());}
+document.getElementById('tabFav').onclick=()=>{showFav=true; render(loadHistory());}
+
+// تاریخچه
+function loadHistory(){ return store.get('history',[]); }
+function saveHistory(items){ const h = loadHistory(); const combined = [...items, ...h].slice(0,50); store.set('history', combined); }
+
+// بار اول
+render(loadHistory());
+if(!loadHistory().length) genMany();
+</script>
+
+<!-- Service Worker -->
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(console.log);
+}
 </script>
 </body>
 </html>
