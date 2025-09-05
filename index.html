@@ -47,11 +47,13 @@ small.meter-label{opacity:.8}
 .theme-gradient{--fg:#0f172a; --btn:#111827; --btn-fg:#ffffff;}
 .theme-gradient body,.theme-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 60%,#9333ea 100%) fixed;}
 
-/* پس‌زمینه‌های رنگی/تصویری */
+/* پس‌زمینه‌ها */
 .bg-1{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%) fixed;}
 .bg-2{background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%) fixed;}
 .bg-3{background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%) fixed;}
 .bg-4{background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%) fixed;}
+.bg-forest{background:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1280&q=80') center/cover fixed;}
+
 @media (max-width:520px){ .row>*{flex:1 1 auto} h1{font-size:22px} }
 </style>
 </head>
@@ -135,7 +137,8 @@ function applyTheme(name){
 themeSelect.addEventListener("change",e=>applyTheme(e.target.value));
 
 // پس‌زمینه
-const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4"]; let bgIndex=store.get(BG_KEY,-1);
+const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"]; 
+let bgIndex=store.get(BG_KEY,-1);
 function applyBg(i){document.body.classList.remove(...BG_CLASSES); if(i>-1)document.body.classList.add(BG_CLASSES[i]);}
 applyBg(bgIndex);
 document.getElementById("btnBg").onclick=()=>{bgIndex=(bgIndex+1)%(BG_CLASSES.length+1); if(bgIndex===BG_CLASSES.length){bgIndex=-1; applyBg(-1);} else applyBg(bgIndex); store.set(BG_KEY,bgIndex);};
@@ -154,18 +157,16 @@ function buildPool(o){let groups=[]; if(o.lower)groups.push(sets.lower); if(o.up
 function genPass(o){const {groups,all}=buildPool(o); if(!all)return""; const L=o.length,chs=[]; if(o.requireEach)groups.forEach(g=>chs.push(pick(g)));
   while(chs.length<L){const c=pick(all); if(o.noRepeat && chs.length && chs[chs.length-1]===c) continue; chs.push(c);} return shuffle(chs).slice(0,L).join("");}
 
-// قدرت رمز (ساده ولی مفید)
+// قدرت رمز
 function scorePassword(p){
-  if(!p) return 0;
-  let s=0;
-  const unique = new Set(p).size;
+  if(!p) return 0; let s=0; const unique = new Set(p).size;
   s += Math.min(unique*4, 40);
   if(/[a-z]/.test(p)) s+=10;
   if(/[A-Z]/.test(p)) s+=10;
   if(/\d/.test(p)) s+=10;
   if(/[^\w]/.test(p)) s+=15;
   if(p.length>=12) s+=10;
-  if(/(.)\1{2,}/.test(p)) s-=10; // تکرار
+  if(/(.)\1{2,}/.test(p)) s-=10;
   return Math.max(0, Math.min(100, s));
 }
 function updateMeter(p){
@@ -206,28 +207,22 @@ function render(list){
     const btnFav=document.createElement("button"); btnFav.className="secondary"; btnFav.textContent = isFav(x) ? "⭐" : "☆";
     btnFav.onclick=()=>toggleFav(x);
 
-    const btnShare=document.createElement("button"); btnShare.className="secondary"; btnShare.textContent="🔗 اشتراک";
-    btnShare.onclick=()=>{ if(navigator.share){ navigator.share({text:x}).catch(()=>{}); } else { alert("مرورگر شما Share را پشتیبانی نمی‌کند."); } };
-
-    actions.append(btnCopy, btnFav, btnShare);
+    actions.append(btnCopy, btnFav);
     row.append(span, actions);
     out.appendChild(row);
   });
 
-  // به‌روزرسانی متر
   updateMeter(list[0]||"");
 }
 
-// تنظیمات ورودی‌ها را نگه داریم
+// تنظیمات ورودی‌ها
 ['length','count','emailLen','lower','upper','digits','symbols','noSimilar','noRepeat','requireEach','emailDot'].forEach(id=>{
   const el = document.getElementById(id);
   const saved = store.get('set_'+id, null);
   if(saved!==null){
     if(el.type==='checkbox') el.checked = saved; else el.value = saved;
   }
-  el.addEventListener('change',()=>{
-    store.set('set_'+id, el.type==='checkbox'?el.checked:el.value);
-  });
+  el.addEventListener('change',()=>{store.set('set_'+id, el.type==='checkbox'?el.checked:el.value);});
 });
 
 // تولید چندتا
