@@ -3,123 +3,82 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>bahrami رمزساز</title>
-  <link rel="manifest" href="manifest.webmanifest">
+  <title>رمزساز bahrami</title>
   <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.webmanifest?v=4">
   <style>
-    :root{
-      --bg:#0b1220; --fg:#e5e7eb; --card:#0f172a; --muted:#1f2937;
-      --btn:#16a34a; --btn-fg:#07110a; --accent:#22d3ee;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:Vazirmatn,iransans,system-ui,Segoe UI,Roboto,Arial;
-         color:var(--fg);background:var(--bg);min-height:100vh;}
-    .container{max-width:980px;margin:24px auto;padding:16px}
-    .card{background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.25);
-          padding:22px;backdrop-filter:blur(6px);}
-
-    h1{margin:0 0 12px;font-size:28px}
-    h2{margin:12px 0 8px}
-    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    label{display:inline-flex;align-items:center;gap:8px;font-size:14px}
-    input[type=number]{width:88px;padding:8px 10px;border-radius:10px;border:1px solid var(--muted);
-                       background:transparent;color:var(--fg)}
-    select,button,.pill{padding:10px 14px;border-radius:12px;border:1px solid transparent;
-                        background:#0b1a2b;color:var(--fg)}
-    select{background:#0b1a2b}
-    button{cursor:pointer}
-    button.primary{background:var(--btn);color:#fff;border-color:#107a34}
-    button.secondary{background:#0b1a2b;border-color:#132235}
-    button.ghost{background:transparent;border-color:#1f2f44}
-    button:disabled{opacity:.55;cursor:not-allowed}
-    .meter{height:10px;border-radius:8px;background:#152233;overflow:hidden}
-    .meter > i{display:block;height:100%;background:linear-gradient(90deg,#ef4444,#eab308,#22c55e)}
-    .meter.w1 > i{width:33%}
-    .meter.w2 > i{width:66%}
-    .meter.w3 > i{width:100%}
-    .password{display:flex;justify-content:space-between;align-items:center;
-              background:#0b1a2b;border:1px solid #122238;border-radius:12px;padding:12px 14px;margin-top:10px}
+    :root{--bg:#0b1220;--fg:#e5e7eb;--card:#0f172a;--muted:#1f2937;--btn:#16a34a;}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Vazirmatn,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
+    .container{max-width:1000px;margin:24px auto;padding:16px}
+    .card{background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:20px}
+    h1{margin:0 0 14px;font-size:28px}
+    h2{margin:14px 0 8px;font-size:18px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    label{display:inline-flex;align-items:center;gap:8px}
+    input[type=number]{width:88px;padding:8px 10px;border-radius:10px;border:1px solid var(--muted);background:transparent;color:var(--fg)}
+    select,button{padding:10px 14px;border-radius:12px;border:1px solid #132235;background:#0b1a2b;color:var(--fg);cursor:pointer}
+    button.primary{background:var(--btn);border-color:#107a34;color:#fff}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .meter{height:10px;border-radius:8px;background:#152233;overflow:hidden;margin-top:8px}
+    .meter>i{display:block;height:100%;background:linear-gradient(90deg,#ef4444,#eab308,#22c55e)}
+    .w1>i{width:33%}.w2>i{width:66%}.w3>i{width:100%}
+    .password{display:flex;justify-content:space-between;align-items:center;background:#0b1a2b;border:1px solid #122238;border-radius:12px;padding:12px 14px;margin-top:10px}
     .password-actions{display:flex;gap:8px}
     .tabs{display:flex;gap:10px;margin:8px 0 14px}
-    .tabs button{padding:8px 12px}
     .list{margin-top:10px}
     .muted{color:#9aa5b1}
-    .footer-status{margin-top:8px;font-size:13px}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:720px){.grid2{grid-template-columns:1fr}}
-
-    /* تم‌ها */
-    .theme-light{--bg:#f8fafc;--fg:#0f172a;--card:#ffffff;--muted:#d1d5db;--btn:#16a34a;--btn-fg:#052e18}
-    .theme-dark{--bg:#0b1220;--fg:#e5e7eb;--card:#0f172a;--muted:#1f2937;--btn:#16a34a;--btn-fg:#07110a}
-    /* پس‌زمینه‌ها */
-    .bg-1{background:radial-gradient(1200px 500px at 20% -10%,#1d4ed8 0%,transparent 60%),
-                       radial-gradient(900px 400px at 110% 10%,#a855f7 0%,transparent 55%),var(--bg)}
-    .bg-2{background:radial-gradient(900px 400px at -10% 110%,#22c55e 0%,transparent 55%),
-                       radial-gradient(900px 400px at 110% 110%,#eab308 0%,transparent 55%),var(--bg)}
-    .bg-3{background:radial-gradient(1000px 420px at 50% -10%,#06b6d4 0%,transparent 60%),var(--bg)}
-    .bg-4{background:radial-gradient(900px 420px at -10% 0%,#ef4444 0%,transparent 60%),var(--bg)}
+    @media (max-width:800px){.grid2{grid-template-columns:1fr}}
+    .theme-light{--bg:#f8fafc;--fg:#0f172a;--card:#ffffff;--muted:#d1d5db;--btn:#16a34a}
     .bg-forest{background:
       linear-gradient(to bottom, rgba(16,24,32,.6), rgba(10,16,24,.9)),
       url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop') center/cover fixed;}
-
-    /* مودال ایمیل */
+    /* modal */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}
-    .modal .panel{background:var(--card);max-width:900px;width:100%;border-radius:16px;padding:14px;border:1px solid #1e2b3f}
+    .panel{background:var(--card);max-width:900px;width:100%;border-radius:16px;padding:14px;border:1px solid #1e2b3f}
     .hidden{display:none}
-    .modal-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
-    .modal-body{display:grid;grid-template-columns:1fr;gap:8px}
-    .modal .tabs{margin:0}
     iframe.mail{width:100%;height:380px;border:1px solid #1e2b3f;border-radius:10px;background:#0b1a2b}
     pre.mail{max-height:380px;overflow:auto;direction:ltr;background:#0b1a2b;border:1px solid #1e2b3f;border-radius:10px;padding:10px}
-    .attach a{display:inline-block;margin:6px 6px 0 0}
   </style>
 </head>
-<body class="theme-dark bg-3">
+<body>
   <div class="container">
     <div class="card">
-      <h1>bahrami رمزساز 🔐</h1>
+      <h1>رمزساز bahrami 🔐</h1>
 
       <div class="grid2">
         <div>
-          <h2>تنظیمات رمز</h2>
+          <h2>تولید رمز</h2>
           <div class="row">
-            <label>طول رمز:
-              <input id="length" type="number" min="4" max="64" value="12">
-            </label>
-            <label>تعداد خروجی:
-              <input id="count" type="number" min="1" max="100" value="5">
-            </label>
+            <label>طول: <input id="length" type="number" min="4" max="64" value="12"></label>
+            <label>تعداد: <input id="count" type="number" min="1" max="100" value="5"></label>
             <label>تم:
               <select id="theme">
                 <option value="dark">تیره</option>
                 <option value="light">روشن</option>
               </select>
             </label>
-            <button id="btnBg" class="secondary">پس‌زمینه 🎨</button>
+            <button id="btnBg">پس‌زمینه جنگلی 🌲</button>
           </div>
-
-          <div class="row" style="margin-top:8px">
-            <label><input id="lower" type="checkbox" checked> حروف کوچک</label>
-            <label><input id="upper" type="checkbox" checked> حروف بزرگ</label>
+          <div class="row" style="margin-top:6px">
+            <label><input id="lower" type="checkbox" checked> کوچک</label>
+            <label><input id="upper" type="checkbox" checked> بزرگ</label>
             <label><input id="digits" type="checkbox" checked> اعداد</label>
             <label><input id="symbols" type="checkbox"> نمادها</label>
           </div>
           <div class="row" style="margin-top:6px">
-            <label><input id="noSimilar" type="checkbox"> حذف مشابه‌ها</label>
-            <label><input id="noRepeat" type="checkbox"> بدون تکرار</label>
-            <label><input id="requireEach" type="checkbox" checked> وجود از هرگروه</label>
+            <label><input id="noSimilar" type="checkbox"> حذف مشابه‌ها (0/O/1…)</label>
+            <label><input id="noRepeat" type="checkbox"> عدم تکرار متوالی</label>
+            <label><input id="requireEach" type="checkbox" checked> حضور از هر گروه</label>
           </div>
-
           <div class="row" style="margin-top:10px">
             <button id="btnGen" class="primary">تولید رمز 🎲</button>
-            <button id="btnEmail" class="secondary">Gmail تولید</button>
-            <button id="btnCSV" class="secondary">CSV</button>
-            <button id="btnJSON" class="secondary">JSON</button>
-            <button id="btnToggle" class="ghost">نمایش/مخفی 👁️</button>
-            <button id="btnClear" class="ghost">پاک‌کردن تاریخچه 🧹</button>
+            <button id="btnCSV">CSV</button>
+            <button id="btnJSON">JSON</button>
+            <button id="btnToggle">نمایش/مخفی 👁️</button>
+            <button id="btnClear">پاک‌کردن 🧹</button>
           </div>
-
           <div class="row" style="margin-top:10px">
             <div id="strength" class="meter w1" style="flex:1"><i></i></div>
             <div id="strengthLabel" class="muted">قدرت: —</div>
@@ -127,79 +86,66 @@
         </div>
 
         <div>
-          <h2>تنظیمات Gmail</h2>
+          <h2>تولید ایمیل Gmail</h2>
           <div class="row">
-            <label>طول ایمیل:
-              <input id="emailLen" type="number" min="6" max="30" value="10">
-            </label>
+            <label>طول: <input id="emailLen" type="number" min="6" max="30" value="10"></label>
             <label><input id="emailDot" type="checkbox" checked> نقطه مجاز</label>
+            <button id="btnEmail">تولید آدرس‌ها</button>
           </div>
 
-          <h2 style="margin-top:18px">ایمیل یکبارمصرف ✉️</h2>
+          <h2 style="margin-top:16px">ایمیل موقت ✉️</h2>
           <div class="row">
             <label>سرویس:
               <select id="svc">
                 <option value="mailtm">Mail.tm</option>
-                <option value="mailgw">Mail.gw</option>
                 <option value="1secmail">1secmail</option>
-                <option value="maildrop">Maildrop</option>
               </select>
             </label>
-            <span id="domWrap" style="display:none">
-              <label>دامنه:
-                <select id="svcDomain"></select>
-              </label>
-            </span>
           </div>
           <div class="row" style="margin-top:6px">
-            <button id="tmpCreate" class="primary">ساخت ایمیل موقت</button>
-            <button id="tmpRefresh" class="secondary" disabled>بروزرسانی 🔁</button>
-            <button id="tmpCopy" class="secondary" disabled>کپی آدرس 📋</button>
+            <button id="tmpCreate" class="primary">ساخت ایمیل</button>
+            <button id="tmpRefresh" disabled>بروزرسانی 🔁</button>
+            <button id="tmpCopy" disabled>کپی آدرس 📋</button>
           </div>
-          <div class="row" style="margin-top:8px">
-            <div id="tmpAddr" class="pill" style="min-width:240px">—</div>
-          </div>
-          <div id="tmpStatus" class="footer-status muted">وضعیت: —</div>
+          <div class="row" style="margin-top:8px"><div id="tmpAddr" style="min-width:240px">—</div></div>
+          <div id="tmpStatus" class="muted">وضعیت: —</div>
         </div>
       </div>
 
-      <div class="tabs">
-        <button id="tabLatest" class="secondary">آخرین‌ها</button>
-        <button id="tabFav" class="secondary">علاقه‌مندی‌ها ⭐</button>
+      <div class="tabs" style="margin-top:12px">
+        <button id="tabLatest">آخرین‌ها</button>
+        <button id="tabFav">علاقه‌مندی‌ها ⭐</button>
       </div>
       <div id="output" class="list"></div>
 
-      <h2 style="margin-top:18px">صندوق ایمیل</h2>
+      <h2 style="margin-top:16px">صندوق ایمیل</h2>
       <div id="tmpInbox" class="list"></div>
     </div>
   </div>
 
-  <!-- Modal for reading email -->
+  <!-- Modal -->
   <div id="mailModal" class="modal hidden">
     <div class="panel">
-      <div class="modal-header">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px">
         <div>
           <div id="mmSubj" style="font-weight:700">—</div>
           <div class="muted" id="mmFrom" style="margin-top:4px">From: —</div>
           <div id="mmTime" class="muted" style="margin-top:2px"><small>—</small></div>
         </div>
         <div class="row">
-          <button id="tabHtml" class="secondary">نمایش HTML</button>
-          <button id="tabText" class="secondary">نمایش متن</button>
-          <button id="mmCopy" class="secondary">کپی متن 📋</button>
-          <button id="mmClose" class="ghost">بستن ✖</button>
+          <button id="tabHtml">HTML</button>
+          <button id="tabText">Text</button>
+          <button id="mmCopy">کپی متن 📋</button>
+          <button id="mmClose">بستن ✖</button>
         </div>
       </div>
-      <div class="modal-body">
-        <iframe id="mailHtml" class="mail"></iframe>
-        <pre id="mailText" class="mail hidden"></pre>
-        <div id="mmAttach" class="attach hidden"></div>
-      </div>
+      <iframe id="mailHtml" class="mail"></iframe>
+      <pre id="mailText" class="mail hidden"></pre>
+      <div id="mmAttach" class="muted" style="margin-top:6px"></div>
     </div>
   </div>
 
 <script>
-/* ==== کمک‌ها و UI عمومی (نسخه سازگار) ==== */
 function $(id){return document.getElementById(id)}
 var el={length:$('length'),count:$('count'),emailLen:$('emailLen'),emailDot:$('emailDot'),
   lower:$('lower'),upper:$('upper'),digits:$('digits'),symbols:$('symbols'),
@@ -207,23 +153,20 @@ var el={length:$('length'),count:$('count'),emailLen:$('emailLen'),emailDot:$('e
   theme:$('theme'),btnBg:$('btnBg'),btnGen:$('btnGen'),btnEmail:$('btnEmail'),
   btnCSV:$('btnCSV'),btnJSON:$('btnJSON'),btnToggle:$('btnToggle'),btnClear:$('btnClear'),
   tabLatest:$('tabLatest'),tabFav:$('tabFav'),strength:$('strength'),strengthLabel:$('strengthLabel'),
-  output:$('output'),svc:$('svc'),svcDomain:$('svcDomain'),domWrap:$('domWrap'),
+  output:$('output'),svc:$('svc'),
   tmpCreate:$('tmpCreate'),tmpCopy:$('tmpCopy'),tmpRefresh:$('tmpRefresh'),
   tmpAddr:$('tmpAddr'),tmpStatus:$('tmpStatus'),tmpInbox:$('tmpInbox')
 };
 var store={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){localStorage.setItem(k,JSON.stringify(v))}};
 
-/* تم و پس‌زمینه */
-var THEME_KEY="theme", BG_KEY="bg";
-function applyTheme(n){document.body.classList.remove('theme-light','theme-dark');document.body.classList.add('theme-'+n);store.set(THEME_KEY,n)}
-applyTheme(store.get(THEME_KEY,"dark")); el.theme.value=store.get(THEME_KEY,"dark");
+/* Theme + BG */
+function applyTheme(n){if(n==='light'){document.body.classList.add('theme-light')}else{document.body.classList.remove('theme-light')} store.set('theme',n)}
+applyTheme(store.get('theme','dark')); el.theme.value=store.get('theme','dark');
 el.theme.onchange=function(e){applyTheme(e.target.value)};
-var BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"]; var bgIndex=store.get(BG_KEY,-1);
-function applyBg(i){for(var j=0;j<BG_CLASSES.length;j++)document.body.classList.remove(BG_CLASSES[j]); if(i>-1)document.body.classList.add(BG_CLASSES[i]);}
-applyBg(bgIndex);
-el.btnBg.onclick=function(){bgIndex=(bgIndex+1)%(BG_CLASSES.length+1); if(bgIndex===BG_CLASSES.length)bgIndex=-1; applyBg(bgIndex); store.set(BG_KEY,bgIndex);};
+var bgOn=store.get('bgOn',false); if(bgOn)document.body.classList.add('bg-forest');
+el.btnBg.onclick=function(){bgOn=!bgOn;store.set('bgOn',bgOn); document.body.classList.toggle('bg-forest',bgOn)};
 
-/* تولید رمز/ایمیل */
+/* Utils */
 function rnd(max){
   if(max<=0) return 0;
   if(window.crypto&&window.crypto.getRandomValues){
@@ -235,22 +178,21 @@ function rnd(max){
 }
 function pick(s){return s.charAt(rnd(s.length))}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),t=a[i];a[i]=a[j];a[j]=t}return a}
+
+/* Passwords */
 var sets={lower:"abcdefghijklmnopqrstuvwxyz",upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",digits:"0123456789",symbols:"!@#$%^&*()_-+=[]{}|:;,.?/~`<>"},
     similarMap={I:1,l:1,"1":1,O:1,"0":1,B:1,"8":1,S:1,"5":1,Z:1,"2":1};
 function removeSimilar(s){var out="";for(var i=0;i<s.length;i++){var c=s[i];if(!similarMap[c])out+=c;}return out;}
 function buildPool(o){var g=[]; if(o.lower)g.push(sets.lower); if(o.upper)g.push(sets.upper); if(o.digits)g.push(sets.digits); if(o.symbols)g.push(sets.symbols);
   if(o.noSimilar){for(var i=0;i<g.length;i++)g[i]=removeSimilar(g[i]);} if(!g.length)g=[sets.lower]; var all=""; for(var j=0;j<g.length;j++)all+=g[j]; return {groups:g,all:all};}
-function genPass(o){
-  var p=buildPool(o),groups=p.groups,all=p.all,L=parseInt(o.length||12,10);
-  if(o.requireEach && L<groups.length)L=groups.length;
-  var ch=[]; if(o.requireEach)for(var i=0;i<groups.length;i++)ch.push(pick(groups[i]));
-  while(ch.length<L){var c=pick(all); if(o.noRepeat && ch.length && ch[ch.length-1]===c)continue; ch.push(c);}
-  return shuffle(ch).slice(0,L).join("");
+function genPass(o){var p=buildPool(o),groups=p.groups,all=p.all,L=parseInt(o.length||12,10);
+  if(o.requireEach && L<groups.length)L=groups.length; var ch=[]; if(o.requireEach)for(var i=0;i<groups.length;i++)ch.push(pick(groups[i]));
+  while(ch.length<L){var c=pick(all); if(o.noRepeat && ch.length && ch[ch.length-1]===c)continue; ch.push(c);} return shuffle(ch).slice(0,L).join("");
 }
-function scorePassword(p){if(!p)return 0; var s=0, seen={}, uniq=0; for(var i=0;i<p.length;i++){if(!seen[p[i]]){seen[p[i]]=1; uniq++;}}
+function scorePassword(p){if(!p)return 0; var s=0, seen={},uniq=0; for(var i=0;i<p.length;i++){if(!seen[p[i]]){seen[p[i]]=1; uniq++;}}
   s+=Math.min(uniq*4,40); if(/[a-z]/.test(p))s+=10; if(/[A-Z]/.test(p))s+=10; if(/\d/.test(p))s+=10; if(/[^\w]/.test(p))s+=15; if(p.length>=12)s+=10; if(/(.)\1{2,}/.test(p))s-=10; if(s<0)s=0; if(s>100)s=100; return s;}
 function updateMeter(p){var sc=scorePassword(p); el.strength.className='meter '+(sc<40?'w1':sc<70?'w2':'w3'); el.strengthLabel.textContent='قدرت: '+(sc<40?'ضعیف':sc<70?'متوسط':'قوی')+' ('+sc+'%)';}
-function opts(){return {lower:el.lower.checked,upper:el.upper.checked,digits:el.digits.checked,symbols:el.symbols.checked,noSimilar:el.noSimilar.checked,noRepeat:el.noRepeat.checked,requireEach:el.requireEach.checked,length:parseInt(el.length.value||12,10)}}
+
 var last=[], hidden=store.get('hidden',false), favs=store.get('favs',[]), showFav=false;
 function isFav(x){return favs.indexOf(x)>-1}
 function toggleFav(x){if(isFav(x))favs=favs.filter(function(i){return i!==x}); else favs.push(x); store.set('favs',favs); render(last);}
@@ -258,28 +200,31 @@ function render(list){
   last=list; var data=showFav?list.filter(isFav):list; el.output.innerHTML="";
   for(var i=0;i<data.length;i++){(function(x){
     var row=document.createElement("div"); row.className="password";
-    var span=document.createElement("span"); span.textContent=hidden?Array(x.length+1).join("•"):x; span.setAttribute("data-real",x);
+    var span=document.createElement("span"); span.textContent=hidden?Array(x.length+1).join("•"):x;
     var act=document.createElement("div"); act.className="password-actions";
-    var b1=document.createElement("button"); b1.className="secondary"; b1.textContent="📋 کپی";
-    b1.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(x); if(navigator.vibrate)navigator.vibrate(20)};
-    var b2=document.createElement("button"); b2.className="secondary"; b2.textContent=isFav(x)?"⭐":"☆"; b2.onclick=function(){toggleFav(x)};
+    var b1=document.createElement("button"); b1.textContent="📋 کپی"; b1.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(x); if(navigator.vibrate)navigator.vibrate(20)};
+    var b2=document.createElement("button"); b2.textContent=isFav(x)?"⭐":"☆"; b2.onclick=function(){toggleFav(x)};
     act.appendChild(b1); act.appendChild(b2); row.appendChild(span); row.appendChild(act); el.output.appendChild(row);
   })(data[i]);}
   updateMeter(list[0]||"");
 }
+function opts(){return {lower:el.lower.checked,upper:el.upper.checked,digits:el.digits.checked,symbols:el.symbols.checked,noSimilar:el.noSimilar.checked,noRepeat:el.noRepeat.checked,requireEach:el.requireEach.checked,length:parseInt(el.length.value||12,10)}}
+
 el.btnGen.onclick=function(){var c=Math.min(100,Math.max(1,parseInt(el.count.value||5,10))); var o=opts(), arr=[]; for(var i=0;i<c;i++)arr.push(genPass(o)); render(arr);};
+el.btnCSV.onclick=function(){if(!last.length)return; var b=new Blob([last.join("\n")],{type:"text/csv"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click();};
+el.btnJSON.onclick=function(){if(!last.length)return; var b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click();};
+el.btnToggle.onclick=function(){hidden=!hidden; store.set('hidden',hidden); render(last);};
+el.btnClear.onclick=function(){render([])}; el.tabLatest.onclick=function(){showFav=false; render(last)}; el.tabFav.onclick=function(){showFav=true; render(last)};
+
+/* Gmail-like addresses */
 el.btnEmail.onclick=function(){
   var c=Math.min(100,Math.max(1,parseInt(el.count.value||5,10))), L=Math.max(6,Math.min(30,parseInt(el.emailLen.value||10,10)));
   var letters="abcdefghijklmnopqrstuvwxyz", pool=letters+"0123456789"+(el.emailDot.checked?".":""); var out=[];
   for(var i=0;i<c;i++){var s=letters.charAt(rnd(letters.length)); while(s.length<L){var ch=pool.charAt(rnd(pool.length)); if(ch==="."&&(s.charAt(s.length-1)==="."||s.length===L-1))continue; s+=ch;} out.push(s+"@gmail.com");}
   render(out);
 };
-el.btnCSV.onclick=function(){if(!last.length)return; var b=new Blob([last.join("\n")],{type:"text/csv"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click();};
-el.btnJSON.onclick=function(){if(!last.length)return; var b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click();};
-el.btnToggle.onclick=function(){hidden=!hidden; store.set('hidden',hidden); render(last);};
-el.btnClear.onclick=function(){render([])}; el.tabLatest.onclick=function(){showFav=false; render(last)}; el.tabFav.onclick=function(){showFav=true; render(last)};
 
-/* مودال ایمیل */
+/* Modal */
 var modal={modal:document.getElementById('mailModal'),subj:document.getElementById('mmSubj'),from:document.getElementById('mmFrom'),
   time:document.getElementById('mmTime'),iframe:document.getElementById('mailHtml'),pre:document.getElementById('mailText'),
   attach:document.getElementById('mmAttach'),close:document.getElementById('mmClose'),copy:document.getElementById('mmCopy'),
@@ -298,7 +243,7 @@ function renderInbox(items,clicker){
 }
 function setTmpStatus(t){el.tmpStatus.textContent="وضعیت: "+t}
 
-/* A) Mail.tm / Mail.gw (پچ‌شده) */
+/* Mail.tm */
 function makeMailTmLike(apiBase){
   var st={api:apiBase,token:null,address:null};
   function j(path,opts){opts=opts||{}; var h=opts.headers||{}; if(st.token)h.Authorization="Bearer "+st.token;
@@ -338,10 +283,10 @@ function makeMailTmLike(apiBase){
         var htmlArr=msg.html||[], htmlStr=Object.prototype.toString.call(htmlArr)==='[object Array]'?htmlArr.join("\n"):(htmlArr||"");
         modal.iframe.srcdoc=htmlStr||"<html><body style='font-family:monospace;white-space:pre-wrap'>"+plain+"</body></html>";
         var atts=msg.attachments||[];
-        if(atts.length){modal.attach.classList.remove('hidden'); modal.attach.innerHTML="";
+        if(atts.length){modal.attach.innerHTML="";
           for(var i=0;i<atts.length;i++){var a=atts[i], url=a.downloadUrl? a.downloadUrl : (a['@id']?(st.api+a['@id']+'/download'):'#');
             var link=document.createElement('a'); link.href=url; link.target="_blank"; link.rel="noopener"; link.textContent="⬇ "+(a.filename||'attachment')+" ("+Math.round((a.size||0)/1024)+" KB)"; modal.attach.appendChild(link);}
-        } else {modal.attach.classList.add('hidden'); modal.attach.innerHTML="";}
+        } else {modal.attach.innerHTML="";}
         modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
       }).catch(function(){setTmpStatus("باز کردن پیام ناموفق.")});
     }
@@ -349,9 +294,8 @@ function makeMailTmLike(apiBase){
   return obj;
 }
 var svc_mailtm=makeMailTmLike("https://api.mail.tm");
-var svc_mailgw=makeMailTmLike("https://api.mail.gw");
 
-/* B) 1secmail */
+/* 1secmail */
 var secmail={api:"https://www.1secmail.com/api/v1/",login:null,domain:null};
 function sec_create(){
   setTmpStatus("در حال ساخت...");
@@ -377,56 +321,19 @@ function sec_open(id){
     modal.time.innerHTML="<small>"+(msg.date||"")+"</small>";
     var plain=msg.textBody||msg.intro||"(بدون متن)"; modal.pre.textContent=plain;
     var htmlStr=msg.htmlBody||""; modal.iframe.srcdoc= htmlStr || "<html><body style='font-family:monospace;white-space:pre-wrap'>"+plain+"</body></html>";
-    var atts=msg.attachments||[];
-    if(atts.length){modal.attach.classList.remove('hidden'); modal.attach.innerHTML="";
-      for(var i=0;i<atts.length;i++){var a=atts[i];
-        var dl=secmail.api+"?action=download&login="+encodeURIComponent(secmail.login)+"&domain="+encodeURIComponent(secmail.domain)+"&id="+id+"&file="+encodeURIComponent(a.filename);
-        var link=document.createElement('a'); link.href=dl; link.target="_blank"; link.rel="noopener"; link.textContent="⬇ "+a.filename+" ("+Math.round((a.size||0)/1024)+" KB)"; modal.attach.appendChild(link);}
-    } else {modal.attach.classList.add('hidden'); modal.attach.innerHTML="";}
-    modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
+    modal.attach.innerHTML=""; modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
   }).catch(function(){setTmpStatus("باز کردن پیام ناموفق.")});
 }
 
-/* C) Maildrop */
-var maildrop={api:"https://api.maildrop.cc",box:null};
-function md_random(){return Math.random().toString(36).slice(2,10)}
-function md_create(){setTmpStatus("در حال ساخت..."); var name=md_random(); maildrop.box=name; el.tmpAddr.textContent=name+"@maildrop.cc"; el.tmpCopy.disabled=false; el.tmpRefresh.disabled=false; setTmpStatus("ساخته شد."); return md_refresh();}
-function md_refresh(){
-  if(!maildrop.box) return Promise.resolve();
-  setTmpStatus("بروزرسانی صندوق...");
-  return fetch(maildrop.api+"/inbox/"+encodeURIComponent(maildrop.box)).then(function(r){return r.json()}).then(function(inbox){
-    var msgs=((inbox&&inbox.messages)||[]).map(function(m){return {id:m.id,from:m.from,subj:m.subject||"(بدون موضوع)",time:m.date||""};});
-    renderInbox(msgs.map(function(x){return "<div><b>"+x.subj+"</b></div><div>From: "+x.from+"</div><div><small>"+x.time+"</small></div>"}), function(e,idx){md_open(msgs[idx].id)});
-    setTmpStatus("آماده.");
-  }).catch(function(){setTmpStatus("Maildrop محدودیت/CORS دارد.")});
-}
-function md_open(id){
-  fetch(maildrop.api+"/message/"+id+"?address="+encodeURIComponent(maildrop.box)).then(function(r){return r.json()}).then(function(msg){
-    modal.subj.textContent=msg.subject||"(بدون موضوع)"; modal.from.textContent="From: "+(msg.from||"unknown"); modal.time.innerHTML="<small>"+(msg.date||"")+"</small>";
-    var plain=msg.text||msg.body||"(بدون متن)"; modal.pre.textContent=plain; var htmlStr=msg.html||"";
-    modal.iframe.srcdoc= htmlStr || "<html><body style='font-family:monospace;white-space:pre-wrap'>"+plain+"</body></html>";
-    modal.attach.classList.add('hidden'); modal.attach.innerHTML=""; modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
-  }).catch(function(){setTmpStatus("باز کردن پیام Maildrop ناموفق.")});
-}
-
-/* سوییچر سرویس */
-function updateSvcUI(){
-  var v=el.svc.value;
-  if(v==="1secmail"){
-    el.domWrap.style.display="inline-flex"; el.svcDomain.innerHTML="";
-    var ds=["1secmail.com","1secmail.org","1secmail.net","kzccv.com","azote.pro","ohoppo.com","esiix.com","vddaz.com","wwjmp.com","yoggm.com"];
-    for(var i=0;i<ds.length;i++){var o=document.createElement('option'); o.value=ds[i]; o.textContent=ds[i]; el.svcDomain.appendChild(o);}
-  } else {el.domWrap.style.display="none";}
-}
-el.svc.onchange=updateSvcUI; updateSvcUI();
-
-/* دکمه‌های ایمیل */
-el.tmpCreate.onclick=function(){var v=el.svc.value; if(v==="mailtm")svc_mailtm.create(); else if(v==="mailgw")svc_mailgw.create(); else if(v==="1secmail")sec_create(); else md_create();};
-el.tmpRefresh.onclick=function(){var v=el.svc.value; if(v==="mailtm")svc_mailtm.refresh(); else if(v==="mailgw")svc_mailgw.refresh(); else if(v==="1secmail")sec_refresh(); else md_refresh();};
+/* Service buttons */
+el.tmpCreate.onclick=function(){var v=el.svc.value; if(v==="mailtm")svc_mailtm.create(); else sec_create();};
+el.tmpRefresh.onclick=function(){var v=el.svc.value; if(v==="mailtm")svc_mailtm.refresh(); else sec_refresh();};
 el.tmpCopy.onclick=function(){var addr=el.tmpAddr.textContent.replace(/\s+/g,'').trim(); if(addr&&addr!=='—'&&navigator.clipboard){navigator.clipboard.writeText(addr); if(navigator.vibrate)navigator.vibrate(20);}};
 
-/* شروع */
-(function init(){render([]); el.btnGen.click();})();
+/* init */
+(function init(){render([]); el.btnGen.click();
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js');}
+})();
 </script>
 </body>
 </html>
