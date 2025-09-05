@@ -1,7 +1,7 @@
 {
   "name": "سازنده رمز قوی",
   "short_name": "PassGen",
-  "description": "تولید پسورد و ایمیل Gmail + تم‌ها و پس‌زمینه‌های مختلف",
+  "description": "تولید پسورد و ایمیل + تم و پس‌زمینه",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -9,13 +9,13 @@
   "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "./icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./icon-512.png",
+      "src": "1000002775.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
