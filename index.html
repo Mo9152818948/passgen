@@ -1,339 +1,304 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>رمزساز bahrami</title>
-  <meta name="theme-color" content="#0f172a">
-  <link rel="manifest" href="manifest.webmanifest?v=4">
-  <style>
-    :root{--bg:#0b1220;--fg:#e5e7eb;--card:#0f172a;--muted:#1f2937;--btn:#16a34a;}
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:Vazirmatn,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
-    .container{max-width:1000px;margin:24px auto;padding:16px}
-    .card{background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:20px}
-    h1{margin:0 0 14px;font-size:28px}
-    h2{margin:14px 0 8px;font-size:18px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    label{display:inline-flex;align-items:center;gap:8px}
-    input[type=number]{width:88px;padding:8px 10px;border-radius:10px;border:1px solid var(--muted);background:transparent;color:var(--fg)}
-    select,button{padding:10px 14px;border-radius:12px;border:1px solid #132235;background:#0b1a2b;color:var(--fg);cursor:pointer}
-    button.primary{background:var(--btn);border-color:#107a34;color:#fff}
-    button:disabled{opacity:.6;cursor:not-allowed}
-    .meter{height:10px;border-radius:8px;background:#152233;overflow:hidden;margin-top:8px}
-    .meter>i{display:block;height:100%;background:linear-gradient(90deg,#ef4444,#eab308,#22c55e)}
-    .w1>i{width:33%}.w2>i{width:66%}.w3>i{width:100%}
-    .password{display:flex;justify-content:space-between;align-items:center;background:#0b1a2b;border:1px solid #122238;border-radius:12px;padding:12px 14px;margin-top:10px}
-    .password-actions{display:flex;gap:8px}
-    .tabs{display:flex;gap:10px;margin:8px 0 14px}
-    .list{margin-top:10px}
-    .muted{color:#9aa5b1}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:800px){.grid2{grid-template-columns:1fr}}
-    .theme-light{--bg:#f8fafc;--fg:#0f172a;--card:#ffffff;--muted:#d1d5db;--btn:#16a34a}
-    .bg-forest{background:
-      linear-gradient(to bottom, rgba(16,24,32,.6), rgba(10,16,24,.9)),
-      url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop') center/cover fixed;}
-    /* modal */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}
-    .panel{background:var(--card);max-width:900px;width:100%;border-radius:16px;padding:14px;border:1px solid #1e2b3f}
-    .hidden{display:none}
-    iframe.mail{width:100%;height:380px;border:1px solid #1e2b3f;border-radius:10px;background:#0b1a2b}
-    pre.mail{max-height:380px;overflow:auto;direction:ltr;background:#0b1a2b;border:1px solid #1e2b3f;border-radius:10px;padding:10px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>رمزساز bahrami</title>
+<meta name="theme-color" content="#0f172a" />
+
+<link rel="manifest" href="manifest.webmanifest" />
+
+<style>
+  :root{
+    --bg:#0b1220; --fg:#e5e7eb; --muted:#93a3b3;
+    --card:#0f172a; --accent:#34c759; --accent-2:#1e90ff;
+    --danger:#ef4444; --ok:#22c55e; --shadow:0 10px 30px rgba(0,0,0,.25);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; font-family: Vazirmatn, iransans, system-ui, -apple-system, Segoe UI, Roboto;
+    color:var(--fg); background:
+      radial-gradient(1200px 800px at 80% -20%, #16325c 0%, transparent 60%),
+      radial-gradient(900px 700px at -10% 110%, #133b2e 0%, transparent 55%),
+      linear-gradient(180deg,#0a1220 0%, #0b1220 100%);
+  }
+  .wrap{max-width:980px; margin:28px auto 60px; padding:0 16px}
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; margin-bottom:18px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px; font-weight:800; font-size:24px;
+  }
+  .brand .lock{
+    width:28px; height:28px; display:inline-grid; place-items:center;
+    background:linear-gradient(135deg,#21d07a,#0aa94f);
+    color:#0b1220; border-radius:10px; box-shadow:var(--shadow);
+  }
+
+  /* iOS switch */
+  .ios-switch{ position:relative; display:inline-block; width:52px; height:28px }
+  .ios-switch input{ opacity:0; width:0; height:0 }
+  .slider{
+    position:absolute; inset:0; cursor:pointer; background:#c7ced6;
+    border-radius:34px; transition:.35s ease;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,.25);
+  }
+  .slider:before{
+    content:""; position:absolute; left:3px; bottom:3px; width:22px; height:22px;
+    background:#fff; border-radius:50%; transition:.35s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,.35);
+  }
+  .ios-switch input:checked + .slider{ background:var(--accent) }
+  .ios-switch input:checked + .slider:before{ transform:translateX(24px) }
+
+  .seg-label{ font-size:12px; color:var(--muted); margin-right:10px; user-select:none }
+
+  /* cards & layout */
+  .card{
+    background:rgba(15, 23, 42, .85); border:1px solid rgba(255,255,255,.06);
+    border-radius:var(--radius); box-shadow:var(--shadow); padding:18px;
+  }
+  .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center }
+  .row > * { flex: 1 1 auto }
+
+  .input, select{
+    width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
+    background:transparent; color:var(--fg); outline:none;
+  }
+  .btn{
+    padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
+    background:linear-gradient(135deg,#21d07a,#0aa94f); color:#07210f;
+    font-weight:700; cursor:pointer; transition:transform .05s ease;
+  }
+  .btn:active{ transform:translateY(1px) }
+  .btn.ghost{ background:transparent; color:var(--fg) }
+  .muted{ color:var(--muted) }
+
+  .list{ display:grid; gap:10px; margin-top:16px }
+  .item{
+    display:flex; align-items:center; gap:10px; justify-content:space-between;
+    background:#0e1930; border:1px solid rgba(255,255,255,.06);
+    border-radius:14px; padding:12px 14px;
+  }
+  .chip{ padding:6px 10px; border-radius:999px; font-size:12px; background:#0b1a2f; color:#93e5b4; border:1px solid rgba(255,255,255,.08) }
+
+  .strength{height:10px; border-radius:999px; background:#172033; overflow:hidden}
+  .bar{height:100%; width:0%; background:linear-gradient(90deg,#ff6b6b,#ffd166,#34c759); transition:width .3s ease}
+
+  /* pages */
+  .page{
+    display:none; transform-origin:center; animation:.25s fade-up both;
+  }
+  .page.active{ display:block }
+  @keyframes fade-up{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
+
+  footer{ margin-top:20px; text-align:center; font-size:12px; color:var(--muted) }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>رمزساز bahrami 🔐</h1>
-
-      <div class="grid2">
-        <div>
-          <h2>تولید رمز</h2>
-          <div class="row">
-            <label>طول: <input id="length" type="number" min="4" max="64" value="12"></label>
-            <label>تعداد: <input id="count" type="number" min="1" max="100" value="5"></label>
-            <label>تم:
-              <select id="theme">
-                <option value="dark">تیره</option>
-                <option value="light">روشن</option>
-              </select>
-            </label>
-            <button id="btnBg">پس‌زمینه جنگلی 🌲</button>
-          </div>
-          <div class="row" style="margin-top:6px">
-            <label><input id="lower" type="checkbox" checked> کوچک</label>
-            <label><input id="upper" type="checkbox" checked> بزرگ</label>
-            <label><input id="digits" type="checkbox" checked> اعداد</label>
-            <label><input id="symbols" type="checkbox"> نمادها</label>
-          </div>
-          <div class="row" style="margin-top:6px">
-            <label><input id="noSimilar" type="checkbox"> حذف مشابه‌ها (0/O/1…)</label>
-            <label><input id="noRepeat" type="checkbox"> عدم تکرار متوالی</label>
-            <label><input id="requireEach" type="checkbox" checked> حضور از هر گروه</label>
-          </div>
-          <div class="row" style="margin-top:10px">
-            <button id="btnGen" class="primary">تولید رمز 🎲</button>
-            <button id="btnCSV">CSV</button>
-            <button id="btnJSON">JSON</button>
-            <button id="btnToggle">نمایش/مخفی 👁️</button>
-            <button id="btnClear">پاک‌کردن 🧹</button>
-          </div>
-          <div class="row" style="margin-top:10px">
-            <div id="strength" class="meter w1" style="flex:1"><i></i></div>
-            <div id="strengthLabel" class="muted">قدرت: —</div>
-          </div>
-        </div>
-
-        <div>
-          <h2>تولید ایمیل Gmail</h2>
-          <div class="row">
-            <label>طول: <input id="emailLen" type="number" min="6" max="30" value="10"></label>
-            <label><input id="emailDot" type="checkbox" checked> نقطه مجاز</label>
-            <button id="btnEmail">تولید آدرس‌ها</button>
-          </div>
-
-          <h2 style="margin-top:16px">ایمیل موقت ✉️</h2>
-          <div class="row">
-            <label>سرویس:
-              <select id="svc">
-                <option value="mailtm">Mail.tm</option>
-                <option value="1secmail">1secmail</option>
-              </select>
-            </label>
-          </div>
-          <div class="row" style="margin-top:6px">
-            <button id="tmpCreate" class="primary">ساخت ایمیل</button>
-            <button id="tmpRefresh" disabled>بروزرسانی 🔁</button>
-            <button id="tmpCopy" disabled>کپی آدرس 📋</button>
-          </div>
-          <div class="row" style="margin-top:8px"><div id="tmpAddr" style="min-width:240px">—</div></div>
-          <div id="tmpStatus" class="muted">وضعیت: —</div>
-        </div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="lock">🔒</span>
+        <span>bahrami رمزساز</span>
       </div>
-
-      <div class="tabs" style="margin-top:12px">
-        <button id="tabLatest">آخرین‌ها</button>
-        <button id="tabFav">علاقه‌مندی‌ها ⭐</button>
+      <div class="row" style="flex-wrap:nowrap; gap:8px">
+        <span class="seg-label">رمزساز</span>
+        <label class="ios-switch" title="تغییر بخش">
+          <input id="switcher" type="checkbox" />
+          <span class="slider"></span>
+        </label>
+        <span class="seg-label">ایمیل موقت</span>
       </div>
-      <div id="output" class="list"></div>
+    </header>
 
-      <h2 style="margin-top:16px">صندوق ایمیل</h2>
-      <div id="tmpInbox" class="list"></div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="mailModal" class="modal hidden">
-    <div class="panel">
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px">
-        <div>
-          <div id="mmSubj" style="font-weight:700">—</div>
-          <div class="muted" id="mmFrom" style="margin-top:4px">From: —</div>
-          <div id="mmTime" class="muted" style="margin-top:2px"><small>—</small></div>
-        </div>
+    <!-- PAGE: PASSWORDS -->
+    <section id="page-pass" class="page active">
+      <div class="card" style="margin-bottom:14px">
         <div class="row">
-          <button id="tabHtml">HTML</button>
-          <button id="tabText">Text</button>
-          <button id="mmCopy">کپی متن 📋</button>
-          <button id="mmClose">بستن ✖</button>
+          <div style="flex:0 0 120px">
+            <label class="muted" for="len">طول رمز</label>
+            <input id="len" class="input" type="number" min="6" max="64" value="12" />
+          </div>
+          <div style="flex:0 0 120px">
+            <label class="muted" for="cnt">تعداد</label>
+            <input id="cnt" class="input" type="number" min="1" max="20" value="5" />
+          </div>
+          <div class="chip"><label><input id="optLower" type="checkbox" checked /> حروف کوچک</label></div>
+          <div class="chip"><label><input id="optUpper" type="checkbox" checked /> حروف بزرگ</label></div>
+          <div class="chip"><label><input id="optNum"   type="checkbox" checked /> اعداد</label></div>
+          <div class="chip"><label><input id="optSym"   type="checkbox" /> نمادها</label></div>
+          <div class="chip"><label><input id="optNoAmb" type="checkbox" /> حذف مشابه‌ها</label></div>
+          <div class="chip"><label><input id="optNoDup" type="checkbox" /> بدون تکرار</label></div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button id="btnGen" class="btn">🎲 تولید رمز</button>
+          <button id="btnClear" class="btn ghost">🧹 پاک‌کردن</button>
+        </div>
+        <div style="margin-top:14px">
+          <div class="muted" style="margin-bottom:6px">قدرت:</div>
+          <div class="strength"><div id="bar" class="bar"></div></div>
         </div>
       </div>
-      <iframe id="mailHtml" class="mail"></iframe>
-      <pre id="mailText" class="mail hidden"></pre>
-      <div id="mmAttach" class="muted" style="margin-top:6px"></div>
-    </div>
+
+      <div class="card">
+        <div class="muted" style="margin-bottom:10px">خروجی‌ها</div>
+        <div id="list" class="list"></div>
+      </div>
+    </section>
+
+    <!-- PAGE: TEMP MAIL (demo) -->
+    <section id="page-mail" class="page">
+      <div class="card">
+        <h3 style="margin:0 0 8px">ایمیل یک‌بارمصرف (دمو)</h3>
+        <p class="muted" style="margin:0 0 16px">
+          این یک صفحه‌ی نمایشی است تا فقط سوییچ و جداسازی کامل بخش‌ها را ببینی.
+          اگر اوکی بود، همین ساختار را به mail.tm یا سرویس دلخواهت وصل می‌کنم تا
+          ایمیل بسازی و صندوق را بخوانی.
+        </p>
+
+        <div class="row">
+          <input id="demoEmail" class="input" readonly value="temp-xyz@mail.example" />
+          <button class="btn" onclick="copy('#demoEmail')">کپی</button>
+        </div>
+
+        <div style="margin-top:16px" class="muted">صندوق (نمایشی):</div>
+        <div class="list" style="margin-top:8px">
+          <div class="item"><span>Welcome 🎉</span><button class="btn ghost" disabled>بازکردن</button></div>
+          <div class="item"><span>Security code: 823914</span><button class="btn ghost" disabled>کپی کد</button></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2025 – Bahrami • UI با سوییچ iOS و جداسازی کامل صفحات</footer>
   </div>
 
 <script>
-function $(id){return document.getElementById(id)}
-var el={length:$('length'),count:$('count'),emailLen:$('emailLen'),emailDot:$('emailDot'),
-  lower:$('lower'),upper:$('upper'),digits:$('digits'),symbols:$('symbols'),
-  noSimilar:$('noSimilar'),noRepeat:$('noRepeat'),requireEach:$('requireEach'),
-  theme:$('theme'),btnBg:$('btnBg'),btnGen:$('btnGen'),btnEmail:$('btnEmail'),
-  btnCSV:$('btnCSV'),btnJSON:$('btnJSON'),btnToggle:$('btnToggle'),btnClear:$('btnClear'),
-  tabLatest:$('tabLatest'),tabFav:$('tabFav'),strength:$('strength'),strengthLabel:$('strengthLabel'),
-  output:$('output'),svc:$('svc'),
-  tmpCreate:$('tmpCreate'),tmpCopy:$('tmpCopy'),tmpRefresh:$('tmpRefresh'),
-  tmpAddr:$('tmpAddr'),tmpStatus:$('tmpStatus'),tmpInbox:$('tmpInbox')
-};
-var store={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){localStorage.setItem(k,JSON.stringify(v))}};
+  // --- Switch pages ---
+  const switcher = document.getElementById('switcher');
+  const pagePass = document.getElementById('page-pass');
+  const pageMail = document.getElementById('page-mail');
 
-/* Theme + BG */
-function applyTheme(n){if(n==='light'){document.body.classList.add('theme-light')}else{document.body.classList.remove('theme-light')} store.set('theme',n)}
-applyTheme(store.get('theme','dark')); el.theme.value=store.get('theme','dark');
-el.theme.onchange=function(e){applyTheme(e.target.value)};
-var bgOn=store.get('bgOn',false); if(bgOn)document.body.classList.add('bg-forest');
-el.btnBg.onclick=function(){bgOn=!bgOn;store.set('bgOn',bgOn); document.body.classList.toggle('bg-forest',bgOn)};
-
-/* Utils */
-function rnd(max){
-  if(max<=0) return 0;
-  if(window.crypto&&window.crypto.getRandomValues){
-    var a=new Uint32Array(1), M=0xffffffff, lim=Math.floor(M/max)*max, r;
-    do{window.crypto.getRandomValues(a); r=a[0];}while(r>=lim);
-    return r%max;
-  }
-  return Math.floor(Math.random()*max);
-}
-function pick(s){return s.charAt(rnd(s.length))}
-function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),t=a[i];a[i]=a[j];a[j]=t}return a}
-
-/* Passwords */
-var sets={lower:"abcdefghijklmnopqrstuvwxyz",upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",digits:"0123456789",symbols:"!@#$%^&*()_-+=[]{}|:;,.?/~`<>"},
-    similarMap={I:1,l:1,"1":1,O:1,"0":1,B:1,"8":1,S:1,"5":1,Z:1,"2":1};
-function removeSimilar(s){var out="";for(var i=0;i<s.length;i++){var c=s[i];if(!similarMap[c])out+=c;}return out;}
-function buildPool(o){var g=[]; if(o.lower)g.push(sets.lower); if(o.upper)g.push(sets.upper); if(o.digits)g.push(sets.digits); if(o.symbols)g.push(sets.symbols);
-  if(o.noSimilar){for(var i=0;i<g.length;i++)g[i]=removeSimilar(g[i]);} if(!g.length)g=[sets.lower]; var all=""; for(var j=0;j<g.length;j++)all+=g[j]; return {groups:g,all:all};}
-function genPass(o){var p=buildPool(o),groups=p.groups,all=p.all,L=parseInt(o.length||12,10);
-  if(o.requireEach && L<groups.length)L=groups.length; var ch=[]; if(o.requireEach)for(var i=0;i<groups.length;i++)ch.push(pick(groups[i]));
-  while(ch.length<L){var c=pick(all); if(o.noRepeat && ch.length && ch[ch.length-1]===c)continue; ch.push(c);} return shuffle(ch).slice(0,L).join("");
-}
-function scorePassword(p){if(!p)return 0; var s=0, seen={},uniq=0; for(var i=0;i<p.length;i++){if(!seen[p[i]]){seen[p[i]]=1; uniq++;}}
-  s+=Math.min(uniq*4,40); if(/[a-z]/.test(p))s+=10; if(/[A-Z]/.test(p))s+=10; if(/\d/.test(p))s+=10; if(/[^\w]/.test(p))s+=15; if(p.length>=12)s+=10; if(/(.)\1{2,}/.test(p))s-=10; if(s<0)s=0; if(s>100)s=100; return s;}
-function updateMeter(p){var sc=scorePassword(p); el.strength.className='meter '+(sc<40?'w1':sc<70?'w2':'w3'); el.strengthLabel.textContent='قدرت: '+(sc<40?'ضعیف':sc<70?'متوسط':'قوی')+' ('+sc+'%)';}
-
-var last=[], hidden=store.get('hidden',false), favs=store.get('favs',[]), showFav=false;
-function isFav(x){return favs.indexOf(x)>-1}
-function toggleFav(x){if(isFav(x))favs=favs.filter(function(i){return i!==x}); else favs.push(x); store.set('favs',favs); render(last);}
-function render(list){
-  last=list; var data=showFav?list.filter(isFav):list; el.output.innerHTML="";
-  for(var i=0;i<data.length;i++){(function(x){
-    var row=document.createElement("div"); row.className="password";
-    var span=document.createElement("span"); span.textContent=hidden?Array(x.length+1).join("•"):x;
-    var act=document.createElement("div"); act.className="password-actions";
-    var b1=document.createElement("button"); b1.textContent="📋 کپی"; b1.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(x); if(navigator.vibrate)navigator.vibrate(20)};
-    var b2=document.createElement("button"); b2.textContent=isFav(x)?"⭐":"☆"; b2.onclick=function(){toggleFav(x)};
-    act.appendChild(b1); act.appendChild(b2); row.appendChild(span); row.appendChild(act); el.output.appendChild(row);
-  })(data[i]);}
-  updateMeter(list[0]||"");
-}
-function opts(){return {lower:el.lower.checked,upper:el.upper.checked,digits:el.digits.checked,symbols:el.symbols.checked,noSimilar:el.noSimilar.checked,noRepeat:el.noRepeat.checked,requireEach:el.requireEach.checked,length:parseInt(el.length.value||12,10)}}
-
-el.btnGen.onclick=function(){var c=Math.min(100,Math.max(1,parseInt(el.count.value||5,10))); var o=opts(), arr=[]; for(var i=0;i<c;i++)arr.push(genPass(o)); render(arr);};
-el.btnCSV.onclick=function(){if(!last.length)return; var b=new Blob([last.join("\n")],{type:"text/csv"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click();};
-el.btnJSON.onclick=function(){if(!last.length)return; var b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click();};
-el.btnToggle.onclick=function(){hidden=!hidden; store.set('hidden',hidden); render(last);};
-el.btnClear.onclick=function(){render([])}; el.tabLatest.onclick=function(){showFav=false; render(last)}; el.tabFav.onclick=function(){showFav=true; render(last)};
-
-/* Gmail-like addresses */
-el.btnEmail.onclick=function(){
-  var c=Math.min(100,Math.max(1,parseInt(el.count.value||5,10))), L=Math.max(6,Math.min(30,parseInt(el.emailLen.value||10,10)));
-  var letters="abcdefghijklmnopqrstuvwxyz", pool=letters+"0123456789"+(el.emailDot.checked?".":""); var out=[];
-  for(var i=0;i<c;i++){var s=letters.charAt(rnd(letters.length)); while(s.length<L){var ch=pool.charAt(rnd(pool.length)); if(ch==="."&&(s.charAt(s.length-1)==="."||s.length===L-1))continue; s+=ch;} out.push(s+"@gmail.com");}
-  render(out);
-};
-
-/* Modal */
-var modal={modal:document.getElementById('mailModal'),subj:document.getElementById('mmSubj'),from:document.getElementById('mmFrom'),
-  time:document.getElementById('mmTime'),iframe:document.getElementById('mailHtml'),pre:document.getElementById('mailText'),
-  attach:document.getElementById('mmAttach'),close:document.getElementById('mmClose'),copy:document.getElementById('mmCopy'),
-  tabH:document.getElementById('tabHtml'),tabT:document.getElementById('tabText')};
-function showModal(){modal.modal.classList.remove('hidden')} function hideModal(){modal.modal.classList.add('hidden')}
-modal.close.onclick=hideModal;
-modal.tabH.onclick=function(){modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden')};
-modal.tabT.onclick=function(){modal.pre.classList.remove('hidden'); modal.iframe.classList.add('hidden')};
-modal.copy.onclick=function(){if(navigator.clipboard)navigator.clipboard.writeText(modal.pre.textContent||''); if(navigator.vibrate)navigator.vibrate(20);};
-modal.modal.addEventListener('click',function(e){if(e.target===modal.modal)hideModal()});
-function renderInbox(items,clicker){
-  el.tmpInbox.innerHTML=""; if(!items.length){el.tmpInbox.innerHTML="<div class='password'>صندوق خالی است.</div>"; return;}
-  for(var i=0;i<items.length;i++){(function(html,idx){var row=document.createElement("div"); row.className="password"; row.style.cursor="pointer";
-    var info=document.createElement("div"); info.style.direction="ltr"; info.innerHTML=html; row.onclick=function(e){clicker(e,idx)}; row.appendChild(info); el.tmpInbox.appendChild(row);
-  })(items[i],i);}
-}
-function setTmpStatus(t){el.tmpStatus.textContent="وضعیت: "+t}
-
-/* Mail.tm */
-function makeMailTmLike(apiBase){
-  var st={api:apiBase,token:null,address:null};
-  function j(path,opts){opts=opts||{}; var h=opts.headers||{}; if(st.token)h.Authorization="Bearer "+st.token;
-    if(opts.body && !h["Content-Type"])h["Content-Type"]="application/json";
-    return fetch(st.api+path,Object.assign({},opts,{headers:h})).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status); return r.json();});
-  }
-  var obj={
-    create:function(){
-      setTmpStatus("در حال ساخت...");
-      return j("/domains").then(function(d){
-        var arr=d && d["hydra:member"] ? d["hydra:member"] : [];
-        var domain=(arr[0]&&arr[0].domain)?arr[0].domain:null; if(!domain)throw new Error("بدون دامنه");
-        var id=Math.random().toString(36).slice(2,10), addr=id+"@"+domain, pass=Math.random().toString(36)+"!A9";
-        return j("/accounts",{method:"POST",body:JSON.stringify({address:addr,password:pass})})
-          .then(function(){return j("/token",{method:"POST",body:JSON.stringify({address:addr,password:pass})});})
-          .then(function(tok){st.token=tok.token; st.address=addr; el.tmpAddr.textContent=addr; el.tmpCopy.disabled=false; el.tmpRefresh.disabled=false; setTmpStatus("ساخته شد."); return obj.refresh();});
-      }).catch(function(){setTmpStatus("خطا در ساخت ایمیل.")});
-    },
-    refresh:function(){
-      if(!st.token) return Promise.resolve();
-      setTmpStatus("بروزرسانی صندوق...");
-      return j("/messages").then(function(m){
-        var mem=m && m["hydra:member"] ? m["hydra:member"] : [];
-        var arr=mem.map(function(x){var from=x&&x.from&&x.from.address?x.from.address:"unknown";
-          var subj=x&&x.subject?x.subject:"(بدون موضوع)"; var time=(x&&x.createdAt?x.createdAt:"").replace("T"," ").replace("Z",""); return {id:x.id,from:from,subj:subj,time:time};});
-        renderInbox(arr.map(function(x){return "<div><b>"+x.subj+"</b></div><div>From: "+x.from+"</div><div><small>"+x.time+"</small></div>"}), function(e,idx){obj.open(arr[idx].id)});
-        setTmpStatus("آماده.");
-      }).catch(function(){setTmpStatus("بروزرسانی ناموفق.")});
-    },
-    open:function(id){
-      return j("/messages/"+id).then(function(msg){
-        modal.subj.textContent=msg.subject||"(بدون موضوع)";
-        var from=(msg&&msg.from&&msg.from.address)?msg.from.address:"unknown";
-        modal.from.textContent="From: "+from;
-        modal.time.innerHTML="<small>"+(msg.createdAt||"").replace("T"," ").replace("Z","")+"</small>";
-        var plain=msg.text||msg.intro||"(بدون متن)"; modal.pre.textContent=plain;
-        var htmlArr=msg.html||[], htmlStr=Object.prototype.toString.call(htmlArr)==='[object Array]'?htmlArr.join("\n"):(htmlArr||"");
-        modal.iframe.srcdoc=htmlStr||"<html><body style='font-family:monospace;white-space:pre-wrap'>"+plain+"</body></html>";
-        var atts=msg.attachments||[];
-        if(atts.length){modal.attach.innerHTML="";
-          for(var i=0;i<atts.length;i++){var a=atts[i], url=a.downloadUrl? a.downloadUrl : (a['@id']?(st.api+a['@id']+'/download'):'#');
-            var link=document.createElement('a'); link.href=url; link.target="_blank"; link.rel="noopener"; link.textContent="⬇ "+(a.filename||'attachment')+" ("+Math.round((a.size||0)/1024)+" KB)"; modal.attach.appendChild(link);}
-        } else {modal.attach.innerHTML="";}
-        modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
-      }).catch(function(){setTmpStatus("باز کردن پیام ناموفق.")});
+  switcher.addEventListener('change', () => {
+    if (switcher.checked) {
+      pagePass.classList.remove('active');
+      pageMail.classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      pageMail.classList.remove('active');
+      pagePass.classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
     }
-  };
-  return obj;
-}
-var svc_mailtm=makeMailTmLike("https://api.mail.tm");
+  });
 
-/* 1secmail */
-var secmail={api:"https://www.1secmail.com/api/v1/",login:null,domain:null};
-function sec_create(){
-  setTmpStatus("در حال ساخت...");
-  return fetch(secmail.api+"?action=genRandomMailbox&count=1").then(function(x){return x.json()}).then(function(r){
-    var addr=r[0], sp=addr.split("@"); secmail.login=sp[0]; secmail.domain=sp[1];
-    el.tmpAddr.textContent=addr; el.tmpCopy.disabled=false; el.tmpRefresh.disabled=false; setTmpStatus("ساخته شد."); return sec_refresh();
-  }).catch(function(){setTmpStatus("ساخت ناموفق.")});
-}
-function sec_refresh(){
-  if(!secmail.login) return Promise.resolve();
-  setTmpStatus("بروزرسانی صندوق...");
-  var url=secmail.api+"?action=getMessages&login="+encodeURIComponent(secmail.login)+"&domain="+encodeURIComponent(secmail.domain);
-  return fetch(url).then(function(x){return x.json()}).then(function(list){
-    var rows=(list||[]).map(function(m){return {id:m.id,from:m.from,subj:m.subject||"(بدون موضوع)",time:(m.date||"")};});
-    renderInbox(rows.map(function(x){return "<div><b>"+x.subj+"</b></div><div>From: "+x.from+"</div><div><small>"+x.time+"</small></div>"}), function(e,idx){sec_open(rows[idx].id)});
-    setTmpStatus("آماده.");
-  }).catch(function(){setTmpStatus("بروزرسانی ناموفق.")});
-}
-function sec_open(id){
-  var url=secmail.api+"?action=readMessage&login="+encodeURIComponent(secmail.login)+"&domain="+encodeURIComponent(secmail.domain)+"&id="+id;
-  fetch(url).then(function(x){return x.json()}).then(function(msg){
-    modal.subj.textContent=msg.subject||"(بدون موضوع)"; modal.from.textContent="From: "+(msg.from||"unknown");
-    modal.time.innerHTML="<small>"+(msg.date||"")+"</small>";
-    var plain=msg.textBody||msg.intro||"(بدون متن)"; modal.pre.textContent=plain;
-    var htmlStr=msg.htmlBody||""; modal.iframe.srcdoc= htmlStr || "<html><body style='font-family:monospace;white-space:pre-wrap'>"+plain+"</body></html>";
-    modal.attach.innerHTML=""; modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
-  }).catch(function(){setTmpStatus("باز کردن پیام ناموفق.")});
-}
+  // --- Password generator ---
+  const amb = "Il1O0oB8G6S5Z2";
+  const lowers = "abcdefghijklmnopqrstuvwxyz";
+  const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const nums   = "0123456789";
+  const syms   = "!@#$%^&*()_+-=[]{};:,.?/~";
 
-/* Service buttons */
-el.tmpCreate.onclick=function(){var v=el.svc.value; if(v==="mailtm")svc_mailtm.create(); else sec_create();};
-el.tmpRefresh.onclick=function(){var v=el.svc.value; if(v==="mailtm")svc_mailtm.refresh(); else sec_refresh();};
-el.tmpCopy.onclick=function(){var addr=el.tmpAddr.textContent.replace(/\s+/g,'').trim(); if(addr&&addr!=='—'&&navigator.clipboard){navigator.clipboard.writeText(addr); if(navigator.vibrate)navigator.vibrate(20);}};
+  function rand(n){ return Math.floor(Math.random()*n) }
+  function shuffle(s){ return s.split('').sort(()=>Math.random()-0.5).join('') }
 
-/* init */
-(function init(){render([]); el.btnGen.click();
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js');}
-})();
+  function buildPool() {
+    let pool = "";
+    if (optLower.checked) pool += lowers;
+    if (optUpper.checked) pool += uppers;
+    if (optNum.checked)   pool += nums;
+    if (optSym.checked)   pool += syms;
+    if (optNoAmb.checked) pool = pool.split('').filter(ch => !amb.includes(ch)).join('');
+    return pool;
+  }
+
+  function uniqueChars(str){
+    return new Set(str.split('')).size === str.length;
+  }
+
+  function genOne(len){
+    let pool = buildPool();
+    if (!pool) return "";
+    // تضمین حضور حداقل از هر گروه انتخاب‌شده
+    let must = "";
+    if (optLower.checked) must += lowers[rand(lowers.length)];
+    if (optUpper.checked) must += uppers[rand(uppers.length)];
+    if (optNum.checked)   must += nums[rand(nums.length)];
+    if (optSym.checked)   must += syms[rand(syms.length)];
+
+    let out = must;
+    while (out.length < len){
+      const ch = pool[rand(pool.length)];
+      if (optNoDup.checked && out.includes(ch)) continue;
+      out += ch;
+    }
+    out = shuffle(out).slice(0,len);
+    if (optNoDup.checked && !uniqueChars(out)) return genOne(len); // تکرار نداشتن
+    return out;
+  }
+
+  function strengthScore(len, sets){
+    // خیلی ساده: طول + تعداد گروه‌های فعال
+    return Math.min(100, Math.round((len/20)*60 + sets*10 + (optNoDup.checked?10:0)));
+  }
+
+  // DOM refs
+  const len = document.getElementById('len');
+  const cnt = document.getElementById('cnt');
+  const optLower = document.getElementById('optLower');
+  const optUpper = document.getElementById('optUpper');
+  const optNum   = document.getElementById('optNum');
+  const optSym   = document.getElementById('optSym');
+  const optNoAmb = document.getElementById('optNoAmb');
+  const optNoDup = document.getElementById('optNoDup');
+
+  const list = document.getElementById('list');
+  const bar  = document.getElementById('bar');
+  const btnGen = document.getElementById('btnGen');
+  const btnClear = document.getElementById('btnClear');
+
+  function updateStrength(){
+    const sets = [optLower.checked,optUpper.checked,optNum.checked,optSym.checked].filter(Boolean).length;
+    const s = strengthScore(+len.value, sets);
+    bar.style.width = s + "%";
+  }
+  [len,optLower,optUpper,optNum,optSym,optNoDup].forEach(el => el.addEventListener('input', updateStrength));
+  updateStrength();
+
+  function addItem(txt){
+    const row = document.createElement('div');
+    row.className = 'item';
+    const span = document.createElement('span');
+    span.style.direction = 'ltr';
+    span.style.userSelect = 'all';
+    span.textContent = txt;
+    const actions = document.createElement('div');
+    actions.style.display='flex'; actions.style.gap='8px';
+    const b1 = document.createElement('button'); b1.className='btn ghost'; b1.textContent='⭐';
+    b1.title='علاقه‌مندی'; b1.onclick=()=>{b1.textContent = (b1.textContent==='⭐'?'★':'⭐')}
+    const b2 = document.createElement('button'); b2.className='btn'; b2.textContent='کپی';
+    b2.onclick=()=>navigator.clipboard.writeText(txt);
+    actions.append(b1,b2);
+    row.append(span,actions);
+    list.prepend(row);
+  }
+
+  btnGen.addEventListener('click', ()=>{
+    list.innerHTML = "";
+    const n = Math.max(1, Math.min(20, +cnt.value||5));
+    const l = Math.max(6, Math.min(64, +len.value||12));
+    for (let i=0;i<n;i++) addItem(genOne(l));
+  });
+
+  btnClear.addEventListener('click', ()=>{ list.innerHTML=""; });
+
+  // util copy
+  window.copy = (sel)=>{
+    const el = document.querySelector(sel);
+    if (!el) return;
+    navigator.clipboard.writeText(el.value||el.textContent||"");
+  }
 </script>
 </body>
 </html>
