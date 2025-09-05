@@ -4,60 +4,44 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>رمز ساز bahrami</title>
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0f172a">
-
 <style>
-:root{
-  --bg:#0b1220; --fg:#e5e7eb; --card:#0f172a; --muted:#1f2937; --btn:#16a34a; --btn-fg:#07110a;
-}
+:root{--bg:#0b1220;--fg:#e5e7eb;--card:#0f172a;--muted:#1f2937;--btn:#16a34a;--btn-fg:#07110a}
 *{box-sizing:border-box}
-body{margin:0; font-family: Vazirmatn,iransans,sans-serif; color:var(--fg); background:var(--bg); min-height:100vh;}
+body{margin:0;font-family:Vazirmatn,iransans,sans-serif;color:var(--fg);background:var(--bg);min-height:100vh}
 .container{max-width:860px;margin:24px auto;padding:16px}
-.card{background:var(--card); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.25); padding:22px; backdrop-filter: blur(6px);}
-h1{margin:0 0 12px; font-size:28px}
+.card{background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:22px;backdrop-filter:blur(6px)}
+h1{margin:0 0 12px;font-size:28px}
 h2{margin:12px 0 8px}
-.row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
-label{display:inline-flex; align-items:center; gap:8px; font-size:14px}
-input[type=number]{width:88px; padding:8px 10px; border-radius:10px; border:1px solid var(--muted); background:transparent; color:var(--fg)}
-select{padding:9px 12px; border-radius:12px; border:1px solid var(--muted); background:transparent; color:var(--fg)}
-button{border:none; border-radius:12px; padding:10px 14px; background:var(--btn); color:var(--btn-fg); cursor:pointer; font-weight:600}
-button.secondary{background:transparent;color:var(--fg); border:1px solid var(--muted)}
-.password{display:flex; justify-content:space-between; align-items:center; gap:8px; background:rgba(255,255,255,.06); padding:10px 12px; border-radius:12px; font-family:ui-monospace,monospace}
-.password-actions{display:flex; gap:6px; flex-wrap:wrap}
-
-/* نوار قدرت */
-.meter{height:8px; border-radius:6px; background:#111827; overflow:hidden; margin-top:8px}
-.meter > span{display:block; height:100%; width:0%;}
-.meter.w1 > span{width:33%; background:#ef4444}
-.meter.w2 > span{width:66%; background:#f59e0b}
-.meter.w3 > span{width:100%; background:#22c55e}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+label{display:inline-flex;align-items:center;gap:8px;font-size:14px}
+input[type=number]{width:88px;padding:8px 10px;border-radius:10px;border:1px solid var(--muted);background:transparent;color:var(--fg)}
+select{padding:9px 12px;border-radius:12px;border:1px solid var(--muted);background:transparent;color:var(--fg)}
+button{border:none;border-radius:12px;padding:10px 14px;background:var(--btn);color:var(--btn-fg);cursor:pointer;font-weight:600}
+button.secondary{background:transparent;color:var(--fg);border:1px solid var(--muted)}
+.password{display:flex;justify-content:space-between;align-items:center;gap:8px;background:rgba(255,255,255,.06);padding:10px 12px;border-radius:12px;font-family:ui-monospace,monospace}
+.password-actions{display:flex;gap:6px;flex-wrap:wrap}
+.meter{height:8px;border-radius:6px;background:#111827;overflow:hidden;margin-top:8px}
+.meter>span{display:block;height:100%;width:0%}
+.meter.w1>span{width:33%;background:#ef4444}
+.meter.w2>span{width:66%;background:#f59e0b}
+.meter.w3>span{width:100%;background:#22c55e}
 small.meter-label{opacity:.8}
-
-/* لیست‌ها */
-.list{display:grid; gap:8px; margin-top:12px}
-.tabs{display:flex; gap:8px; margin-top:10px}
-
-/* تم‌ها */
-.theme-light{--bg:#f8fafc; --fg:#0f172a; --card:#ffffff; --muted:#e2e8f0; --btn:#0f172a; --btn-fg:#ffffff;}
-.theme-dark{--bg:#0b1220; --fg:#e5e7eb; --card:#0f172a; --muted:#1f2937; --btn:#16a34a; --btn-fg:#07110a;}
-.theme-blue{--bg:#e6f0ff; --fg:#0b1a33; --card:#ffffff; --muted:#d9e6ff; --btn:#1d4ed8; --btn-fg:#ffffff;}
-.theme-purple{--bg:#f5f0ff; --fg:#27104a; --card:#ffffff; --muted:#eadbff; --btn:#7c3aed; --btn-fg:#ffffff;}
-.theme-gradient{--fg:#0f172a; --btn:#111827; --btn-fg:#ffffff;}
-.theme-gradient body,.theme-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 60%,#9333ea 100%) fixed;}
-
-/* پس‌زمینه‌های رنگی/عکسی */
-.bg-1{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%) fixed;}
-.bg-2{background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%) fixed;}
-.bg-3{background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%) fixed;}
-.bg-4{background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%) fixed;}
-.bg-forest{background:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1280&q=80') center/cover fixed;}
-
-@media (max-width:520px){ .row>*{flex:1 1 auto} h1{font-size:22px} }
-
-/* ===== Mail Viewer Modal ===== */
+.list{display:grid;gap:8px;margin-top:12px}
+.tabs{display:flex;gap:8px;margin-top:10px}
+.theme-light{--bg:#f8fafc;--fg:#0f172a;--card:#fff;--muted:#e2e8f0;--btn:#0f172a;--btn-fg:#fff}
+.theme-dark{--bg:#0b1220;--fg:#e5e7eb;--card:#0f172a;--muted:#1f2937;--btn:#16a34a;--btn-fg:#07110a}
+.theme-blue{--bg:#e6f0ff;--fg:#0b1a33;--card:#fff;--muted:#d9e6ff;--btn:#1d4ed8;--btn-fg:#fff}
+.theme-purple{--bg:#f5f0ff;--fg:#27104a;--card:#fff;--muted:#eadbff;--btn:#7c3aed;--btn-fg:#fff}
+.theme-gradient{--fg:#0f172a;--btn:#111827;--btn-fg:#fff}
+.theme-gradient body,.theme-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 60%,#9333ea 100%) fixed}
+.bg-1{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%) fixed}
+.bg-2{background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%) fixed}
+.bg-3{background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%) fixed}
+.bg-4{background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%) fixed}
+.bg-forest{background:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1280&q=80') center/cover fixed}
+@media (max-width:520px){.row>*{flex:1 1 auto}h1{font-size:22px}}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:9999}
 .modal.hidden{display:none}
 .modal-card{width:min(900px,98vw);max-height:92vh;background:var(--card);color:var(--fg);border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.35);display:flex;flex-direction:column}
@@ -86,10 +70,8 @@ small.meter-label{opacity:.8}
       <label>تعداد خروجی: <input type="number" id="count" value="5" min="1" max="100"></label>
       <label>تم:
         <select id="theme">
-          <option value="dark">تیره</option>
-          <option value="light">روشن</option>
-          <option value="blue">آبی</option>
-          <option value="purple">بنفش</option>
+          <option value="dark">تیره</option><option value="light">روشن</option>
+          <option value="blue">آبی</option><option value="purple">بنفش</option>
           <option value="gradient">گرادیانت</option>
         </select>
       </label>
@@ -117,10 +99,10 @@ small.meter-label{opacity:.8}
 
     <div class="row">
       <button id="btnGen">🎲 تولید رمز</button>
-      <button id="btnCSV"   class="secondary">CSV</button>
-      <button id="btnJSON"  class="secondary">JSON</button>
+      <button id="btnCSV" class="secondary">CSV</button>
+      <button id="btnJSON" class="secondary">JSON</button>
       <button id="btnToggle" class="secondary">👁️ نمایش/مخفی</button>
-      <button id="btnClear"  class="secondary">🧹 پاک‌کردن تاریخچه</button>
+      <button id="btnClear" class="secondary">🧹 پاک‌کردن تاریخچه</button>
     </div>
 
     <div class="meter" id="strength"><span></span></div>
@@ -128,17 +110,29 @@ small.meter-label{opacity:.8}
 
     <div class="tabs">
       <button id="tabLatest" class="secondary">آخرین‌ها</button>
-      <button id="tabFav"    class="secondary">⭐ علاقه‌مندی‌ها</button>
+      <button id="tabFav" class="secondary">⭐ علاقه‌مندی‌ها</button>
     </div>
 
     <div id="output" class="list"></div>
 
-    <!-- ایمیل موقت -->
-    <hr style="border-color: rgba(255,255,255,.15); margin:18px 0">
-    <h2>✉️ ایمیل یک‌بارمصرف (Mail.tm)</h2>
+    <hr style="border-color:rgba(255,255,255,.15);margin:18px 0">
+    <h2>✉️ ایمیل یک‌بارمصرف</h2>
     <div class="row">
-      <button id="tmpCreate">ساخت ایمیل موقت</button>
-      <button id="tmpCopy"   class="secondary" disabled>📋 کپی آدرس</button>
+      <label>سرویس:
+        <select id="svc">
+          <option value="mailtm">Mail.tm</option>
+          <option value="mailgw">Mail.gw</option>
+          <option value="1secmail">1secmail</option>
+          <option value="maildrop">Maildrop.cc</option>
+        </select>
+      </label>
+      <label id="domWrap" style="display:none">دامنه:
+        <select id="svcDomain"></select>
+      </label>
+    </div>
+    <div class="row">
+      <button id="tmpCreate">ساخت ایمیل</button>
+      <button id="tmpCopy" class="secondary" disabled>📋 کپی آدرس</button>
       <button id="tmpRefresh" class="secondary" disabled>🔄 بروزرسانی</button>
     </div>
     <div class="password"><span id="tmpAddr">—</span></div>
@@ -147,7 +141,7 @@ small.meter-label{opacity:.8}
   </div>
 </div>
 
-<!-- ===== Mail Viewer Modal ===== -->
+<!-- مودال نمایش ایمیل -->
 <div id="mailModal" class="modal hidden" role="dialog" aria-modal="true">
   <div class="modal-card">
     <div class="modal-head">
@@ -159,353 +153,207 @@ small.meter-label{opacity:.8}
         <div id="mmFrom">From: —</div>
         <div id="mmTime"><small>—</small></div>
       </div>
-
       <div class="mail-tabs">
         <button id="tabHtml" class="secondary">نمایش HTML</button>
         <button id="tabText" class="secondary">نمایش متن</button>
       </div>
-
       <div class="mail-view">
         <iframe id="mailHtml" sandbox="allow-same-origin"></iframe>
         <pre id="mailText" class="hidden"></pre>
       </div>
-
       <div id="mmAttach" class="attach hidden"></div>
     </div>
-    <div class="modal-foot">
-      <button id="mmCopy" class="secondary">📋 کپی متن</button>
-    </div>
+    <div class="modal-foot"><button id="mmCopy" class="secondary">📋 کپی متن</button></div>
   </div>
 </div>
 
 <script>
-/* ========= رفرنس ایمن عناصر ========= */
-const $ = (id) => document.getElementById(id);
-const el = {
-  length:   $('length'),
-  count:    $('count'),
-  emailLen: $('emailLen'),
-  emailDot: $('emailDot'),
-  lower:    $('lower'),
-  upper:    $('upper'),
-  digits:   $('digits'),
-  symbols:  $('symbols'),
-  noSimilar:$('noSimilar'),
-  noRepeat: $('noRepeat'),
-  requireEach:$('requireEach'),
-
-  theme:    $('theme'),
-  btnBg:    $('btnBg'),
-
-  btnGen:   $('btnGen'),
-  btnEmail: $('btnEmail'),
-  btnCSV:   $('btnCSV'),
-  btnJSON:  $('btnJSON'),
-  btnToggle:$('btnToggle'),
-  btnClear: $('btnClear'),
-
-  tabLatest:$('tabLatest'),
-  tabFav:   $('tabFav'),
-
-  strength: $('strength'),
-  strengthLabel: $('strengthLabel'),
-
-  output:   $('output'),
-
-  // temp mail
-  tmpCreate:$('tmpCreate'),
-  tmpCopy:  $('tmpCopy'),
-  tmpRefresh:$('tmpRefresh'),
-  tmpAddr:  $('tmpAddr'),
-  tmpStatus:$('tmpStatus'),
-  tmpInbox: $('tmpInbox')
+/* ==== کمک‌ها و UI عمومی ==== */
+const $=id=>document.getElementById(id);
+const el={length:$('length'),count:$('count'),emailLen:$('emailLen'),emailDot:$('emailDot'),
+  lower:$('lower'),upper:$('upper'),digits:$('digits'),symbols:$('symbols'),
+  noSimilar:$('noSimilar'),noRepeat:$('noRepeat'),requireEach:$('requireEach'),
+  theme:$('theme'),btnBg:$('btnBg'),btnGen:$('btnGen'),btnEmail:$('btnEmail'),
+  btnCSV:$('btnCSV'),btnJSON:$('btnJSON'),btnToggle:$('btnToggle'),btnClear:$('btnClear'),
+  tabLatest:$('tabLatest'),tabFav:$('tabFav'),strength:$('strength'),strengthLabel:$('strengthLabel'),
+  output:$('output'),
+  svc:$('svc'),svcDomain:$('svcDomain'),domWrap:$('domWrap'),
+  tmpCreate:$('tmpCreate'),tmpCopy:$('tmpCopy'),tmpRefresh:$('tmpRefresh'),
+  tmpAddr:$('tmpAddr'),tmpStatus:$('tmpStatus'),tmpInbox:$('tmpInbox')
 };
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){localStorage.setItem(k,JSON.stringify(v))}};
+/* تم/پس‌زمینه */
+const THEME_KEY="theme",BG_KEY="bg";
+function applyTheme(n){document.body.className="theme-"+n;store.set(THEME_KEY,n)}
+applyTheme(store.get(THEME_KEY,"dark"));el.theme.value=store.get(THEME_KEY,"dark");el.theme.onchange=e=>applyTheme(e.target.value);
+const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"];let bgIndex=store.get(BG_KEY,-1);
+function applyBg(i){document.body.classList.remove(...BG_CLASSES);if(i>-1)document.body.classList.add(BG_CLASSES[i])}
+applyBg(bgIndex);el.btnBg.onclick=()=>{bgIndex=(bgIndex+1)%(BG_CLASSES.length+1);if(bgIndex===BG_CLASSES.length)bgIndex=-1;applyBg(bgIndex);store.set(BG_KEY,bgIndex)};
 
-/* ========= ذخیره ساده ========= */
-const store = {
-  get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch{ return d; } },
-  set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
-};
-
-/* ========= تم و پس‌زمینه ========= */
-const THEME_KEY="theme", BG_KEY="bg";
-function applyTheme(name){ document.body.className = "theme-"+name; store.set(THEME_KEY,name); }
-applyTheme(store.get(THEME_KEY,"dark"));
-el.theme.value = store.get(THEME_KEY,"dark");
-el.theme.onchange = e => applyTheme(e.target.value);
-
-const BG_CLASSES=["bg-1","bg-2","bg-3","bg-4","bg-forest"]; 
-let bgIndex=store.get(BG_KEY,-1);
-function applyBg(i){ document.body.classList.remove(...BG_CLASSES); if(i>-1) document.body.classList.add(BG_CLASSES[i]); }
-applyBg(bgIndex);
-el.btnBg.onclick = () => { bgIndex=(bgIndex+1)%(BG_CLASSES.length+1); if(bgIndex===BG_CLASSES.length) bgIndex=-1; applyBg(bgIndex); store.set(BG_KEY,bgIndex); };
-
-/* ========= تولید رمز ========= */
-function rnd(max){
-  if (max <= 0) return 0;
-  if (window.crypto && crypto.getRandomValues) {
-    const a = new Uint32Array(1);
-    const M = 0xffffffff, lim = Math.floor(M / max) * max;
-    let r;
-    do { crypto.getRandomValues(a); r = a[0]; } while (r >= lim);
-    return r % max;
-  }
-  return Math.floor(Math.random() * max);
-}
-function pick(s){ return s[rnd(s.length)]; }
-function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=rnd(i+1); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
-
+/* تولید رمز/ایمیل gmail */
+function rnd(max){if(max<=0)return 0;if(crypto?.getRandomValues){const a=new Uint32Array(1),M=0xffffffff,lim=Math.floor(M/max)*max;let r;do{crypto.getRandomValues(a);r=a[0]}while(r>=lim);return r%max}return Math.floor(Math.random()*max)}
+function pick(s){return s[rnd(s.length)]}
+function shuffle(a){for(let i=a.length-1;i>0;i++){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
 const sets={lower:"abcdefghijklmnopqrstuvwxyz",upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",digits:"0123456789",symbols:"!@#$%^&*()_-+=[]{}|:;,.?/~`<>"},
       similar=new Set("Il1O0B8S5Z2".split(""));
+function buildPool(o){let g=[];if(o.lower)g.push(sets.lower);if(o.upper)g.push(sets.upper);if(o.digits)g.push(sets.digits);if(o.symbols)g.push(sets.symbols);if(o.noSimilar)g=g.map(s=>[...s].filter(c=>!similar.has(c)).join(""));if(!g.length)g=[sets.lower];return{groups:g,all:g.join("")}}
+function genPass(o){const {groups,all}=buildPool(o);let L=parseInt(o.length||12,10);if(o.requireEach&&L<groups.length)L=groups.length;const ch=[];if(o.requireEach)groups.forEach(g=>ch.push(pick(g)));while(ch.length<L){const c=pick(all);if(o.noRepeat&&ch.length&&ch[ch.length-1]===c)continue;ch.push(c)}return shuffle(ch).slice(0,L).join("")}
+function scorePassword(p){if(!p)return 0;let s=0;const u=new Set(p).size;s+=Math.min(u*4,40);if(/[a-z]/.test(p))s+=10;if(/[A-Z]/.test(p))s+=10;if(/\d/.test(p))s+=10;if(/[^\w]/.test(p))s+=15;if(p.length>=12)s+=10;if(/(.)\1{2,}/.test(p))s-=10;return Math.max(0,Math.min(100,s))}
+function updateMeter(p){const sc=scorePassword(p);el.strength.className='meter '+(sc<40?'w1':sc<70?'w2':'w3');el.strengthLabel.textContent='قدرت: '+(sc<40?'ضعیف':sc<70?'متوسط':'قوی')+` (${sc}%)`}
+function opts(){return{lower:el.lower.checked,upper:el.upper.checked,digits:el.digits.checked,symbols:el.symbols.checked,noSimilar:el.noSimilar.checked,noRepeat:el.noRepeat.checked,requireEach:el.requireEach.checked,length:parseInt(el.length.value||12,10)}}
+let last=[],hidden=store.get('hidden',false),favs=store.get('favs',[]),showFav=false;
+function isFav(x){return favs.includes(x)}function toggleFav(x){if(isFav(x))favs=favs.filter(i=>i!==x);else favs.push(x);store.set('favs',favs);render(last)}
+function render(list){last=list;const data=showFav?list.filter(x=>isFav(x)):list;el.output.innerHTML="";data.forEach(x=>{const row=document.createElement("div");row.className="password";const span=document.createElement("span");span.textContent=hidden?"•".repeat(x.length):x;span.dataset.real=x;const act=document.createElement("div");act.className="password-actions";const b1=document.createElement("button");b1.className="secondary";b1.textContent="📋 کپی";b1.onclick=async()=>{await navigator.clipboard.writeText(x);navigator.vibrate?.(20)};const b2=document.createElement("button");b2.className="secondary";b2.textContent=isFav(x)?"⭐":"☆";b2.onclick=()=>toggleFav(x);act.append(b1,b2);row.append(span,act);el.output.appendChild(row)});updateMeter(list[0]||"")}
+el.btnGen.onclick=()=>{const c=Math.min(100,Math.max(1,parseInt(el.count.value||5,10)));const o=opts();const arr=[];for(let i=0;i<c;i++)arr.push(genPass(o));render(arr)}
+el.btnEmail.onclick=()=>{const c=Math.min(100,Math.max(1,parseInt(el.count.value||5,10)));let L=Math.max(6,Math.min(30,parseInt(el.emailLen.value||10,10)));const letters="abcdefghijklmnopqrstuvwxyz";const pool=letters+"0123456789"+(el.emailDot.checked?".":"");const arr=[];for(let i=0;i<c;i++){let s=letters[rnd(letters.length)];while(s.length<L){const ch=pool[rnd(pool.length)];if(ch==="."&&(s.endsWith(".")||s.length===L-1))continue;s+=ch}arr.push(s+"@gmail.com")}render(arr)}
+el.btnCSV.onclick=()=>{if(!last.length)return;const b=new Blob([last.join("\n")],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="output.csv";a.click()}
+el.btnJSON.onclick=()=>{if(!last.length)return;const b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="output.json";a.click()}
+el.btnToggle.onclick=()=>{hidden=!hidden;store.set('hidden',hidden);render(last)}
+el.btnClear.onclick=()=>render([])
+el.tabLatest.onclick=()=>{showFav=false;render(last)}
+el.tabFav.onclick=()=>{showFav=true;render(last)}
 
-function buildPool(o){
-  let groups=[];
-  if(o.lower) groups.push(sets.lower);
-  if(o.upper) groups.push(sets.upper);
-  if(o.digits) groups.push(sets.digits);
-  if(o.symbols) groups.push(sets.symbols);
-  if(o.noSimilar) groups = groups.map(g => [...g].filter(c=>!similar.has(c)).join(""));
-  if(!groups.length) groups=[sets.lower];
-  return {groups, all: groups.join("")};
-}
-function genPass(o){
-  const {groups,all}=buildPool(o);
-  let L=parseInt(o.length||12,10); if(!L||L<1)L=12;
-  if(o.requireEach && L<groups.length) L=groups.length;
-  const chs=[]; if(o.requireEach) groups.forEach(g=>chs.push(pick(g)));
-  while(chs.length<L){ const c=pick(all); if(o.noRepeat && chs.length && chs[chs.length-1]===c) continue; chs.push(c); }
-  return shuffle(chs).slice(0,L).join("");
-}
-function scorePassword(p){
-  if(!p) return 0; let s=0; const unique=new Set(p).size;
-  s+=Math.min(unique*4,40);
-  if(/[a-z]/.test(p)) s+=10; if(/[A-Z]/.test(p)) s+=10; if(/\d/.test(p)) s+=10; if(/[^\w]/.test(p)) s+=15; if(p.length>=12) s+=10; if(/(.)\1{2,}/.test(p)) s-=10;
-  return Math.max(0,Math.min(100,s));
-}
-function updateMeter(p){
-  const sc=scorePassword(p);
-  el.strength.className='meter '+(sc<40?'w1':sc<70?'w2':'w3');
-  el.strengthLabel.textContent='قدرت: '+(sc<40?'ضعیف':sc<70?'متوسط':'قوی')+` (${sc}%)`;
-}
-function opts(){
+/* ==== مودال ایمیل ==== */
+const modal={modal:document.getElementById('mailModal'),subj:document.getElementById('mmSubj'),from:document.getElementById('mmFrom'),time:document.getElementById('mmTime'),iframe:document.getElementById('mailHtml'),pre:document.getElementById('mailText'),attach:document.getElementById('mmAttach'),close:document.getElementById('mmClose'),copy:document.getElementById('mmCopy'),tabH:document.getElementById('tabHtml'),tabT:document.getElementById('tabText')}
+function showModal(){modal.modal.classList.remove('hidden')}function hideModal(){modal.modal.classList.add('hidden')}
+modal.close.onclick=hideModal;modal.tabH.onclick=()=>{modal.iframe.classList.remove('hidden');modal.pre.classList.add('hidden')}
+modal.tabT.onclick=()=>{modal.pre.classList.remove('hidden');modal.iframe.classList.add('hidden')}
+modal.copy.onclick=async()=>{await navigator.clipboard.writeText(modal.pre.textContent||'');navigator.vibrate?.(20)}
+modal.modal.addEventListener('click',e=>{if(e.target===modal.modal)hideModal()})
+function renderInbox(items,clicker){el.tmpInbox.innerHTML="";if(!items.length){el.tmpInbox.innerHTML="<div class='password'>صندوق خالی است.</div>";return}
+items.forEach(m=>{const row=document.createElement("div");row.className="password";row.style.cursor="pointer";const info=document.createElement("div");info.style.direction="ltr";info.innerHTML=m;row.onclick=clicker;row.appendChild(info);el.tmpInbox.appendChild(row)})}
+function setTmpStatus(t){el.tmpStatus.textContent="وضعیت: "+t}
+
+/* ==== سرویس‌ها ==== */
+
+/* --- A) Mail.tm / Mail.gw (ساختار یکسان) --- */
+function makeMailTmLike(apiBase){
+  const st={api:apiBase,token:null,address:null};
+  async function j(path,opts={}){const h=opts.headers||{};if(st.token)h.Authorization="Bearer "+st.token;if(opts.body&&!h["Content-Type"])h["Content-Type"]="application/json";const r=await fetch(st.api+path,{...opts,headers:h});if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}
   return {
-    lower: el.lower.checked,
-    upper: el.upper.checked,
-    digits: el.digits.checked,
-    symbols: el.symbols.checked,
-    noSimilar: el.noSimilar.checked,
-    noRepeat: el.noRepeat.checked,
-    requireEach: el.requireEach.checked,
-    length: parseInt(el.length.value || 12, 10)
-  };
-}
-
-/* ========= تاریخچه/علاقه‌مندی ========= */
-let last=[], hidden=store.get('hidden',false), favs=store.get('favs',[]), showFav=false;
-function isFav(x){return favs.includes(x);}
-function toggleFav(x){ if(isFav(x)) favs=favs.filter(i=>i!==x); else favs.push(x); store.set('favs',favs); render(last); }
-function render(list){
-  last=list;
-  const data = showFav ? list.filter(x=>isFav(x)) : list;
-  el.output.innerHTML="";
-  data.forEach(x=>{
-    const row=document.createElement("div"); row.className="password";
-    const span=document.createElement("span"); span.textContent=hidden?"•".repeat(x.length):x; span.dataset.real=x;
-    const actions=document.createElement("div"); actions.className="password-actions";
-    const btnCopy=document.createElement("button"); btnCopy.className="secondary"; btnCopy.textContent="📋 کپی";
-    btnCopy.onclick=async()=>{ await navigator.clipboard.writeText(x); if(navigator.vibrate) navigator.vibrate(20); };
-    const btnFav=document.createElement("button"); btnFav.className="secondary"; btnFav.textContent = isFav(x) ? "⭐" : "☆";
-    btnFav.onclick=()=>toggleFav(x);
-    actions.append(btnCopy, btnFav);
-    row.append(span, actions);
-    el.output.appendChild(row);
-  });
-  updateMeter(list[0]||"");
-}
-
-/* ========= دکمه‌ها ========= */
-el.btnGen.onclick = () => {
-  const c = Math.min(100, Math.max(1, parseInt(el.count.value || 5, 10)));
-  const o = opts(); const arr=[];
-  for (let i=0;i<c;i++) arr.push(genPass(o));
-  render(arr);
-};
-el.btnEmail.onclick = () => {
-  const c = Math.min(100, Math.max(1, parseInt(el.count.value || 5, 10)));
-  let L = Math.max(6, Math.min(30, parseInt(el.emailLen.value || 10, 10)));
-  const letters = "abcdefghijklmnopqrstuvwxyz";
-  const pool = letters + "0123456789" + (el.emailDot.checked ? "." : "");
-  const arr=[];
-  for (let i=0;i<c;i++){
-    let s = letters[rnd(letters.length)];
-    while (s.length < L) {
-      const ch = pool[rnd(pool.length)];
-      if (ch === "." && (s.endsWith(".") || s.length === L - 1)) continue;
-      s += ch;
+    async create(){
+      setTmpStatus("در حال ساخت...");
+      const d=await j("/domains"); const domain=d["hydra:member"]?.[0]?.domain; if(!domain) throw 0;
+      const id=Math.random().toString(36).slice(2,10), addr=`${id}@${domain}`, pass=Math.random().toString(36)+"!A9";
+      await j("/accounts",{method:"POST",body:JSON.stringify({address:addr,password:pass})});
+      const tok=await j("/token",{method:"POST",body:JSON.stringify({address:addr,password:pass})});
+      st.token=tok.token; st.address=addr; el.tmpAddr.textContent=addr; el.tmpCopy.disabled=false; el.tmpRefresh.disabled=false; setTmpStatus("ساخته شد."); await this.refresh();
+    },
+    async refresh(){
+      if(!st.token) return;
+      setTmpStatus("بروزرسانی صندوق...");
+      const m=await j("/messages"); const arr=(m["hydra:member"]||[]).map(x=>({id:x.id,from:x.from?.address||"unknown",subj:x.subject||"(بدون موضوع)",time:(x.createdAt||"").replace("T"," ").replace("Z","")}));
+      renderInbox(arr.map(x=>`<div><b>${x.subj}</b></div><div>From: ${x.from}</div><div><small>${x.time}</small></div>`),(e)=>{const idx=[...el.tmpInbox.children].indexOf(e.currentTarget); this.open(arr[idx].id)});
+      setTmpStatus("آماده.");
+    },
+    async open(id){
+      const msg=await j(`/messages/${id}`);
+      modal.subj.textContent=msg.subject||"(بدون موضوع)"; modal.from.textContent="From: "+(msg.from?.address||"unknown"); modal.time.innerHTML=`<small>${(msg.createdAt||"").replace("T"," ").replace("Z","")}</small>`;
+      const plain=msg.text||msg.intro||"(بدون متن)"; modal.pre.textContent=plain;
+      const htmlArr=msg.html||[]; const htmlStr=Array.isArray(htmlArr)?htmlArr.join("\n"):(htmlArr||""); modal.iframe.srcdoc=htmlStr||`<html><body style="font-family:monospace;white-space:pre-wrap">${plain}</body></html>`;
+      const atts=msg.attachments||[]; if(atts.length){modal.attach.classList.remove('hidden');modal.attach.innerHTML="";atts.forEach(a=>{const url=a.downloadUrl||(a['@id']?(st.api+a['@id']+'/download'):'#'); const link=document.createElement('a'); link.href=url; link.target="_blank"; link.rel="noopener"; link.textContent=`⬇ ${a.filename||'attachment'} (${Math.round((a.size||0)/1024)} KB)`; modal.attach.appendChild(link)})} else {modal.attach.classList.add('hidden');modal.attach.innerHTML=""}
+      modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
     }
-    arr.push(s + "@gmail.com");
-  }
-  render(arr);
-};
-el.btnCSV.onclick = ()=>{ if(!last.length)return; const b=new Blob([last.join("\n")],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click(); };
-el.btnJSON.onclick=()=>{ if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click(); };
-el.btnToggle.onclick=()=>{ hidden=!hidden; store.set('hidden',hidden); render(last); };
-el.btnClear.onclick = ()=>{ render([]); };
-el.tabLatest.onclick = ()=>{ showFav=false; render(last); };
-el.tabFav.onclick    = ()=>{ showFav=true;  render(last); };
-
-/* ========= ایمیل موقت (Mail.tm) ========= */
-const mailApi = "https://api.mail.tm";
-let mtm = { token:null, address:null };
-
-async function mtmFetch(path, opts={}){
-  const headers = opts.headers || {};
-  if (mtm.token) headers["Authorization"] = "Bearer " + mtm.token;
-  if (opts.body && !headers["Content-Type"]) headers["Content-Type"] = "application/json";
-  const res = await fetch(mailApi + path, { ...opts, headers });
-  if (!res.ok) throw new Error("HTTP "+res.status);
-  return res.json();
-}
-function setTmpStatus(t){ el.tmpStatus.textContent = "وضعیت: " + t; }
-
-async function mtmCreate(){
-  try{
-    setTmpStatus("در حال ساخت...");
-    const domains = await mtmFetch("/domains");
-    const domain = domains["hydra:member"]?.[0]?.domain;
-    if(!domain) throw 0;
-    const id   = Math.random().toString(36).slice(2,10);
-    const addr = `${id}@${domain}`;
-    const pass = Math.random().toString(36) + "!A9";
-    await mtmFetch("/accounts",{method:"POST",body:JSON.stringify({address:addr,password:pass})});
-    const tokenRes = await mtmFetch("/token",{method:"POST",body:JSON.stringify({address:addr,password:pass})});
-    mtm = { token: tokenRes.token, address: addr };
-    el.tmpAddr.textContent = addr;
-    el.tmpCopy.disabled = false;
-    el.tmpRefresh.disabled = false;
-    setTmpStatus("ایمیل ساخته شد.");
-    await mtmRefresh();
-  }catch{ setTmpStatus("خطا در ساخت ایمیل."); }
-}
-async function mtmRefresh(){
-  if(!mtm.token) return;
-  try{
-    setTmpStatus("در حال بروزرسانی...");
-    const m = await mtmFetch("/messages");
-    renderInbox(m["hydra:member"]||[]);
-    setTmpStatus("صندوق بروزرسانی شد.");
-  }catch{ setTmpStatus("خطا در بروزرسانی."); }
-}
-
-/* ====== مودال نمایش ایمیل ====== */
-const $mm = {
-  modal: document.getElementById('mailModal'),
-  subj:  document.getElementById('mmSubj'),
-  from:  document.getElementById('mmFrom'),
-  time:  document.getElementById('mmTime'),
-  iframe:document.getElementById('mailHtml'),
-  pre:   document.getElementById('mailText'),
-  attach:document.getElementById('mmAttach'),
-  close: document.getElementById('mmClose'),
-  copy:  document.getElementById('mmCopy'),
-  tabH:  document.getElementById('tabHtml'),
-  tabT:  document.getElementById('tabText'),
-};
-function showModal(){ $mm.modal.classList.remove('hidden'); }
-function hideModal(){ $mm.modal.classList.add('hidden'); }
-$mm.close.onclick = hideModal;
-$mm.tabH.onclick = ()=>{ $mm.iframe.classList.remove('hidden'); $mm.pre.classList.add('hidden'); };
-$mm.tabT.onclick = ()=>{ $mm.pre.classList.remove('hidden'); $mm.iframe.classList.add('hidden'); };
-$mm.copy.onclick = async ()=>{ await navigator.clipboard.writeText($mm.pre.textContent||''); if(navigator.vibrate) navigator.vibrate(20); };
-$mm.modal.addEventListener('click',e=>{ if(e.target===$mm.modal) hideModal(); });
-
-function renderInbox(items){
-  el.tmpInbox.innerHTML = "";
-  if (!items.length) {
-    el.tmpInbox.innerHTML = "<div class='password'>صندوق خالی است.</div>";
-    return;
-  }
-  items.forEach(msg => {
-    const row = document.createElement("div");
-    row.className = "password";
-    row.style.cursor = "pointer";
-
-    const info = document.createElement("div");
-    info.style.direction = "ltr";
-    const from = msg.from?.address || "unknown";
-    const subj = msg.subject || "(بدون موضوع)";
-    const t    = (msg.createdAt || "").replace("T"," ").replace("Z","");
-    info.innerHTML = `<div><b>${subj}</b></div><div>From: ${from}</div><div><small>${t}</small></div>`;
-
-    row.onclick = () => openMessage(msg.id);
-
-    row.appendChild(info);
-    el.tmpInbox.appendChild(row);
-  });
-}
-
-async function openMessage(id){
-  try{
-    setTmpStatus("در حال دریافت پیام...");
-    const msg = await mtmFetch(`/messages/${id}`);
-
-    const from = msg.from?.address || "unknown";
-    const subj = msg.subject || "(بدون موضوع)";
-    const time = (msg.createdAt || "").replace("T"," ").replace("Z","");
-    $mm.subj.textContent = subj;
-    $mm.from.textContent = "From: " + from;
-    $mm.time.innerHTML   = `<small>${time}</small>`;
-
-    const plain = msg.text || msg.intro || "(بدون متن)";
-    $mm.pre.textContent = plain;
-
-    const htmlArr = msg.html || [];
-    const htmlStr = Array.isArray(htmlArr) ? htmlArr.join("\n") : (htmlArr || "");
-    $mm.iframe.srcdoc = htmlStr || `<html><body style="font-family:monospace;white-space:pre-wrap">${plain}</body></html>`;
-
-    const atts = msg.attachments || [];
-    if (atts.length){
-      $mm.attach.classList.remove('hidden');
-      $mm.attach.innerHTML = "";
-      atts.forEach(a=>{
-        const url = a.downloadUrl || (a['@id'] ? (mailApi + a['@id'] + '/download') : '#');
-        const link = document.createElement('a');
-        link.href = url; link.target = "_blank"; link.rel = "noopener";
-        link.textContent = `⬇ ${a.filename || 'attachment'} (${Math.round((a.size||0)/1024)} KB)`;
-        $mm.attach.appendChild(link);
-      });
-    } else {
-      $mm.attach.classList.add('hidden');
-      $mm.attach.innerHTML = "";
-    }
-
-    $mm.iframe.classList.remove('hidden');
-    $mm.pre.classList.add('hidden');
-
-    showModal();
-    setTmpStatus("پیام آماده شد.");
-  }catch(e){
-    setTmpStatus("خطا در باز کردن پیام.");
   }
 }
+const svc_mailtm = makeMailTmLike("https://api.mail.tm");
+const svc_mailgw = makeMailTmLike("https://api.mail.gw");
 
-/* ========= اتصال دکمه‌های Mail.tm ========= */
-el.tmpCreate.onclick = mtmCreate;
-el.tmpRefresh.onclick = mtmRefresh;
-el.tmpCopy.onclick = async ()=>{ if(mtm.address){ await navigator.clipboard.writeText(mtm.address); if(navigator.vibrate) navigator.vibrate(20);} };
+/* --- B) 1secmail --- */
+const secmail={api:"https://www.1secmail.com/api/v1/",login:null,domain:null};
+const secDomains=["1secmail.com","1secmail.org","1secmail.net","kzccv.com","azote.pro","ohoppo.com","esiix.com","vddaz.com","wwjmp.com","yoggm.com"];
+async function sec_create(){
+  setTmpStatus("در حال ساخت...");
+  const r=await fetch(secmail.api+"?action=genRandomMailbox&count=1").then(x=>x.json());
+  const addr=r[0]; const [login,domain]=addr.split("@"); secmail.login=login; secmail.domain=domain;
+  el.tmpAddr.textContent=addr; el.tmpCopy.disabled=false; el.tmpRefresh.disabled=false; setTmpStatus("ساخته شد."); await sec_refresh();
+}
+async function sec_refresh(){
+  if(!secmail.login) return; setTmpStatus("بروزرسانی صندوق...");
+  const url=`${secmail.api}?action=getMessages&login=${encodeURIComponent(secmail.login)}&domain=${encodeURIComponent(secmail.domain)}`;
+  const list=await fetch(url).then(x=>x.json());
+  const rows=list.map(m=>({id:m.id,from:m.from,subj:m.subject||"(بدون موضوع)",time:(m.date||"")}));
+  renderInbox(rows.map(x=>`<div><b>${x.subj}</b></div><div>From: ${x.from}</div><div><small>${x.time}</small></div>`),(e)=>{const idx=[...el.tmpInbox.children].indexOf(e.currentTarget); sec_open(rows[idx].id)});
+  setTmpStatus("آماده.");
+}
+async function sec_open(id){
+  const url=`${secmail.api}?action=readMessage&login=${encodeURIComponent(secmail.login)}&domain=${encodeURIComponent(secmail.domain)}&id=${id}`;
+  const msg=await fetch(url).then(x=>x.json());
+  modal.subj.textContent=msg.subject||"(بدون موضوع)"; modal.from.textContent="From: "+(msg.from||"unknown"); modal.time.innerHTML=`<small>${msg.date||""}</small>`;
+  const plain=msg.textBody||msg.intro||"(بدون متن)"; modal.pre.textContent=plain; const htmlStr=msg.htmlBody||"";
+  modal.iframe.srcdoc=htmlStr||`<html><body style="font-family:monospace;white-space:pre-wrap">${plain}</body></html>`;
+  const atts=msg.attachments||[]; if(atts.length){modal.attach.classList.remove('hidden');modal.attach.innerHTML="";atts.forEach(a=>{const dl=`${secmail.api}?action=download&login=${encodeURIComponent(secmail.login)}&domain=${encodeURIComponent(secmail.domain)}&id=${id}&file=${encodeURIComponent(a.filename)}`;const link=document.createElement('a');link.href=dl;link.target="_blank";link.rel="noopener";link.textContent=`⬇ ${a.filename} (${Math.round((a.size||0)/1024)} KB)`;modal.attach.appendChild(link)})} else {modal.attach.classList.add('hidden');modal.attach.innerHTML=""}
+  modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal();
+}
 
-/* ========= بار اول ========= */
-(function init(){
-  render([]);         // یک‌بار خالی
-  el.btnGen.click();  // خودکار چند رمز بسازد
-})();
+/* --- C) Maildrop.cc --- */
+const maildrop={api:"https://api.maildrop.cc",box:null};
+function md_random(){return Math.random().toString(36).slice(2,10)}
+async function md_create(){
+  setTmpStatus("در حال ساخت...");
+  const name=md_random(); maildrop.box=name;
+  el.tmpAddr.textContent = `${name}@maildrop.cc`;
+  el.tmpCopy.disabled=false; el.tmpRefresh.disabled=false;
+  setTmpStatus("ساخته شد."); await md_refresh();
+}
+async function md_refresh(){
+  if(!maildrop.box) return; setTmpStatus("بروزرسانی صندوق...");
+  try{
+    const inbox = await fetch(`${maildrop.api}/inbox/${encodeURIComponent(maildrop.box)}`).then(r=>r.json());
+    const msgs = (inbox?.messages||[]).map(m=>({id:m.id,from:m.from,subj:m.subject||"(بدون موضوع)",time:m.date||""}));
+    renderInbox(msgs.map(x=>`<div><b>${x.subj}</b></div><div>From: ${x.from}</div><div><small>${x.time}</small></div>`),(e)=>{const idx=[...el.tmpInbox.children].indexOf(e.currentTarget); md_open(msgs[idx].id)});
+    setTmpStatus("آماده.");
+  }catch{ setTmpStatus("Maildrop اجازه‌ی دسترسی نداد (CORS/RateLimit).") }
+}
+async function md_open(id){
+  try{
+    const msg = await fetch(`${maildrop.api}/message/${id}?address=${encodeURIComponent(maildrop.box)}`).then(r=>r.json());
+    modal.subj.textContent=msg.subject||"(بدون موضوع)"; modal.from.textContent="From: "+(msg.from||"unknown"); modal.time.innerHTML=`<small>${msg.date||""}</small>`;
+    const plain=msg.text||msg.body||"(بدون متن)"; modal.pre.textContent=plain; const htmlStr=msg.html||"";
+    modal.iframe.srcdoc = htmlStr || `<html><body style="font-family:monospace;white-space:pre-wrap">${plain}</body></html>`;
+    modal.attach.classList.add('hidden'); modal.attach.innerHTML="";
+    modal.iframe.classList.remove('hidden'); modal.pre.classList.add('hidden'); showModal(); setTmpStatus("آماده.");
+  }catch{ setTmpStatus("باز کردن پیام Maildrop ناموفق (CORS).") }
+}
+
+/* سوییچر سرویس */
+function updateSvcUI(){
+  const v=el.svc.value;
+  if(v==="1secmail"){
+    el.domWrap.style.display="inline-flex";
+    el.svcDomain.innerHTML="";
+    ["1secmail.com","1secmail.org","1secmail.net","kzccv.com","azote.pro","ohoppo.com","esiix.com","vddaz.com","wwjmp.com","yoggm.com"].forEach(d=>{
+      const o=document.createElement('option'); o.value=d; o.textContent=d; el.svcDomain.appendChild(o);
+    });
+  }else{
+    el.domWrap.style.display="none";
+  }
+}
+el.svc.onchange=updateSvcUI; updateSvcUI();
+
+/* دکمه‌ها (بر اساس سرویس انتخابی) */
+el.tmpCreate.onclick=async()=>{try{
+  const v=el.svc.value;
+  if(v==="mailtm") await svc_mailtm.create();
+  else if(v==="mailgw") await svc_mailgw.create();
+  else if(v==="1secmail") await sec_create();
+  else await md_create();
+}catch{setTmpStatus("خطا در ساخت ایمیل.")}}
+el.tmpRefresh.onclick=async()=>{try{
+  const v=el.svc.value;
+  if(v==="mailtm") await svc_mailtm.refresh();
+  else if(v==="mailgw") await svc_mailgw.refresh();
+  else if(v==="1secmail") await sec_refresh();
+  else await md_refresh();
+}catch{setTmpStatus("خطا در بروزرسانی.")}}
+el.tmpCopy.onclick=async()=>{const addr=el.tmpAddr.textContent.trim(); if(addr&&addr!=='—'){await navigator.clipboard.writeText(addr); navigator.vibrate?.(20)}}
+
+/* شروع */
+(function init(){render([]);el.btnGen.click()})();
 </script>
 
-<!-- Service Worker (اختیاری) -->
 <script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js').catch(()=>{});
-}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 </script>
 </body>
 </html>
