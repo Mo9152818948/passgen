@@ -118,8 +118,8 @@ small.meter-label{opacity:.8}
 
     <div class="row">
       <button id="btnGen">🎲 تولید رمز</button>
-      <button id="btnCSV" class="secondary">CSV</button>
-      <button id="btnJSON" class="secondary">JSON</button>
+      <button id="btnCSV" class="secondary">JSON</button>
+      <button id="btnJSON" class="secondary">CSV</button>
       <button id="btnToggle" class="secondary">👁️ نمایش/مخفی</button>
       <button id="btnClear" class="secondary">🧹 پاک‌کردن تاریخچه</button>
     </div>
@@ -348,8 +348,8 @@ el.btnEmail.onclick = () => {
   }
   render(arr);
 };
-el.btnCSV.onclick = ()=>{ if(!last.length)return; const b=new Blob([last.join("\n")],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click(); };
-el.btnJSON.onclick=()=>{ if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click(); };
+el.btnCSV.onclick = ()=>{ if(!last.length)return; const b=new Blob([last.join("\n")],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.json"; a.click(); };
+el.btnJSON.onclick=()=>{ if(!last.length)return; const b=new Blob([JSON.stringify(last,null,2)],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="output.csv"; a.click(); };
 el.btnToggle.onclick=()=>{ hidden=!hidden; store.set('hidden',hidden); render(last); };
 el.btnClear.onclick = ()=>{ render([]); };
 el.tabLatest.onclick = ()=>{ showFav=false; render(last); };
@@ -418,6 +418,7 @@ $mm.close.onclick = hideModal;
 $mm.tabH.onclick = ()=>{ $mm.iframe.classList.remove('hidden'); $mm.pre.classList.add('hidden'); };
 $mm.tabT.onclick = ()=>{ $mm.pre.classList.remove('hidden'); $mm.iframe.classList.add('hidden'); };
 $mm.copy.onclick = async ()=>{ await navigator.clipboard.writeText($mm.pre.textContent||''); if(navigator.vibrate) navigator.vibrate(20); };
+$mm.modal.addEventListener('click',e=>{ if(e.target===$mm.modal) hideModal(); });
 
 function renderInbox(items){
   el.tmpInbox.innerHTML = "";
@@ -428,6 +429,7 @@ function renderInbox(items){
   items.forEach(msg => {
     const row = document.createElement("div");
     row.className = "password";
+    row.style.cursor = "pointer";            // کلیک‌پذیر
 
     const info = document.createElement("div");
     info.style.direction = "ltr";
@@ -436,15 +438,9 @@ function renderInbox(items){
     const t    = (msg.createdAt || "").replace("T"," ").replace("Z","");
     info.innerHTML = `<div><b>${subj}</b></div><div>From: ${from}</div><div><small>${t}</small></div>`;
 
-    const actions = document.createElement("div");
-    actions.className = "password-actions";
-    const openBtn = document.createElement("button");
-    openBtn.className = "secondary";
-    openBtn.textContent = "📥 مشاهده";
-    openBtn.onclick = () => openMessage(msg.id);
+    row.onclick = () => openMessage(msg.id);
 
-    actions.appendChild(openBtn);
-    row.append(info, actions);
+    row.appendChild(info);
     el.tmpInbox.appendChild(row);
   });
 }
@@ -484,7 +480,6 @@ async function openMessage(id){
       $mm.attach.innerHTML = "";
     }
 
-    // پیش‌فرض: HTML
     $mm.iframe.classList.remove('hidden');
     $mm.pre.classList.add('hidden');
 
@@ -497,8 +492,8 @@ async function openMessage(id){
 
 /* ========= بار اول ========= */
 (function init(){
-  render([]);              // یک‌بار خالی
-  el.btnGen.click();       // خودکار چند رمز بسازد
+  render([]);         // یک‌بار خالی
+  el.btnGen.click();  // خودکار چند رمز بسازد
 })();
 </script>
 
