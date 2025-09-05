@@ -1,24 +1,13 @@
 {
-  "name": "رمز ساز bahrami",
-  "short_name": "bahrami",
-  "description": "اپ تولید پسورد و ایمیل امن",
+  "name": "رمزساز bahrami",
+  "short_name": "رمزساز",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f8fafc",
+  "background_color": "#0b1220",
   "theme_color": "#0f172a",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "1000002828.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "1000002819.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
